@@ -1,4 +1,4 @@
-package data.employee;
+package data;
 
 public class FullTimeEmployee extends EmployeeInfo {
 

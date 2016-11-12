@@ -1,4 +1,4 @@
-package io.save;
+package io;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,14 +9,34 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import data.employee.EmployeeInfo;
-import data.employee.FullTimeEmployee;
-import data.employee.Gender;
-import data.employee.Location;
-import data.employee.PartTimeEmployee;
+import data.EmployeeInfo;
+import data.FullTimeEmployee;
+import data.Gender;
+import data.Location;
+import data.PartTimeEmployee;
 
 public class Database {
 	private static Database instance = null;
+
+	// All employees
+	private static final String KEY_ID = "id"; // int, employee ID
+
+	private static final String KEY_FIRSTNAME = "fst"; // String, first name
+
+	private static final String KEY_LASTNAME = "lst"; // String, last name
+
+	private static final String KEY_GENDER = "gen"; // Gender, the gender
+	private static final String KEY_LOCATION = "loc"; // Location, the gender
+	private static final String KEY_DEDUCTIONS = "ded"; // double, the deductions rate
+	private static final String KEY_FULLTIME = "fll"; // Boolean, if the employee is full time, else part time
+	// Full Time
+	private static final String KEY_YEARLY_SALARY = "sal"; // double, the yearly salary
+	// Part Time
+	private static final String KEY_HOURLY_SALARY = "dph"; // double, the hourly wage
+
+	private static final String KEY_WEEKLY_HOURS = "hpw"; // double, the hours worked per week
+
+	private static final String KEY_WEEKS_PER_YEAR = "wpy"; // double, weeks worked per year
 
 	public static Database instance() {
 		if (instance == null) {
@@ -26,8 +46,9 @@ public class Database {
 
 		return instance;
 	}
-
 	private File file;
+	// TODO make into a hash tabe
+	public List<EmployeeInfo> table;
 
 	private Database(File file) {
 		if (!file.exists()) {
@@ -44,27 +65,6 @@ public class Database {
 
 		load();
 	}
-
-	// All employees
-	private static final String KEY_ID = "id"; // int, employee ID
-	private static final String KEY_FIRSTNAME = "fst"; // String, first name
-	private static final String KEY_LASTNAME = "lst"; // String, last name
-	private static final String KEY_GENDER = "gen"; // Gender, the gender
-	private static final String KEY_LOCATION = "loc"; // Location, the gender
-	private static final String KEY_DEDUCTIONS = "ded"; // double, the deductions rate
-
-	private static final String KEY_FULLTIME = "fll"; // Boolean, if the employee is full time, else part time
-
-	// Full Time
-	private static final String KEY_YEARLY_SALARY = "sal"; // double, the yearly salary
-
-	// Part Time
-	private static final String KEY_HOURLY_SALARY = "dph"; // double, the hourly wage
-	private static final String KEY_WEEKLY_HOURS = "hpw"; // double, the hours worked per week
-	private static final String KEY_WEEKS_PER_YEAR = "wpy"; // double, weeks worked per year
-
-	// TODO make into a hash tabe
-	public List<EmployeeInfo> table;
 
 	public boolean load() {
 		try {

@@ -1,4 +1,4 @@
-package data.employee;
+package data;
 
 public class EmployeeInfo {
 	private int empNumber;
@@ -17,12 +17,20 @@ public class EmployeeInfo {
 		this.deductionsRate = deductionsRate;
 	}
 
-	public Location getLocation() {
-		return workLocation;
+	public double calcAnnualIncome() {
+		return 0D;
 	}
 
 	public double getDeductionsRate() {
 		return deductionsRate;
+	}
+
+	public int getEmployeeNumber() {
+		return empNumber;
+	}
+
+	public String getFirstName() {
+		return firstName;
 	}
 
 	public Gender getGender() {
@@ -33,15 +41,7 @@ public class EmployeeInfo {
 		return lastName;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public int getEmployeeNumber() {
-		return empNumber;
-	}
-
-	public double calcAnnualIncome() {
-		return 0D;
+	public Location getLocation() {
+		return workLocation;
 	}
 }

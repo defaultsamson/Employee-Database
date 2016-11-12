@@ -1,4 +1,4 @@
-package data.employee;
+package data;
 
 public class PartTimeEmployee extends EmployeeInfo {
 
@@ -14,6 +14,11 @@ public class PartTimeEmployee extends EmployeeInfo {
 		this.weeksPerYear = weeksPerYear;
 	}
 
+	@Override
+	public double calcAnnualIncome() {
+		return hourlyWage * hoursPerWeek * weeksPerYear * (1D - deductionsRate);
+	}
+
 	public double getHourlyWage() {
 		return hourlyWage;
 	}
@@ -24,10 +29,5 @@ public class PartTimeEmployee extends EmployeeInfo {
 
 	public double getWeeksPerYear() {
 		return weeksPerYear;
-	}
-
-	@Override
-	public double calcAnnualIncome() {
-		return hourlyWage * hoursPerWeek * weeksPerYear * (1D - deductionsRate);
 	}
 }

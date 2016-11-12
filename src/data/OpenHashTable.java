@@ -1,4 +1,4 @@
-package data.employee;
+package data;
 
 import java.util.ArrayList;
 
@@ -31,8 +31,20 @@ public class OpenHashTable {
 		}
 	}
 
-	public int getNumItems() {
-		return numItems;
+	public int calcBucket(int keyValue) {
+		// Finds the column to put the EmployeeInfo into based on its mod of
+		// the number of columns
+		return keyValue % buckets.size();
+	}
+
+	public void displayContents() {
+		for (int i = 0; i < buckets.size(); i++) { // Goes through columns
+			for (int j = 0; j < buckets.get(i).size(); j++) { // Goes through
+																// rows
+				EmployeeInfo e = buckets.get(i).get(j);
+				System.out.println("(c:" + i + " r:" + j + ") #:" + e.getEmployeeNumber() + " name:" + e.getFirstName());
+			}
+		}
 	}
 
 	/**
@@ -57,27 +69,8 @@ public class OpenHashTable {
 		return -1;
 	}
 
-	/**
-	 * Finds an employee's info from their id.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public EmployeeInfo searchEmployee(int id) {
-		for (ArrayList<EmployeeInfo> row : buckets) { // Goes through columns
-			for (EmployeeInfo e : row) { // Goes through rows
-				if (e.getEmployeeNumber() == id)
-					return e;
-			}
-		}
-
-		return null;
-	}
-
-	public int calcBucket(int keyValue) {
-		// Finds the column to put the EmployeeInfo into based on its mod of
-		// the number of columns
-		return keyValue % buckets.size();
+	public int getNumItems() {
+		return numItems;
 	}
 
 	/**
@@ -100,13 +93,20 @@ public class OpenHashTable {
 		return null;
 	}
 
-	public void displayContents() {
-		for (int i = 0; i < buckets.size(); i++) { // Goes through columns
-			for (int j = 0; j < buckets.get(i).size(); j++) { // Goes through
-																// rows
-				EmployeeInfo e = buckets.get(i).get(j);
-				System.out.println("(c:" + i + " r:" + j + ") #:" + e.getEmployeeNumber() + " name:" + e.getFirstName());
+	/**
+	 * Finds an employee's info from their id.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public EmployeeInfo searchEmployee(int id) {
+		for (ArrayList<EmployeeInfo> row : buckets) { // Goes through columns
+			for (EmployeeInfo e : row) { // Goes through rows
+				if (e.getEmployeeNumber() == id)
+					return e;
 			}
 		}
+
+		return null;
 	}
 }

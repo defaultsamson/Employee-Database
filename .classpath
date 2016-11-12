@@ -7,5 +7,6 @@
 			<attribute name="javadoc_location" value="http://juliusdavies.ca/json-simple-1.1.1-javadocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="icons"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
