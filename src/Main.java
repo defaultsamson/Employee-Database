@@ -6,14 +6,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
-import data.FullTimeEmployee;
-import data.Gender;
-import data.Location;
-import data.PartTimeEmployee;
 import gui.IconButton;
 import gui.IconTextField;
 import gui.IconType;
-import io.Database;
 
 public class Main {
 	public static void main(String[] args) {
@@ -28,10 +23,6 @@ public class Main {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-
-		Database.instance().table.add(new PartTimeEmployee(53, "Karlos", "Ketter", Gender.MALE, Location.CHICAGO, 0.15, 11.5, 30, 25));
-		Database.instance().table.add(new FullTimeEmployee(1, "Cameron", "Scott", Gender.FEMALE, Location.MISSISSAUGA, 0.13, 55300));
-		Database.instance().save();
 
 		JFrame frame = new JFrame("Hnng");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

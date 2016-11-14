@@ -11,6 +11,8 @@ public class HintTextField extends JTextField {
 	 */
 	private static final long serialVersionUID = 2985318102891981101L;
 
+	private static final int TEXT_Y_OFFSET = 19;
+
 	private String hint;
 
 	public HintTextField(String hint) {
@@ -32,7 +34,7 @@ public class HintTextField extends JTextField {
 			Color oldColour = g.getColor();
 			float grey = 0.7F;
 			g.setColor(new Color(grey, grey, grey));
-			g.drawString(hint, getInsets().left, 21);
+			g.drawString(hint, getInsets().left, TEXT_Y_OFFSET);
 			g.setColor(oldColour);
 		}
 	}

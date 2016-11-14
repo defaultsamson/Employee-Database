@@ -13,45 +13,33 @@ import data.EmployeeInfo;
 import data.FullTimeEmployee;
 import data.Gender;
 import data.Location;
+import data.OpenHashTable;
 import data.PartTimeEmployee;
 
 public class Database {
-	private static Database instance = null;
-
 	// All employees
 	private static final String KEY_ID = "id"; // int, employee ID
-
 	private static final String KEY_FIRSTNAME = "fst"; // String, first name
-
 	private static final String KEY_LASTNAME = "lst"; // String, last name
-
 	private static final String KEY_GENDER = "gen"; // Gender, the gender
 	private static final String KEY_LOCATION = "loc"; // Location, the gender
 	private static final String KEY_DEDUCTIONS = "ded"; // double, the deductions rate
 	private static final String KEY_FULLTIME = "fll"; // Boolean, if the employee is full time, else part time
+
 	// Full Time
 	private static final String KEY_YEARLY_SALARY = "sal"; // double, the yearly salary
+
 	// Part Time
 	private static final String KEY_HOURLY_SALARY = "dph"; // double, the hourly wage
-
 	private static final String KEY_WEEKLY_HOURS = "hpw"; // double, the hours worked per week
-
 	private static final String KEY_WEEKS_PER_YEAR = "wpy"; // double, weeks worked per year
 
-	public static Database instance() {
-		if (instance == null) {
-			File file = new File("db.json");
-			instance = new Database(file);
-		}
-
-		return instance;
-	}
-
 	private File file;
-	// TODO make into a hash tabe
-	public List<EmployeeInfo> table;
+	public OpenHashTable table;
 
-	private Database(File file) {
+	public Database(File file, OpenHashTable table) {
+		this.table = table;
+
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -61,8 +49,6 @@ public class Database {
 		}
 
 		this.file = file;
-
-		table = new ArrayList<EmployeeInfo>();
 
 		load();
 	}
@@ -87,12 +73,12 @@ public class Database {
 
 					if (isFullTime) {
 						double yearlySalary = Double.parseDouble(jObj.get(KEY_YEARLY_SALARY).toString());
-						table.add(new FullTimeEmployee(id, first, last, gender, location, deductions, yearlySalary));
+						table.addEmployee(new FullTimeEmployee(id, first, last, gender, location, deductions, yearlySalary));
 					} else {
 						double hourlySalary = Double.parseDouble(jObj.get(KEY_HOURLY_SALARY).toString());
 						double weeklyHours = Double.parseDouble(jObj.get(KEY_WEEKLY_HOURS).toString());
 						double weeksPerYear = Double.parseDouble(jObj.get(KEY_WEEKS_PER_YEAR).toString());
-						table.add(new PartTimeEmployee(id, first, last, gender, location, deductions, hourlySalary, weeklyHours, weeksPerYear));
+						table.addEmployee(new PartTimeEmployee(id, first, last, gender, location, deductions, hourlySalary, weeklyHours, weeksPerYear));
 					}
 
 				} catch (Exception e) {
@@ -113,29 +99,31 @@ public class Database {
 	@SuppressWarnings("unchecked")
 	public void save() {
 		List<String> lines = new ArrayList<String>();
-		for (EmployeeInfo e : table) {
-			JSONObject obj = new JSONObject();
+		for (ArrayList<EmployeeInfo> bucket : table.getBuckets()) {
+			for (EmployeeInfo e : bucket) {
+				JSONObject obj = new JSONObject();
 
-			obj.put(KEY_ID, e.getEmployeeNumber());
-			obj.put(KEY_FIRSTNAME, e.getFirstName());
-			obj.put(KEY_LASTNAME, e.getLastName());
-			obj.put(KEY_GENDER, e.getGender().toString());
-			obj.put(KEY_LOCATION, e.getLocation().toString());
-			obj.put(KEY_DEDUCTIONS, e.getDeductionsRate());
+				obj.put(KEY_ID, e.getEmployeeNumber());
+				obj.put(KEY_FIRSTNAME, e.getFirstName());
+				obj.put(KEY_LASTNAME, e.getLastName());
+				obj.put(KEY_GENDER, e.getGender().toString());
+				obj.put(KEY_LOCATION, e.getLocation().toString());
+				obj.put(KEY_DEDUCTIONS, e.getDeductionsRate());
 
-			if (e instanceof FullTimeEmployee) {
-				FullTimeEmployee f = (FullTimeEmployee) e;
-				obj.put(KEY_FULLTIME, true);
-				obj.put(KEY_YEARLY_SALARY, f.getYearlySalary());
-			} else if (e instanceof PartTimeEmployee) {
-				PartTimeEmployee p = (PartTimeEmployee) e;
-				obj.put(KEY_FULLTIME, false);
-				obj.put(KEY_HOURLY_SALARY, p.getHourlyWage());
-				obj.put(KEY_WEEKLY_HOURS, p.getHoursPerWeek());
-				obj.put(KEY_WEEKS_PER_YEAR, p.getWeeksPerYear());
+				if (e instanceof FullTimeEmployee) {
+					FullTimeEmployee f = (FullTimeEmployee) e;
+					obj.put(KEY_FULLTIME, true);
+					obj.put(KEY_YEARLY_SALARY, f.getYearlySalary());
+				} else if (e instanceof PartTimeEmployee) {
+					PartTimeEmployee p = (PartTimeEmployee) e;
+					obj.put(KEY_FULLTIME, false);
+					obj.put(KEY_HOURLY_SALARY, p.getHourlyWage());
+					obj.put(KEY_WEEKLY_HOURS, p.getHoursPerWeek());
+					obj.put(KEY_WEEKS_PER_YEAR, p.getWeeksPerYear());
+				}
+
+				lines.add(obj.toJSONString());
 			}
-
-			lines.add(obj.toJSONString());
 		}
 
 		FileUtil.writeLines(file, lines);
