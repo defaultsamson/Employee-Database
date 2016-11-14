@@ -2,111 +2,83 @@ package data;
 
 import java.util.ArrayList;
 
+/***************
+ * 
+ * NAME : Yijie Wang STUDENT NUMBER: 718084
+ * 
+ * ICS4UO-A, November 4, 2016
+ * 
+ * THIS FILE IS PART OF THE PROGRAM: the binary tree assignment
+ * 
+ *****************/
+/*
+ * This is the MyHashTable class, it stores data inside a hash table using buckets and hashing function This table uses open hashing and closed addressing
+ */
+
 public class OpenHashTable {
-	private int numItems;
-	private ArrayList<ArrayList<EmployeeInfo>> buckets;
+	// buckets is an array of ArrayList<EmployeeInfo>. Each item in an ArrayList is an EmployeeInfo object.
+	private ArrayList<EmployeeInfo>[] buckets;
 
-	public OpenHashTable(int columns) {
-		numItems = 0;
+	// CONSTRUCTOR
+	public OpenHashTable(int bucketNumber) {
+		// Construct the hash table (open hashing/closed addressing) as an array of bucketNumber ArrayLists.
+		// Instantiate an array to have an ArrayList as each element of the array.
+		buckets = new ArrayList[bucketNumber];
 
-		// Creates an acceptable value for the number of columns
-		int colCount = Math.max(1, columns);
-
-		// Creates a set number of columns
-		buckets = new ArrayList<ArrayList<EmployeeInfo>>(colCount);
-
-		// Creates dynamically resizable rows
-		for (int i = 0; i < colCount; i++) {
-			buckets.add(new ArrayList<EmployeeInfo>());
+		// For each element in the array, instantiate its ArrayList.
+		for (int i = 0; i < bucketNumber; i++) {
+			buckets[i] = new ArrayList<EmployeeInfo>(); // Instantiate the ArrayList for bucket i.
 		}
 	}
 
-	public boolean addEmployee(EmployeeInfo e) {
-		try {
-			int index = calcBucket(e.getEmployeeNumber());
-			buckets.get(index).add(e);
-			return true;
-		} catch (Exception ex) {
-			return false;
-		}
+	// Add the employee to the hash table
+	public boolean addEmployee(EmployeeInfo theEmployee) {
+		boolean successful;
+		successful = buckets[calcBucket(theEmployee.getEmployeeNumber())].add(theEmployee);
+		return successful;
 	}
 
 	public int calcBucket(int keyValue) {
-		// Finds the column to put the EmployeeInfo into based on its mod of
-		// the number of columns
-		return keyValue % buckets.size();
+		// Returns the bucket number as the integer keyValue modulo the number of buckets for the hash table.
+		int reminder = keyValue % buckets.length;
+		// If the reminder is positive, which it generally will be, return it
+		if (reminder >= 0) {
+			return reminder;
+		} else {
+			// If the user enters a negative keyValue, return the positive reminder
+			return buckets.length + reminder;
+		}
 	}
 
+	// Display the content stored in this hash table
 	public void displayContents() {
-		for (int i = 0; i < buckets.size(); i++) { // Goes through columns
-			for (int j = 0; j < buckets.get(i).size(); j++) { // Goes through
-																// rows
-				EmployeeInfo e = buckets.get(i).get(j);
-				System.out.println("(c:" + i + " r:" + j + ") #:" + e.getEmployeeNumber() + " name:" + e.getFirstName());
+		// Go through all buckets
+		for (int i = 0; i < buckets.length; i++) {
+			System.out.println("Bucket " + i);
+			// Display all objects in every bucket
+			for (EmployeeInfo j : buckets[i]) {
+				System.out.println("    " + j);
 			}
 		}
 	}
 
-	/**
-	 * Finds the position of an employee in a bucket from the employee's ID.
-	 * 
-	 * @param id
-	 *            the employee's ID
-	 * @return
-	 */
-	public int findInTable(int id) {
-		// Gets the bucket the employee is in
-		int buck = calcBucket(id);
-		ArrayList<EmployeeInfo> bucket = buckets.get(buck);
+	// Search and remove the employeeInfo object using employee number, then return the removed object
+	public EmployeeInfo removeEmployee(int employeeNum) {
+		EmployeeInfo result;
+		result = searchEmployee(employeeNum);
+		if (result != null) {
+			buckets[calcBucket(employeeNum)].remove(result);
+		}
+		return result;
+	}
 
-		// Finds their position in that bucket
-		for (int i = 0; i < bucket.size(); i++) {
-			if (bucket.get(i).getEmployeeNumber() == id)
+	// Search and return the EmployeeInfo object based on the employee number entered
+	public EmployeeInfo searchEmployee(int employeeNum) {
+		for (EmployeeInfo i : buckets[calcBucket(employeeNum)]) {
+			if (i.getEmployeeNumber() == employeeNum) {
 				return i;
-		}
-
-		// -1 if not found iin bucket for some reason |:I
-		return -1;
-	}
-
-	public int getNumItems() {
-		return numItems;
-	}
-
-	/**
-	 * Removes an employee's info.
-	 * 
-	 * @param id
-	 *            the employee's number
-	 * @return the employee info being removed
-	 */
-	public EmployeeInfo removeEmployee(int id) {
-		for (ArrayList<EmployeeInfo> row : buckets) { // Goes through columns
-			for (EmployeeInfo e : row) { // Goes through rows
-				if (e.getEmployeeNumber() == id) {
-					row.remove(e);
-					return e;
-				}
 			}
 		}
-
 		return null;
 	}
-
-	/**
-	 * Finds an employee's info from their id.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public EmployeeInfo searchEmployee(int id) {
-		for (ArrayList<EmployeeInfo> row : buckets) { // Goes through columns
-			for (EmployeeInfo e : row) { // Goes through rows
-				if (e.getEmployeeNumber() == id)
-					return e;
-			}
-		}
-
-		return null;
-	}
-}
+} // end class MyHashTable

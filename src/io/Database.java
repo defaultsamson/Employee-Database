@@ -46,6 +46,7 @@ public class Database {
 
 		return instance;
 	}
+
 	private File file;
 	// TODO make into a hash tabe
 	public List<EmployeeInfo> table;
