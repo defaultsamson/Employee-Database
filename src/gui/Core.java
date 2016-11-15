@@ -40,6 +40,22 @@ public class Core {
 	private static final Dimension WINDOW_SIZE = new Dimension(800, 600);
 	private static final Dimension TABLE_WIDTH = new Dimension(250, 0);
 	private static final Dimension TABLE_HEADING_SIZE = new Dimension(250, 100);
+	
+	// Graphic interface
+	private JFrame window;
+	private JMenuBar menuBar;
+	private JMenu fileMenu;
+	private JMenuItem openMenuItem;
+	private JMenuItem saveMenuItem;
+	private JPanel content;
+	private JPanel databaseVisual;
+
+	private JPanel table;
+	private JPanel headings;
+	private JScrollPane tableScrollPane;
+	private JTextField searchBar;
+
+	private Database database;
 
 	// The main method runs to set up the core and displays the content
 	public static void main(String[] args) {
@@ -63,22 +79,6 @@ public class Core {
 
 		new Core(database);
 	}
-
-	// Graphic interface
-	private JFrame window;
-	private JMenuBar menuBar;
-	private JMenu fileMenu;
-	private JMenuItem openMenuItem;
-	private JMenuItem saveMenuItem;
-	private JPanel content;
-	private JPanel databaseVisual;
-
-	private JPanel table;
-	private JPanel headings;
-	private JScrollPane tableScrollPane;
-	private JTextField searchBar;
-
-	private Database database;
 
 	// So this is where you use a private constructor
 	private Core(Database database) {
@@ -121,6 +121,9 @@ public class Core {
 		headings.add(empnumLabel);
 		headings.add(new JLabel(TABLE_FIRST_NAME));
 		headings.add(new JLabel(TABLE_LAST_NAME));
+		
+		//TODO: remove this after the grid is sorted out
+		//Filler fluff
 		for (int i = 0; i < 99; i++) {
 			JLabel text = new JLabel("100000000000");
 			text.setHorizontalAlignment((int) Component.CENTER_ALIGNMENT);
