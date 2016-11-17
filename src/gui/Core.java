@@ -103,6 +103,7 @@ public class Core {
 
 		searchBar = new IconTextField("Search", IconType.SEARCH);
 		searchBar.setMaximumSize(TABLE_WIDTH);
+		
 
 		tableScrollPane = new JScrollPane(table);
 		tableScrollPane.setMinimumSize(TABLE_WIDTH);
@@ -125,7 +126,7 @@ public class Core {
 		//TODO: remove this after the grid is sorted out
 		//Filler fluff
 		for (int i = 0; i < 99; i++) {
-			JLabel text = new JLabel("100000000000");
+			JLabel text = new JLabel("1000000");
 			text.setHorizontalAlignment((int) Component.CENTER_ALIGNMENT);
 			table.add(text);
 		}
