@@ -68,7 +68,7 @@ public class Main {
 		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
 
 		EmployeeList list = new EmployeeList(listModel);
-		list.setSize(new Dimension(200, 150));
+		list.setSize(new Dimension(400, 150));
 		list.setLocation(300, 150);
 		con.add(list);
 
@@ -76,12 +76,11 @@ public class Main {
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				
+
 				System.out.println(arg0.getSource());
 			}
 		});
 
-		
 		list.getSelectedValue();
 
 		frame.setVisible(true);

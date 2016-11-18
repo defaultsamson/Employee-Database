@@ -9,7 +9,7 @@ import javax.swing.CellRendererPane;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JTextArea;
+import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
@@ -18,8 +18,7 @@ import data.EmployeeInfo;
 
 public class EmployeeList extends JList<EmployeeInfo> {
 
-	private static final double NUMBER_DRAW_PROPORTION = 1D / 7D;
-	private static final double NAME_DRAW_PROPORTION = 3D / 7D;
+	private static final int LINE_X_OFFSET = -3;
 
 	/**
 	 * 
@@ -42,10 +41,10 @@ public class EmployeeList extends JList<EmployeeInfo> {
 		Color oldColor = g.getColor();
 		g.setColor(new Color(0.5F, 0.5F, 0.5F));
 
-		int numberDrawWidth = (int) ((double) getWidth() * NUMBER_DRAW_PROPORTION);
+		int numberDrawWidth = (int) (getWidth() * (1D / 3D)) + LINE_X_OFFSET;
 		g.drawLine(numberDrawWidth, 0, numberDrawWidth, getHeight());
 
-		int nameDrawWidth = (int) ((double) getWidth() * NAME_DRAW_PROPORTION);
+		int nameDrawWidth = (int) (getWidth() * (1D / 3D));
 		g.drawLine(numberDrawWidth + nameDrawWidth, 0, numberDrawWidth + nameDrawWidth, getHeight());
 
 		g.setColor(oldColor);
@@ -63,7 +62,7 @@ public class EmployeeList extends JList<EmployeeInfo> {
 	}
 }
 
-class EmployeeListRenderer extends JTextArea implements ListCellRenderer<EmployeeInfo> {
+class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeInfo> {
 	/**
 	 * 
 	 */
@@ -148,7 +147,6 @@ class EmployeeListRenderer extends JTextArea implements ListCellRenderer<Employe
 			setBackground(list.getBackground());
 		}
 
-		
 		// Sets other attributes
 		setFont(list.getFont());
 		setEnabled(list.isEnabled());
