@@ -44,4 +44,9 @@ public class EmployeeInfo {
 	public Location getLocation() {
 		return workLocation;
 	}
+	
+	public String toString()
+	{
+		return getEmployeeNumber() + " " + getFirstName() + " " + getLastName();
+	}
 }

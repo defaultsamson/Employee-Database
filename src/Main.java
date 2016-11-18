@@ -1,11 +1,20 @@
 import java.awt.Container;
 import java.awt.Dimension;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import data.EmployeeInfo;
+import data.FullTimeEmployee;
+import data.Gender;
+import data.Location;
+import data.PartTimeEmployee;
+import gui.EmployeeList;
 import gui.IconButton;
 import gui.IconTextField;
 import gui.IconType;
@@ -53,6 +62,27 @@ public class Main {
 		field.setLocation(100, 50);
 		field.setSize(200, 32);
 		con.add(field);
+
+		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
+		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
+		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
+
+		EmployeeList list = new EmployeeList(listModel);
+		list.setSize(new Dimension(200, 150));
+		list.setLocation(300, 150);
+		con.add(list);
+
+		list.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				
+				System.out.println(arg0.getSource());
+			}
+		});
+
+		
+		list.getSelectedValue();
 
 		frame.setVisible(true);
 	}
