@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
@@ -38,7 +39,7 @@ public class EmployeeList extends JList<EmployeeInfo> {
 		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
 		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
 		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
-
+		
 		return listModel;
 	}
 
@@ -48,7 +49,8 @@ public class EmployeeList extends JList<EmployeeInfo> {
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Can only select one employee at a time
 		setLayoutOrientation(JList.VERTICAL); // list scrolls vertically
 		setCellRenderer(new EmployeeListRenderer()); // Renders the desired information
-
+		
+		setPreferredSize(new Dimension(10, 10));
 	}
 
 	@Override
