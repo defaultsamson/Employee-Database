@@ -35,8 +35,16 @@ public class Database {
 	private static final String KEY_WEEKS_PER_YEAR = "wpy"; // double, weeks worked per year
 
 	private File file;
-	public OpenHashTable table;
+	private OpenHashTable table;
 
+	/**
+	 * The database that can be saved to and loaded from.
+	 * 
+	 * @param file
+	 *            the file to write to/read from
+	 * @param table
+	 *            the OpenHashTable
+	 */
 	public Database(File file, OpenHashTable table) {
 		this.table = table;
 
@@ -53,6 +61,11 @@ public class Database {
 		load();
 	}
 
+	/**
+	 * Loads the file into the hash table.
+	 * 
+	 * @return if the file loaded properly or not.
+	 */
 	public boolean load() {
 		try {
 			// Loads lines from the file
@@ -96,8 +109,17 @@ public class Database {
 		return false;
 	}
 
+	public File getFile() {
+		return file;
+	}
+
+	/**
+	 * Saves the hash table to the file specified upon creation fo this Database.
+	 * 
+	 * @return if the file saved properly or not.
+	 */
 	@SuppressWarnings("unchecked")
-	public void save() {
+	public boolean save() {
 		List<String> lines = new ArrayList<String>();
 		for (ArrayList<EmployeeInfo> bucket : table.getBuckets()) {
 			for (EmployeeInfo e : bucket) {
@@ -126,6 +148,13 @@ public class Database {
 			}
 		}
 
-		FileUtil.writeLines(file, lines);
+		try {
+			FileUtil.writeLines(file, lines);
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+
+			return false;
+		}
 	}
 }

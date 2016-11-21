@@ -18,26 +18,16 @@ public class FileUtil {
 		return ImageIO.read(IconButton.class.getResourceAsStream(ICON_DIR + path));
 	}
 
-	public static void writeLines(File file, List<String> lines) {
+	public static void writeLines(File file, List<String> lines) throws IOException {
 		if (!file.exists())
-			try {
-				file.createNewFile();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			file.createNewFile();
 
-		PrintWriter pw;
+		PrintWriter pw = new PrintWriter(file);
 
-		try {
-			pw = new PrintWriter(file);
-
-			for (String s : lines) {
-				pw.println(s);
-			}
-
-			pw.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		for (String s : lines) {
+			pw.println(s);
 		}
+
+		pw.close();
 	}
 }

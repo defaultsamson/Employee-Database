@@ -100,9 +100,9 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		DefaultListCellRenderer renderer = defaultRenderer;
 		JLabel defaultLabel = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-		c1.setText("" + value.getEmployeeNumber());
-		c2.setText(value.getFirstName());
-		c3.setText(value.getLastName());
+		c1.setText(value.getFirstName());
+		c2.setText(value.getLastName());
+		c3.setText("" + value.getEmployeeNumber());
 
 		// Sets the colours based on whether the entry is selected or not
 		if (isSelected) {
