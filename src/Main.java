@@ -63,11 +63,11 @@ public class Main {
 		field.setSize(200, 32);
 		con.add(field);
 
-		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
-		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
-		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
+//		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
+//		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
+//		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
 
-		EmployeeList list = new EmployeeList(listModel);
+		EmployeeList list = new EmployeeList();
 		list.setSize(new Dimension(400, 150));
 		list.setLocation(300, 150);
 		con.add(list);
