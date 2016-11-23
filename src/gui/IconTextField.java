@@ -16,7 +16,13 @@ public class IconTextField extends HintTextField {
 	private int rightIconDrawPadding;
 	private BufferedImage image;
 	private IconType iconType;
-
+        
+        //No-argument constructor for net beans implementation
+        public IconTextField(){
+            //Do not call this constructor
+            super();
+        }
+        
 	public IconTextField(String hint, IconType iconType) {
 		super(hint);
 
