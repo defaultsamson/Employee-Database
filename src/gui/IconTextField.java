@@ -39,6 +39,7 @@ public class IconTextField extends HintTextField {
 
 		// Ensures that the text never goes over the icon
 		rightIconDrawPadding = getInsets().right;
+                rightIconDrawPadding = 0;
 		int rightMargin = image.getWidth() + (getMargin().right * 2) + 2;
 		setMargin(new Insets(getMargin().top, getMargin().left, getMargin().bottom, rightMargin));
 
