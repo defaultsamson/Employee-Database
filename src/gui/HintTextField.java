@@ -11,13 +11,10 @@ public class HintTextField extends JTextField {
 	 */
 	private static final long serialVersionUID = 2985318102891981101L;
 
-<<<<<<< HEAD
 	private static final int TEXT_Y_OFFSET = 19;
         
         private static final String DEFAULT_HINT = "Insert hint here";
 
-=======
->>>>>>> origin/master
 	private String hint;
         
         public HintTextField(){
