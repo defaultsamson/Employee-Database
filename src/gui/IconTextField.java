@@ -16,13 +16,15 @@ public class IconTextField extends HintTextField {
 	private int rightIconDrawPadding;
 	private BufferedImage image;
 	private IconType iconType;
-        
-        //No-argument constructor for net beans implementation
-        public IconTextField(){
-            //Do not call this constructor
-            super();
-        }
-        
+
+	// No-argument constructor for net beans implementation
+	public IconTextField() {
+		// Do not call this constructor
+		super();
+
+		image = null;
+	}
+
 	public IconTextField(String hint, IconType iconType) {
 		super(hint);
 
@@ -54,15 +56,17 @@ public class IconTextField extends HintTextField {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		// Gets the location to draw the icon at
-		// (Can change dynamically, so must be calculated
-		int x = getWidth() - image.getWidth() - rightIconDrawPadding;
-		int y = (getHeight() / 2) - (image.getHeight() / 2);
+		if (image != null) {
+			// Gets the location to draw the icon at
+			// (Can change dynamically, so must be calculated
+			int x = getWidth() - image.getWidth() - rightIconDrawPadding;
+			int y = (getHeight() / 2) - (image.getHeight() / 2);
 
-		// Draws a
-		// g.drawRect(x-1, y-1, image.getWidth(), image.getHeight());
+			// Draws a
+			// g.drawRect(x-1, y-1, image.getWidth(), image.getHeight());
 
-		// Draws the icon
-		g.drawImage(image, x, y, null);
+			// Draws the icon
+			g.drawImage(image, x, y, null);
+		}
 	}
 }
