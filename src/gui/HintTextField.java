@@ -11,10 +11,13 @@ public class HintTextField extends JTextField {
 	 */
 	private static final long serialVersionUID = 2985318102891981101L;
 
+<<<<<<< HEAD
 	private static final int TEXT_Y_OFFSET = 19;
         
         private static final String DEFAULT_HINT = "Insert hint here";
 
+=======
+>>>>>>> origin/master
 	private String hint;
         
         public HintTextField(){
@@ -42,7 +45,11 @@ public class HintTextField extends JTextField {
 			Color oldColour = g.getColor();
 			float grey = 0.7F;
 			g.setColor(new Color(grey, grey, grey));
-			g.drawString(hint, getInsets().left, TEXT_Y_OFFSET);
+
+			int fontHeight = g.getFontMetrics().getHeight();
+			int yOff = ((this.getHeight() - fontHeight) / 4) + fontHeight;
+
+			g.drawString(hint, getInsets().left, yOff);
 			g.setColor(oldColour);
 		}
 	}
