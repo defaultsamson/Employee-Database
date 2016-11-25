@@ -1,19 +1,18 @@
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-import javax.swing.DefaultListModel;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import data.EmployeeInfo;
-import data.FullTimeEmployee;
-import data.Gender;
-import data.Location;
-import data.PartTimeEmployee;
 import gui.EmployeeList;
 import gui.IconButton;
 import gui.IconTextField;
@@ -63,9 +62,9 @@ public class Main {
 		field.setSize(200, 32);
 		con.add(field);
 
-//		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
-//		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
-//		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
+		// DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
+		// listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
+		// listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
 
 		EmployeeList list = new EmployeeList();
 		list.setSize(new Dimension(400, 150));
@@ -83,6 +82,42 @@ public class Main {
 
 		list.getSelectedValue();
 
+		try {
+			Image im = new Image(ImageIO.read(Main.class.getResource("ic_search_black_18dp_1x.png")));
+			con.add(im);
+			im.setSize(200, 200);
+			im.setLocation(10, 10);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			Image im = new Image(ImageIO.read(Main.class.getResource("ic_search_black_18dp_1x.png")));
+			con.add(im);
+			im.setSize(200, 200);
+			im.setLocation(10, 10);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		frame.setVisible(true);
+	}
+}
+
+class Image extends JPanel {
+
+	private BufferedImage image;
+
+	public Image(BufferedImage image) {
+		super();
+
+		this.image = image;
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(image, 0, 0, null);
 	}
 }
