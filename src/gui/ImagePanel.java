@@ -7,7 +7,11 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import javax.swing.JPanel;
+
+import io.FileUtil;
 
 /**
  *
@@ -17,10 +21,15 @@ class ImagePanel extends JPanel {
 
 	private BufferedImage image;
 
-	public ImagePanel(BufferedImage image) {
+	public ImagePanel(IconType icon) {
 		super();
 
-		this.image = image;
+		try {
+			// Loads the image
+			image = FileUtil.loadImage(icon.getTextureDir());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
