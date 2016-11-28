@@ -58,11 +58,10 @@ public class Core {
 
 		int numberOfBuckets = (int) Math.round(Math.random() * 6 + 2);
 		OpenHashTable table = new OpenHashTable(numberOfBuckets);
-		File file = new File("db.json");
-		Database database = new Database(file, table);
 
-		new Core(database);
+		new Core();
 	}
+
 	// Graphic interface
 	private JFrame window;
 	private JMenuBar menuBar;
@@ -78,12 +77,10 @@ public class Core {
 
 	private JTextField searchBar;
 
-	private Database database;
+	private OpenHashTable hashTable;
 
 	// So this is where you use a private constructor
-	private Core(Database database) {
-		this.database = database;
-
+	private Core() {
 		window = new JFrame(WINDOW_TITLE);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menuBar = new JMenuBar();

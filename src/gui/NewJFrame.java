@@ -5,8 +5,18 @@
  */
 package gui;
 
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import data.EmployeeInfo;
+import data.OpenHashTable;
+import io.Database;
 
 /**
  *
@@ -14,13 +24,115 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class NewJFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewJFrame
-     */
-    public NewJFrame() {
-        initComponents();	
-    }
+	private OpenHashTable table;
 
+	/**
+	 * Creates new form NewJFrame
+	 */
+	public NewJFrame() {
+		table = new OpenHashTable(2);
+		Database.instance().load(table);
+
+		initComponents();
+		
+		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				action();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				action();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				action();
+			}
+
+			private void action() {
+				updateDisplayTable();
+			}
+		});
+	}
+
+	public void updateDisplayTable() {
+		ListModel<EmployeeInfo> listModel = employeeList.getModel();
+
+		if (listModel instanceof DefaultListModel<?>) {
+			DefaultListModel<EmployeeInfo> entries = (DefaultListModel<EmployeeInfo>) listModel;
+
+			// Clear the list
+			entries.removeAllElements();
+
+			String search = searchTextField.getText().toLowerCase();
+			boolean doSearch = !search.replace(" ", "").equals("");
+
+			// If there's a search, filter things out
+			if (doSearch) {
+				// The parameters to search for (Each word that the user has typed in)
+				String[] params = search.split(" ");
+
+				// For every EmployeeInfo in the hash table
+				for (ArrayList<EmployeeInfo> bucket : table.getBuckets()) {
+					for (EmployeeInfo e : bucket) {
+
+						// Keep track if each parameter matched a field
+						boolean[] addResult = new boolean[params.length];
+						for (int i = 0; i < addResult.length; i++) {
+							addResult[i] = false;
+						}
+
+						// Test each parameter for a match
+						for (int i = 0; i < params.length; i++) {
+
+							String param = params[i];
+
+							// Test first name
+							if (e.getFirstName().toLowerCase().contains(param)) {
+								addResult[i] = true;
+							}
+
+							// Test last name
+							if (e.getLastName().toLowerCase().contains(param)) {
+								addResult[i] = true;
+							}
+
+							// Test ID number
+							if (("" + e.getEmployeeNumber()).contains(param)) {
+								addResult[i] = true;
+							}
+						}
+
+						// Tests if each parameter found a match in this EmployeeInfo object
+						boolean trulyAdd = true;
+						for (int j = 0; j < addResult.length; j++) {
+							if (addResult[j] == false)
+								trulyAdd = false;
+						}
+
+						// If the above code found it to be true, add the element
+						if (trulyAdd) {
+							entries.addElement(e);
+						}
+					}
+				}
+			} else {// nothing is being searched, add everything
+				// For every EmployeeInfo in the hash table
+				for (ArrayList<EmployeeInfo> bucket : table.getBuckets()) {
+					for (EmployeeInfo e : bucket) {
+						// Add it
+						entries.addElement(e);
+					}
+				}
+			}
+		} else {
+			System.err.println("Display table's ListModel isn't an instance of DefaultListModel");
+		}
+	}
+
+	public void saveTable() {
+		Database.instance().save(table);
+	}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

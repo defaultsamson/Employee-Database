@@ -17,6 +17,15 @@ import data.OpenHashTable;
 import data.PartTimeEmployee;
 
 public class Database {
+	private static Database instance;
+
+	public static Database instance() {
+		if (instance == null) {
+			instance = new Database(new File("db.json"));
+		}
+		return instance;
+	}
+
 	// All employees
 	private static final String KEY_ID = "id"; // int, employee ID
 	private static final String KEY_FIRSTNAME = "fst"; // String, first name
@@ -35,7 +44,6 @@ public class Database {
 	private static final String KEY_WEEKS_PER_YEAR = "wpy"; // double, weeks worked per year
 
 	private File file;
-	private OpenHashTable table;
 
 	/**
 	 * The database that can be saved to and loaded from.
@@ -45,9 +53,7 @@ public class Database {
 	 * @param table
 	 *            the OpenHashTable
 	 */
-	public Database(File file, OpenHashTable table) {
-		this.table = table;
-
+	public Database(File file) {
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -57,8 +63,6 @@ public class Database {
 		}
 
 		this.file = file;
-
-		load();
 	}
 
 	/**
@@ -66,7 +70,7 @@ public class Database {
 	 * 
 	 * @return if the file loaded properly or not.
 	 */
-	public boolean load() {
+	public boolean load(OpenHashTable table) {
 		try {
 			// Loads lines from the file
 			List<String> lines = Files.readAllLines(file.toPath());
@@ -119,7 +123,7 @@ public class Database {
 	 * @return if the file saved properly or not.
 	 */
 	@SuppressWarnings("unchecked")
-	public boolean save() {
+	public boolean save(OpenHashTable table) {
 		List<String> lines = new ArrayList<String>();
 		for (ArrayList<EmployeeInfo> bucket : table.getBuckets()) {
 			for (EmployeeInfo e : bucket) {

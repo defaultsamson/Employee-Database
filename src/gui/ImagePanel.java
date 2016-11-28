@@ -19,6 +19,11 @@ import io.FileUtil;
  */
 class ImagePanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3966638652448600131L;
+
 	private BufferedImage image;
 
 	public ImagePanel(IconType icon) {
