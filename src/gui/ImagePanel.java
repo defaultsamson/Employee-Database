@@ -15,7 +15,7 @@ import io.FileUtil;
 
 /**
  *
- * @author wangyijie6646
+ *
  */
 class ImagePanel extends JPanel {
 

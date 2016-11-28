@@ -213,10 +213,10 @@ public class NewJFrame extends javax.swing.JFrame {
         partTimeRadioButton.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel3.setText("Position");
+        jLabel3.setText("Hourly Wage");
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel4.setText("Position");
+        jLabel4.setText("Hours worked");
 
         javax.swing.GroupLayout wagePanelLayout = new javax.swing.GroupLayout(wagePanel);
         wagePanel.setLayout(wagePanelLayout);
