@@ -118,7 +118,7 @@ public class Database {
 	}
 
 	/**
-	 * Saves the hash table to the file specified upon creation fo this Database.
+	 * Saves the hash table to the file specified upon creation of this Database.
 	 * 
 	 * @return if the file saved properly or not.
 	 */
