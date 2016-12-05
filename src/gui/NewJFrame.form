@@ -226,6 +226,7 @@
               <Component id="addButton" min="-2" pref="48" max="-2" attributes="0"/>
               <Component id="removeButton" min="-2" pref="48" max="-2" attributes="0"/>
               <Component id="editButton" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+              <Component id="editButton1" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -236,7 +237,9 @@
                   <Component id="removeButton" min="-2" pref="48" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="editButton" min="-2" pref="48" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="78" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="editButton1" min="-2" pref="48" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="24" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -267,6 +270,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new IconButton(IconType.EDIT);"/>
+          </AuxValues>
+        </Component>
+        <Component class="gui.IconButton" name="editButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="iconButton1"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButton1ActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new IconButton(IconType.EDIT);"/>
@@ -309,7 +323,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="positionLabel" max="32767" attributes="0"/>
+                                  <Component id="empInfoDeductionRate" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="fullTimeRadioButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" pref="49" max="32767" attributes="0"/>
@@ -330,8 +344,8 @@
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox1" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                              <Component id="empInfoFirstName" alignment="0" pref="155" max="32767" attributes="0"/>
+                                              <Component id="empInfoComboBoxGender" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="empInfoFirstName" alignment="0" pref="161" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
@@ -346,9 +360,9 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="genderLabel1" min="-2" max="-2" attributes="0"/>
                                               <Component id="lastNameEmpInfoLabel" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox2" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="empInfoComboBoxLocation" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -384,13 +398,13 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="empInfoComboBoxGender" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="empInfoComboBoxLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="positionLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="empInfoDeductionRate" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="portraitPanel" pref="192" max="32767" attributes="0"/>
                   </Group>
@@ -440,7 +454,7 @@
             <Property name="text" type="java.lang.String" value="Deduction Rate"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="positionLabel">
+        <Component class="javax.swing.JTextField" name="empInfoDeductionRate">
         </Component>
         <Container class="javax.swing.JPanel" name="portraitPanel">
           <Properties>
@@ -508,14 +522,10 @@
             <Property name="text" type="java.lang.String" value="Gender&#xa;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="empInfoComboBoxGender">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Male"/>
-                <StringItem index="1" value="Female"/>
-                <StringItem index="2" value="Other"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="(new javax.swing.DefaultComboBoxModel&lt;&gt;(new Gender[] { Gender.MALE, Gender.FEMALE, Gender.OTHER }))" type="code"/>
             </Property>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="-1" type="code"/>
@@ -525,7 +535,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Gender&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="genderLabel1">
@@ -536,14 +546,10 @@
             <Property name="text" type="java.lang.String" value="Location"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="empInfoComboBoxLocation">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Mississauga"/>
-                <StringItem index="1" value="Ottawa"/>
-                <StringItem index="2" value="Chicago"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new Location[] { Location.MISSISSAUGA, Location.OTTAWA, Location.CHICAGO })" type="code"/>
             </Property>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="-1" type="code"/>
@@ -553,7 +559,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Location&gt;"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="wagePanel">
@@ -581,7 +587,7 @@
                               <Component id="salaryTextField" alignment="0" max="32767" attributes="0"/>
                               <Component id="annualSalaryLabel" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="311" max="32767" attributes="0"/>
+                          <EmptySpace pref="323" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="fullTimeWageTextField" alignment="0" max="32767" attributes="0"/>
                               <Component id="fullTimeWageLabel" alignment="0" max="32767" attributes="0"/>
@@ -659,17 +665,17 @@
                               <Component id="hourlyWageTextField" max="32767" attributes="0"/>
                               <Component id="hourlyWageLabel" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" pref="49" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="53" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="hoursWorkedTextField" max="32767" attributes="0"/>
                               <Component id="hoursWorkedLabel" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" pref="51" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="55" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="deductionRateTextField" max="32767" attributes="0"/>
                               <Component id="deductionRateLabel" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" pref="51" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="55" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="partTimeWageTextField" max="32767" attributes="0"/>
                               <Component id="partTimeWageLabel" max="32767" attributes="0"/>
