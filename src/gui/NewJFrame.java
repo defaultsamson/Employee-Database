@@ -39,6 +39,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
 		initComponents();
 		
+		setEnabledEmployeeInfoPanel(false);
+		
 		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				action();
@@ -142,14 +144,14 @@ public class NewJFrame extends javax.swing.JFrame {
         private void addBlankEmployee(){
                 employeeList.setEnabled(false);
                 enableEmployeeInfo();
-                employeeInfoPanel.setEnabled(true);
+                setEnabledEmployeeInfoPanel(true);
                 //PartTimeEmployee employee;
                 
                 //table.addEmployee(employee);
         }
         
-        private void removeEmployee(){
-            
+        private void removeEmployee(int id){
+            table.removeEmployee(id);
         }
         
         private void editEmployee(){
@@ -162,6 +164,19 @@ public class NewJFrame extends javax.swing.JFrame {
         
         private void enableEmployeeInfo(){
             
+        }
+        
+        private void setEnabledEmployeeInfoPanel(boolean enabled){
+        	employeeInfoPanel.setEnabled(enabled);
+        	for(int i = 0; i < employeeInfoPanel.getComponentCount(); i++){
+        		employeeInfoPanel.getComponent(i).setEnabled(enabled);
+        	}
+        	for(int i = 0; i < partTimeWagePanel.getComponentCount(); i++){
+        		partTimeWagePanel.getComponent(i).setEnabled(enabled);
+        	}
+        	for(int i = 0; i < fullTimeWagePanel.getComponentCount(); i++){
+        		fullTimeWagePanel.getComponent(i).setEnabled(enabled);
+        	}
         }
         
         public void selectWagePanel(){
@@ -353,18 +368,13 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel1.setText("First Name");
 
-        empInfoFirstName.setEnabled(false);
-
         lastNameEmpInfoLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         lastNameEmpInfoLabel.setText("Last Name");
 
-        empInfoLastName.setEnabled(false);
         empInfoLastName.setSize(new java.awt.Dimension(10, 26));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel2.setText("Deduction Rate");
-
-        positionLabel.setEnabled(false);
 
         portraitPanel.setBackground(new java.awt.Color(204, 204, 204));
         portraitPanel.setPreferredSize(new java.awt.Dimension(160, 200));
@@ -382,8 +392,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
         empnumLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         empnumLabel.setText("Employee Number");
-
-        empInfoEmpnum.setEnabled(false);
 
         fullPartTimeButtonGroup.add(fullTimeRadioButton);
         fullTimeRadioButton.setText("Full Time");
@@ -407,7 +415,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Other" }));
         jComboBox1.setSelectedIndex(-1);
         jComboBox1.setSelectedItem(null);
-        jComboBox1.setEnabled(false);
 
         genderLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         genderLabel1.setText("Location");
@@ -415,7 +422,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mississauga", "Ottawa", "Chicago" }));
         jComboBox2.setSelectedIndex(-1);
         jComboBox2.setSelectedItem(null);
-        jComboBox2.setEnabled(false);
 
         wagePanel.setLayout(new java.awt.CardLayout());
 

@@ -416,9 +416,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="empInfoFirstName">
-          <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lastNameEmpInfoLabel">
           <Properties>
@@ -430,7 +427,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="empInfoLastName">
           <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
             <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 26]"/>
             </Property>
@@ -445,9 +441,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="positionLabel">
-          <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="portraitPanel">
           <Properties>
@@ -484,9 +477,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="empInfoEmpnum">
-          <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="fullTimeRadioButton">
           <Properties>
@@ -533,7 +523,6 @@
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="null" type="code"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -562,7 +551,6 @@
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="null" type="code"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
