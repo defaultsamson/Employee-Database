@@ -15,9 +15,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import data.EmployeeInfo;
+import data.Gender;
+import data.Location;
 import data.OpenHashTable;
+import data.PartTimeEmployee;
 import io.Database;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 /**
  *
@@ -131,9 +135,34 @@ public class NewJFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public void saveTable() {
+	private void saveTable() {
 		Database.instance().save(table);
 	}
+
+        private void addBlankEmployee(){
+                employeeList.setEnabled(false);
+                enableEmployeeInfo();
+                employeeInfoPanel.setEnabled(true);
+                //PartTimeEmployee employee;
+                
+                //table.addEmployee(employee);
+        }
+        
+        private void removeEmployee(){
+            
+        }
+        
+        private void editEmployee(){
+            
+        }
+        
+        private void updateHashTable(){
+            
+        }
+        
+        private void enableEmployeeInfo(){
+            
+        }
         
         public void selectWagePanel(){
                 if(fullTimeRadioButton.isSelected()){
@@ -248,12 +277,14 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelFirstName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelLastName)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelEmployeeNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
-            .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -309,6 +340,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
 
         doneButton.setText("iconButton1");
+        doneButton.setEnabled(false);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 doneButtonActionPerformed(evt);
@@ -645,7 +677,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        addBlankEmployee();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed

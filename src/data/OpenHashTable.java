@@ -54,7 +54,7 @@ public class OpenHashTable {
 	 *            the employee's ID
 	 * @return
 	 */
-	public int findInTable(int id) {
+	private int findInTable(int id) {
 		// Gets the bucket the employee is in
 		int buck = calcBucket(id);
 		ArrayList<EmployeeInfo> bucket = buckets.get(buck);
