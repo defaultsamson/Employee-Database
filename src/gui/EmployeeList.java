@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
-import javax.swing.CellRendererPane;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -39,7 +38,7 @@ public class EmployeeList extends JList<EmployeeInfo> {
 		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
 		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
 		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
-		
+
 		return listModel;
 	}
 
@@ -49,7 +48,7 @@ public class EmployeeList extends JList<EmployeeInfo> {
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Can only select one employee at a time
 		setLayoutOrientation(JList.VERTICAL); // list scrolls vertically
 		setCellRenderer(new EmployeeListRenderer()); // Renders the desired information
-		
+
 		setPreferredSize(new Dimension(10, 10));
 	}
 
@@ -67,17 +66,6 @@ public class EmployeeList extends JList<EmployeeInfo> {
 		g.drawLine(numberDrawWidth + nameDrawWidth, 0, numberDrawWidth + nameDrawWidth, getHeight());
 
 		g.setColor(oldColor);
-
-		CellRendererPane pane = (CellRendererPane) this.getComponent(0);
-
-		for (Component c : pane.getComponents()) {
-			System.out.println(c);
-
-			if (c instanceof JLabel) {
-				((JLabel) c).setText("Dong");
-			}
-		}
-
 	}
 }
 
@@ -99,8 +87,7 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 	private Color selectedForeground = null;
 
 	private Color disabledBackground;
-	private Color disabledForeground;
-	
+
 	public EmployeeListRenderer() {
 		super();
 
@@ -115,9 +102,8 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		add(c1);
 		add(c2);
 		add(c3);
-		
+
 		disabledBackground = new Color(0.5F, 0.5F, 0.5F);
-		disabledForeground = new Color(0.9F, 0.9F, 0.9F);
 	}
 
 	@Override
@@ -129,22 +115,14 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		c2.setText(value.getLastName());
 		c3.setText("" + value.getEmployeeNumber());
 
-		// Sets the colours based on whether the entry is selected or not
+		// Sets the background colour to grey if this component is not enabled
 		if (!isEnabled()) {
-			list.setSelectionBackground(disabledBackground);
-			list.setSelectionForeground(disabledForeground);
-//			list.setBackground(disabledBackground);
-//			list.setForeground(disabledForeground);
-			
-			c1.setForeground(list.getSelectionForeground());
-			c2.setForeground(list.getSelectionForeground());
-			c3.setForeground(list.getSelectionForeground());
-			
-			c1.setBackground(list.getSelectionBackground());
-			c2.setBackground(list.getSelectionBackground());
-			c3.setBackground(list.getSelectionBackground());
-		}
-		else if (isSelected) {
+			list.setBackground(disabledBackground);
+
+			setBackground(list.getBackground());
+
+			// Sets the colours based on whether the entry is selected or not
+		} else if (isSelected) {
 			// Sets the background and foreground colours from the defaults
 			if (background == null) {
 				Color bg = defaultLabel.getBackground();
