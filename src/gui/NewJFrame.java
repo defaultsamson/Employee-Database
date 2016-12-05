@@ -166,8 +166,18 @@ public class NewJFrame extends javax.swing.JFrame {
     	empInfoDeductionRate.setText(Double.toString(employee.getDeductionsRate()));
     	if(employee instanceof FullTimeEmployee){
     		fullTimeRadioButton.setSelected(true);
+    		FullTimeEmployee fullEmployee = (FullTimeEmployee)employee;
+    		fullTimeSalaryTextField.setText(Double.toString(fullEmployee.getYearlySalary()));
+    		fullTimeIncomeTextField.setText(Double.toString(fullEmployee.calcAnnualIncome()));
     	} else {
-    		partTimeRadioButton.setSelected(true);
+    		if (employee instanceof PartTimeEmployee){
+    			partTimeRadioButton.setSelected(true);
+        		PartTimeEmployee partEmployee = (PartTimeEmployee)employee;
+        		partTimeHourlyWageTextField.setText(Double.toString(partEmployee.getHourlyWage()));
+                partTimeHoursWorkedTextField.setText(Double.toString(partEmployee.getHoursPerWeek()));
+                partTimeWeeksWorkedTextField.setText(Double.toString(partEmployee.getWeeksPerYear()));
+                partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
+    		}
     	}
     }
     
@@ -210,7 +220,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         employeeList = new gui.EmployeeList();
-        jPanel1 = new javax.swing.JPanel();
+        listHeadingPanel = new javax.swing.JPanel();
         labelEmployeeNumber = new javax.swing.JLabel();
         labelLastName = new javax.swing.JLabel();
         labelFirstName = new javax.swing.JLabel();
@@ -239,19 +249,19 @@ public class NewJFrame extends javax.swing.JFrame {
         empInfoComboBoxLocation = new javax.swing.JComboBox<>();
         wagePanel = new javax.swing.JPanel();
         fullTimeWagePanel = new javax.swing.JPanel();
-        annualSalaryLabel = new javax.swing.JLabel();
-        salaryTextField = new javax.swing.JTextField();
-        fullTimeWageLabel = new javax.swing.JLabel();
-        fullTimeWageTextField = new javax.swing.JTextField();
+        fullTimeAnnualSalaryLabel = new javax.swing.JLabel();
+        fullTimeSalaryTextField = new javax.swing.JTextField();
+        fullTimeIncomeLabel = new javax.swing.JLabel();
+        fullTimeIncomeTextField = new javax.swing.JTextField();
         partTimeWagePanel = new javax.swing.JPanel();
-        hourlyWageLabel = new javax.swing.JLabel();
-        hoursWorkedLabel = new javax.swing.JLabel();
-        hourlyWageTextField = new javax.swing.JTextField();
-        hoursWorkedTextField = new javax.swing.JTextField();
-        deductionRateLabel = new javax.swing.JLabel();
-        deductionRateTextField = new javax.swing.JTextField();
+        partTimeHourlyWageLabel = new javax.swing.JLabel();
+        partTimeHoursWorkedLabel = new javax.swing.JLabel();
+        partTimeHourlyWageTextField = new javax.swing.JTextField();
+        partTimeHoursWorkedTextField = new javax.swing.JTextField();
+        partTimeWeeksWorkedLabel = new javax.swing.JLabel();
+        partTimeWeeksWorkedTextField = new javax.swing.JTextField();
         partTimeWageLabel = new javax.swing.JLabel();
-        partTimeWageTextField = new javax.swing.JTextField();
+        partTimeIncomeTextField = new javax.swing.JTextField();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -291,11 +301,11 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout listHeadingPanelLayout = new javax.swing.GroupLayout(listHeadingPanel);
+        listHeadingPanel.setLayout(listHeadingPanelLayout);
+        listHeadingPanelLayout.setHorizontalGroup(
+            listHeadingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listHeadingPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelFirstName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -303,19 +313,19 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelEmployeeNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(listHeadingPanelLayout.createSequentialGroup()
                 .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 26, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        listHeadingPanelLayout.setVerticalGroup(
+            listHeadingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(listHeadingPanelLayout.createSequentialGroup()
                 .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(listHeadingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelEmployeeNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listHeadingPanelLayout.createSequentialGroup()
+                        .addGroup(listHeadingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelLastName)
                             .addComponent(labelFirstName))
                         .addContainerGap())))
@@ -443,17 +453,17 @@ public class NewJFrame extends javax.swing.JFrame {
 
         fullTimeWagePanel.setPreferredSize(new java.awt.Dimension(492, 70));
 
-        annualSalaryLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        annualSalaryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        annualSalaryLabel.setText("<html>Annual<br>Salary</p></html>");
+        fullTimeAnnualSalaryLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        fullTimeAnnualSalaryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fullTimeAnnualSalaryLabel.setText("<html>Annual<br>Salary</p></html>");
 
-        salaryTextField.setText("jTextField1");
+        fullTimeSalaryTextField.setText("jTextField1");
 
-        fullTimeWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        fullTimeWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fullTimeWageLabel.setText("<html>Annual<br>Income</p></html>");
+        fullTimeIncomeLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        fullTimeIncomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fullTimeIncomeLabel.setText("<html>Annual<br>Income</p></html>");
 
-        fullTimeWageTextField.setText("jTextField2");
+        fullTimeIncomeTextField.setText("jTextField2");
 
         javax.swing.GroupLayout fullTimeWagePanelLayout = new javax.swing.GroupLayout(fullTimeWagePanel);
         fullTimeWagePanel.setLayout(fullTimeWagePanelLayout);
@@ -462,24 +472,24 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(fullTimeWagePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(salaryTextField)
-                    .addComponent(annualSalaryLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
+                    .addComponent(fullTimeSalaryTextField)
+                    .addComponent(fullTimeAnnualSalaryLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
                 .addGroup(fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(fullTimeWageTextField)
-                    .addComponent(fullTimeWageLabel))
+                    .addComponent(fullTimeIncomeTextField)
+                    .addComponent(fullTimeIncomeLabel))
                 .addContainerGap())
         );
         fullTimeWagePanelLayout.setVerticalGroup(
             fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fullTimeWagePanelLayout.createSequentialGroup()
                 .addGroup(fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(annualSalaryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fullTimeWageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fullTimeAnnualSalaryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fullTimeIncomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(salaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fullTimeWageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fullTimeSalaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fullTimeIncomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -487,29 +497,29 @@ public class NewJFrame extends javax.swing.JFrame {
 
         partTimeWagePanel.setPreferredSize(new java.awt.Dimension(492, 70));
 
-        hourlyWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        hourlyWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        hourlyWageLabel.setText("<html>Hourly<br>&nbsp;Wage</p></html>");
+        partTimeHourlyWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        partTimeHourlyWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        partTimeHourlyWageLabel.setText("<html>Hourly<br>&nbsp;Wage</p></html>");
 
-        hoursWorkedLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        hoursWorkedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        hoursWorkedLabel.setText("<html>&nbsp;&nbsp;Hours<br>per Week</p></html>");
+        partTimeHoursWorkedLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        partTimeHoursWorkedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        partTimeHoursWorkedLabel.setText("<html>&nbsp;&nbsp;Hours<br>per Week</p></html>");
 
-        hourlyWageTextField.setText("jTextField1");
+        partTimeHourlyWageTextField.setText("jTextField1");
 
-        hoursWorkedTextField.setText("jTextField2");
+        partTimeHoursWorkedTextField.setText("jTextField2");
 
-        deductionRateLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        deductionRateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        deductionRateLabel.setText("<html>&nbsp;&nbsp;Weeks<br>per Year</p></html>");
+        partTimeWeeksWorkedLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        partTimeWeeksWorkedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        partTimeWeeksWorkedLabel.setText("<html>&nbsp;&nbsp;Weeks<br>per Year</p></html>");
 
-        deductionRateTextField.setText("jTextField2");
+        partTimeWeeksWorkedTextField.setText("jTextField2");
 
         partTimeWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         partTimeWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         partTimeWageLabel.setText("<html>Annual<br>Income</p></html>");
 
-        partTimeWageTextField.setText("jTextField2");
+        partTimeIncomeTextField.setText("jTextField2");
 
         javax.swing.GroupLayout partTimeWagePanelLayout = new javax.swing.GroupLayout(partTimeWagePanel);
         partTimeWagePanel.setLayout(partTimeWagePanelLayout);
@@ -518,19 +528,19 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(partTimeWagePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(hourlyWageTextField)
-                    .addComponent(hourlyWageLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 53, Short.MAX_VALUE)
+                    .addComponent(partTimeHourlyWageTextField)
+                    .addComponent(partTimeHourlyWageLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 52, Short.MAX_VALUE)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(hoursWorkedTextField)
-                    .addComponent(hoursWorkedLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 55, Short.MAX_VALUE)
+                    .addComponent(partTimeHoursWorkedTextField)
+                    .addComponent(partTimeHoursWorkedLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 54, Short.MAX_VALUE)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(deductionRateTextField)
-                    .addComponent(deductionRateLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 55, Short.MAX_VALUE)
+                    .addComponent(partTimeWeeksWorkedTextField)
+                    .addComponent(partTimeWeeksWorkedLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 54, Short.MAX_VALUE)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(partTimeWageTextField)
+                    .addComponent(partTimeIncomeTextField)
                     .addComponent(partTimeWageLabel))
                 .addContainerGap())
         );
@@ -538,16 +548,16 @@ public class NewJFrame extends javax.swing.JFrame {
             partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, partTimeWagePanelLayout.createSequentialGroup()
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hourlyWageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hoursWorkedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deductionRateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partTimeHourlyWageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partTimeHoursWorkedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partTimeWeeksWorkedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(partTimeWageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hourlyWageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hoursWorkedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deductionRateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(partTimeWageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(partTimeHourlyWageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partTimeHoursWorkedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partTimeWeeksWorkedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(partTimeIncomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -657,7 +667,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addGap(27, 27, 27))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(listHeadingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -680,7 +690,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(listHeadingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
@@ -755,10 +765,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.IconButton addButton;
-    private javax.swing.JLabel annualSalaryLabel;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JLabel deductionRateLabel;
-    private javax.swing.JTextField deductionRateTextField;
     private gui.IconButton doneButton;
     private gui.IconButton editButton;
     private gui.IconButton editButton1;
@@ -772,16 +779,14 @@ public class NewJFrame extends javax.swing.JFrame {
     private gui.EmployeeList employeeList;
     private javax.swing.JLabel empnumLabel;
     private javax.swing.ButtonGroup fullPartTimeButtonGroup;
+    private javax.swing.JLabel fullTimeAnnualSalaryLabel;
+    private javax.swing.JLabel fullTimeIncomeLabel;
+    private javax.swing.JTextField fullTimeIncomeTextField;
     private javax.swing.JRadioButton fullTimeRadioButton;
-    private javax.swing.JLabel fullTimeWageLabel;
+    private javax.swing.JTextField fullTimeSalaryTextField;
     private javax.swing.JPanel fullTimeWagePanel;
-    private javax.swing.JTextField fullTimeWageTextField;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JLabel genderLabel1;
-    private javax.swing.JLabel hourlyWageLabel;
-    private javax.swing.JTextField hourlyWageTextField;
-    private javax.swing.JLabel hoursWorkedLabel;
-    private javax.swing.JTextField hoursWorkedTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -790,20 +795,25 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEmployeeNumber;
     private javax.swing.JLabel labelFirstName;
     private javax.swing.JLabel labelLastName;
     private javax.swing.JLabel lastNameEmpInfoLabel;
+    private javax.swing.JPanel listHeadingPanel;
+    private javax.swing.JLabel partTimeHourlyWageLabel;
+    private javax.swing.JTextField partTimeHourlyWageTextField;
+    private javax.swing.JLabel partTimeHoursWorkedLabel;
+    private javax.swing.JTextField partTimeHoursWorkedTextField;
+    private javax.swing.JTextField partTimeIncomeTextField;
     private javax.swing.JRadioButton partTimeRadioButton;
     private javax.swing.JLabel partTimeWageLabel;
     private javax.swing.JPanel partTimeWagePanel;
-    private javax.swing.JTextField partTimeWageTextField;
+    private javax.swing.JLabel partTimeWeeksWorkedLabel;
+    private javax.swing.JTextField partTimeWeeksWorkedTextField;
     private javax.swing.JPanel portraitPanel;
     private gui.IconButton removeButton;
-    private javax.swing.JTextField salaryTextField;
     private gui.IconTextField searchTextField;
     private javax.swing.JPanel wagePanel;
     // End of variables declaration//GEN-END:variables
