@@ -19,9 +19,12 @@ import data.EmployeeInfo;
 import data.FullTimeEmployee;
 import data.Gender;
 import data.Location;
+import data.OpenHashTable;
 import data.PartTimeEmployee;
 
 public class EmployeeList extends JList<EmployeeInfo> {
+	
+	private OpenHashTable employeeTable;
 
 	private static final int LINE_X_OFFSET = -3;
 
@@ -36,8 +39,8 @@ public class EmployeeList extends JList<EmployeeInfo> {
 
 	private static DefaultListModel<EmployeeInfo> getDefaultListModel() {
 		DefaultListModel<EmployeeInfo> listModel = new DefaultListModel<EmployeeInfo>();
-		listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
-		listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
+		//listModel.addElement(new PartTimeEmployee(64, "Samasioduyajsdghakjsdghaskjdgoajshd", "Close", Gender.MALE, Location.MISSISSAUGA, 0.2, 12, 2, 2));
+		//listModel.addElement(new FullTimeEmployee(64, "Mike", "Oxlittle", Gender.FEMALE, Location.CHICAGO, 0.13, 12000));
 
 		return listModel;
 	}
