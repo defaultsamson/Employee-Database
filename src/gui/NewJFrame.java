@@ -13,6 +13,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import data.*;
 import io.Database;
@@ -166,6 +168,7 @@ public class NewJFrame extends javax.swing.JFrame {
     	empInfoLastName.setText(employee.getLastName());
     	empInfoEmpnum.setText(Integer.toString(employee.getEmployeeNumber()));
     	empInfoComboBoxGender.setSelectedItem(employee.getGender());
+    	empInfoDeductionRate.setText(Double.toString(employee.getDeductionsRate()));
     	empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
     	fullTimeIncomeTextField.setText(Double.toString(employee.getDeductionsRate()));
     	if(employee instanceof FullTimeEmployee){
@@ -242,6 +245,15 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         employeeList = new gui.EmployeeList();
+        employeeList.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(employeeList.getSelectedValue() != null){
+                    displayEmployeeInfo(employeeList.getSelectedValue());
+                }
+            }
+        });
         listHeadingPanel = new javax.swing.JPanel();
         labelEmployeeNumber = new javax.swing.JLabel();
         labelLastName = new javax.swing.JLabel();
@@ -440,6 +452,7 @@ public class NewJFrame extends javax.swing.JFrame {
         empnumLabel.setText("Employee Number");
 
         fullPartTimeButtonGroup.add(fullTimeRadioButton);
+        fullTimeRadioButton.setSelected(true);
         fullTimeRadioButton.setText("Full Time");
         fullTimeRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -690,8 +703,8 @@ public class NewJFrame extends javax.swing.JFrame {
                                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)
                                 .addComponent(employeeInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
