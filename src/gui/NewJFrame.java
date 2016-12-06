@@ -176,6 +176,7 @@ public class NewJFrame extends javax.swing.JFrame {
     		FullTimeEmployee fullEmployee = (FullTimeEmployee)employee;
     		fullTimeSalaryTextField.setText(Double.toString(fullEmployee.getYearlySalary()));
     		fullTimeIncomeTextField.setText(Double.toString(fullEmployee.calcAnnualIncome()));
+    		selectWagePanel();
     	} else {
     		if (employee instanceof PartTimeEmployee){
     			partTimeRadioButton.setSelected(true);
@@ -184,6 +185,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 partTimeHoursWorkedTextField.setText(Double.toString(partEmployee.getHoursPerWeek()));
                 partTimeWeeksWorkedTextField.setText(Double.toString(partEmployee.getWeeksPerYear()));
                 partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
+                selectWagePanel();
     		}
     	}
     }
@@ -494,6 +496,8 @@ public class NewJFrame extends javax.swing.JFrame {
         fullTimeIncomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fullTimeIncomeLabel.setText("<html>Annual<br>Income</p></html>");
 
+        fullTimeIncomeTextField.setEditable(false);
+
         javax.swing.GroupLayout fullTimeWagePanelLayout = new javax.swing.GroupLayout(fullTimeWagePanel);
         fullTimeWagePanel.setLayout(fullTimeWagePanelLayout);
         fullTimeWagePanelLayout.setHorizontalGroup(
@@ -541,6 +545,8 @@ public class NewJFrame extends javax.swing.JFrame {
         partTimeWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         partTimeWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         partTimeWageLabel.setText("<html>Annual<br>Income</p></html>");
+
+        partTimeIncomeTextField.setEditable(false);
 
         javax.swing.GroupLayout partTimeWagePanelLayout = new javax.swing.GroupLayout(partTimeWagePanel);
         partTimeWagePanel.setLayout(partTimeWagePanelLayout);

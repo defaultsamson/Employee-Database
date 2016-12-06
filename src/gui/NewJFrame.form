@@ -626,6 +626,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="fullTimeIncomeTextField">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="fullTimeSalaryTextField">
                 </Component>
@@ -750,6 +753,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="partTimeIncomeTextField">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
