@@ -299,8 +299,10 @@ public class NewJFrame extends javax.swing.JFrame {
         partTimeIncomeTextField = new javax.swing.JTextField();
         empInfoEmpnum = new javax.swing.JTextField();
         jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        menuFile = new javax.swing.JMenu();
+        menuItemSave = new javax.swing.JMenuItem();
+        menuEdit = new javax.swing.JMenu();
+        menuHelp = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -685,11 +687,19 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jMenu3.setText("File");
-        jMenuBar2.add(jMenu3);
+        menuFile.setText("File");
 
-        jMenu4.setText("Edit");
-        jMenuBar2.add(jMenu4);
+        menuItemSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menuItemSave.setText("save");
+        menuFile.add(menuItemSave);
+
+        jMenuBar2.add(menuFile);
+
+        menuEdit.setText("Edit");
+        jMenuBar2.add(menuEdit);
+
+        menuHelp.setText("Help");
+        jMenuBar2.add(menuHelp);
 
         setJMenuBar(jMenuBar2);
 
@@ -854,8 +864,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel2;
@@ -865,6 +873,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelLastName;
     private javax.swing.JLabel lastNameEmpInfoLabel;
     private javax.swing.JPanel listHeadingPanel;
+    private javax.swing.JMenu menuEdit;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JLabel partTimeHourlyWageLabel;
     private javax.swing.JTextField partTimeHourlyWageTextField;
     private javax.swing.JLabel partTimeHoursWorkedLabel;
