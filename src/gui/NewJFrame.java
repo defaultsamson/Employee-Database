@@ -28,13 +28,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
 	private OpenHashTable table;
 	
-	private boolean editing;
+	private boolean isEditing;
 
 	/**
 	 * Creates new form NewJFrame
 	 */
 	public NewJFrame() {
-		editing = false;
+		isEditing = false;
 		table = new OpenHashTable(2);
 		Database.instance().load(table);
 
@@ -145,9 +145,21 @@ public class NewJFrame extends javax.swing.JFrame {
 	}
 
     private void addBlankEmployee(){
+    		isEditing = false;
             employeeList.setEnabled(false);
             setEnabledEmployeeInfoPanel(true);
             clearEmployeeInfo();
+            addButton.setEnabled(false);
+            removeButton.setEnabled(false);
+            editButton.setEnabled(false);
+            doneButton.setEnabled(true);
+    }
+    
+    private void editEmployee(int empnum){
+    		isEditing = true;
+    		displayEmployeeInfo(table.searchEmployee(empnum));
+            employeeList.setEnabled(false);
+            setEnabledEmployeeInfoPanel(true);
             addButton.setEnabled(false);
             removeButton.setEnabled(false);
             editButton.setEnabled(false);
@@ -754,17 +766,22 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        // TODO add your handling code here:
+        if(employeeList.getSelectedValue()!=null){
+        	editEmployee(employeeList.getSelectedValue().getEmployeeNumber());
+        }
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-    	//Code for creating an event
+    	//Code for creating an or replacing an employee
     	try{
 	    	if(fullTimeRadioButton.isSelected()){
 	    		FullTimeEmployee fullEmployee = new FullTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
 	    				empInfoFirstName.getText(),empInfoLastName.getText(),(Gender)empInfoComboBoxGender.getSelectedItem(),
 	    				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
 	    				Double.valueOf(fullTimeSalaryTextField.getText()));
+	    		if(isEditing){
+	    			table.removeEmployee(employeeList.getSelectedValue().getEmployeeNumber());
+	    		}
 	    		table.addEmployee(fullEmployee);
 	    	} else {
 	    		if (partTimeRadioButton.isSelected()){
@@ -773,6 +790,9 @@ public class NewJFrame extends javax.swing.JFrame {
 	        				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
 	        				Double.valueOf(partTimeHourlyWageTextField.getText()),Double.valueOf(partTimeHoursWorkedTextField.getText()),
 	        				Double.valueOf(partTimeWeeksWorkedTextField.getText()));
+		    		if(isEditing){
+		    			table.removeEmployee(employeeList.getSelectedValue().getEmployeeNumber());
+		    		}
 	        		table.addEmployee(partEmployee);
 	    		}
 	    	} 
