@@ -27,11 +27,14 @@ import java.awt.Color;
 public class NewJFrame extends javax.swing.JFrame {
 
 	private OpenHashTable table;
+	
+	private boolean editing;
 
 	/**
 	 * Creates new form NewJFrame
 	 */
 	public NewJFrame() {
+		editing = false;
 		table = new OpenHashTable(2);
 		Database.instance().load(table);
 
@@ -240,11 +243,7 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
         fullPartTimeButtonGroup = new javax.swing.ButtonGroup();
-        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         employeeList = new gui.EmployeeList();
         employeeList.addListSelectionListener(new ListSelectionListener() {
@@ -265,7 +264,7 @@ public class NewJFrame extends javax.swing.JFrame {
         addButton = new IconButton(IconType.ADD);
         removeButton = new IconButton(IconType.REMOVE);
         editButton = new IconButton(IconType.EDIT);
-        editButton1 = new IconButton(IconType.EDIT);
+        saveButton = new IconButton(IconType.SAVE);
         doneButton = new IconButton(IconType.DONE);
         employeeInfoPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -303,23 +302,6 @@ public class NewJFrame extends javax.swing.JFrame {
         menuItemSave = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
         menuHelp = new javax.swing.JMenu();
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -387,10 +369,10 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        editButton1.setText("iconButton1");
-        editButton1.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setText("iconButton1");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButton1ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
@@ -401,7 +383,7 @@ public class NewJFrame extends javax.swing.JFrame {
             .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -412,7 +394,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 24, Short.MAX_VALUE))
         );
 
@@ -691,6 +673,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
         menuItemSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         menuItemSave.setText("save");
+        menuItemSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemSaveActionPerformed(evt);
+            }
+        });
         menuFile.add(menuItemSave);
 
         jMenuBar2.add(menuFile);
@@ -758,7 +745,12 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        // TODO add your handling code here:
+    	EmployeeInfo removedEmployee = employeeList.getSelectedValue();
+    	if(removedEmployee != null){
+    		table.removeEmployee(removedEmployee.getEmployeeNumber());
+        	updateDisplayTable();
+        	clearEmployeeInfo();
+    	}
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -807,9 +799,13 @@ public class NewJFrame extends javax.swing.JFrame {
         selectWagePanel();
     }//GEN-LAST:event_partTimeRadioButtonActionPerformed
 
-    private void editButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editButton1ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        saveTable();
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void menuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveActionPerformed
+        saveTable();
+    }//GEN-LAST:event_menuItemSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -841,7 +837,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel buttonPanel;
     private gui.IconButton doneButton;
     private gui.IconButton editButton;
-    private gui.IconButton editButton1;
     private javax.swing.JComboBox<Gender> empInfoComboBoxGender;
     private javax.swing.JComboBox<Location> empInfoComboBoxLocation;
     private javax.swing.JTextField empInfoDeductionRate;
@@ -862,11 +857,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel genderLabel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEmployeeNumber;
     private javax.swing.JLabel labelFirstName;
@@ -889,6 +880,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField partTimeWeeksWorkedTextField;
     private javax.swing.JPanel portraitPanel;
     private gui.IconButton removeButton;
+    private gui.IconButton saveButton;
     private gui.IconTextField searchTextField;
     private javax.swing.JPanel wagePanel;
     // End of variables declaration//GEN-END:variables
