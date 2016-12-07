@@ -75,6 +75,8 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="clearButton" min="-2" pref="48" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="doneButton" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -92,7 +94,10 @@
                   <Group type="102" attributes="0">
                       <Component id="employeeInfoPanel" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="doneButton" min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="doneButton" min="-2" pref="48" max="-2" attributes="0"/>
+                          <Component id="clearButton" min="-2" pref="48" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -750,5 +755,17 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="gui.IconButton" name="clearButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="iconButton1"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearButtonActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new IconButton(IconType.CLEAR);"/>
+      </AuxValues>
+    </Component>
   </SubComponents>
 </Form>

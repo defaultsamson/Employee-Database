@@ -7,6 +7,7 @@ public enum IconType {
 	DONE("ic_done_black_48dp_1x.png"),
 	SEARCH("ic_search_black_18dp_1x.png"),
 	SAVE("ic_save_black_48dp_1x.png"),
+	CLEAR("ic_clear_black_48dp_1x.png"),
 	USA("usa.jpg");
 
 	private String textureDir;

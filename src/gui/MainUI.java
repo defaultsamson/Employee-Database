@@ -40,7 +40,7 @@ public class MainUI extends javax.swing.JFrame {
 
 		initComponents();
 		
-		setEnabledEmployeeInfoPanel(false);
+		setEditableEmployeeInfoPanel(false);
 		
 		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
@@ -146,36 +146,14 @@ public class MainUI extends javax.swing.JFrame {
 
     private void addBlankEmployee(){
     		isEditing = false;
-            employeeList.setEnabled(false);
-            setEnabledEmployeeInfoPanel(true);
+            setEditableEmployeeInfoPanel(true);
             clearEmployeeInfo();
-            addButton.setEnabled(false);
-            removeButton.setEnabled(false);
-            editButton.setEnabled(false);
-            doneButton.setEnabled(true);
     }
     
     private void editEmployee(int empnum){
     		isEditing = true;
+    		setEditableEmployeeInfoPanel(true);
     		displayEmployeeInfo(table.searchEmployee(empnum));
-            employeeList.setEnabled(false);
-            setEnabledEmployeeInfoPanel(true);
-            addButton.setEnabled(false);
-            removeButton.setEnabled(false);
-            editButton.setEnabled(false);
-            doneButton.setEnabled(true);
-    }
-    
-    private void removeEmployee(int id){
-        table.removeEmployee(id);
-    }
-    
-    private void editEmployee(){
-        
-    }
-    
-    private void updateHashTable(){
-        
     }
     
     private void displayEmployeeInfo(EmployeeInfo employee){
@@ -223,17 +201,39 @@ public class MainUI extends javax.swing.JFrame {
         partTimeIncomeTextField.setText("");
     }
     
-    private void setEnabledEmployeeInfoPanel(boolean enabled){
-    	employeeInfoPanel.setEnabled(enabled);
-    	for(int i = 0; i < employeeInfoPanel.getComponentCount(); i++){
-    		employeeInfoPanel.getComponent(i).setEnabled(enabled);
-    	}
-    	for(int i = 0; i < partTimeWagePanel.getComponentCount(); i++){
-    		partTimeWagePanel.getComponent(i).setEnabled(enabled);
-    	}
-    	for(int i = 0; i < fullTimeWagePanel.getComponentCount(); i++){
-    		fullTimeWagePanel.getComponent(i).setEnabled(enabled);
-    	}
+    //Set whether or not everything in EmployeeInfoPanel is enabled for editing
+    private void setEditableEmployeeInfoPanel(boolean editable){
+    	
+    	//Make all text fields editable all other component enabled if editable is true
+    	//Otherwise set all text field as not editable and disable all other components
+    	empInfoEmpnum.setEditable(editable);
+    	empInfoFirstName.setEditable(editable);
+    	empInfoLastName.setEditable(editable);
+    	empInfoComboBoxGender.setEnabled(editable);
+    	empInfoComboBoxLocation.setEnabled(editable);
+    	empInfoDeductionRate.setEditable(editable);
+    	partTimeRadioButton.setEnabled(editable);
+    	fullTimeRadioButton.setEnabled(editable);
+    	
+    	//Set all valid text field in partTimeWagePanel as editable depends on the boolean
+    	//editable. Annual income is not a valid text field for this as it is never editable
+        partTimeHourlyWageTextField.setEditable(editable);
+        partTimeHoursWorkedTextField.setEditable(editable);
+        partTimeWeeksWorkedTextField.setEditable(editable);
+        
+        //Set editable status for all valid text field in fullTimeWagePanel
+        fullTimeSalaryTextField.setEditable(editable);
+        
+        //The employeeList and the buttons for adding, removing and editing employees
+        //are locked when editing the info panel to prevent losing any changes
+        employeeList.setEnabled(!editable);
+        addButton.setEnabled(!editable);
+        removeButton.setEnabled(!editable);
+        editButton.setEnabled(!editable);
+        
+        //Enable the doneButton and clearButton when editing
+        doneButton.setEnabled(editable);
+        clearButton.setEnabled(editable);
     }
     
     public void selectWagePanel(){
@@ -309,6 +309,7 @@ public class MainUI extends javax.swing.JFrame {
         partTimeWageLabel = new javax.swing.JLabel();
         partTimeIncomeTextField = new javax.swing.JTextField();
         empInfoEmpnum = new javax.swing.JTextField();
+        clearButton = new IconButton(IconType.CLEAR);
         jMenuBar2 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemSave = new javax.swing.JMenuItem();
@@ -681,6 +682,14 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        clearButton.setText("iconButton1");
+        clearButton.setEnabled(false);
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
         menuFile.setText("File");
 
         menuItemSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
@@ -720,6 +729,8 @@ public class MainUI extends javax.swing.JFrame {
                                 .addComponent(employeeInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -731,7 +742,9 @@ public class MainUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(employeeInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(listHeadingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -774,18 +787,19 @@ public class MainUI extends javax.swing.JFrame {
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
     	//Code for creating an or replacing an employee
     	try{
+    		EmployeeInfo newEmployee;
 	    	if(fullTimeRadioButton.isSelected()){
-	    		FullTimeEmployee fullEmployee = new FullTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
+	    		newEmployee = new FullTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
 	    				empInfoFirstName.getText(),empInfoLastName.getText(),(Gender)empInfoComboBoxGender.getSelectedItem(),
 	    				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
 	    				Double.valueOf(fullTimeSalaryTextField.getText()));
 	    		if(isEditing){
 	    			table.removeEmployee(employeeList.getSelectedValue().getEmployeeNumber());
 	    		}
-	    		table.addEmployee(fullEmployee);
+	    		table.addEmployee(newEmployee);
 	    	} else {
 	    		if (partTimeRadioButton.isSelected()){
-	        		PartTimeEmployee partEmployee = new PartTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
+	    			newEmployee = new PartTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
 	        				empInfoFirstName.getText(),empInfoLastName.getText(),(Gender)empInfoComboBoxGender.getSelectedItem(),
 	        				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
 	        				Double.valueOf(partTimeHourlyWageTextField.getText()),Double.valueOf(partTimeHoursWorkedTextField.getText()),
@@ -793,17 +807,12 @@ public class MainUI extends javax.swing.JFrame {
 		    		if(isEditing){
 		    			table.removeEmployee(employeeList.getSelectedValue().getEmployeeNumber());
 		    		}
-	        		table.addEmployee(partEmployee);
+	        		table.addEmployee(newEmployee);
 	    		}
 	    	} 
 	    	clearEmployeeInfo();
             updateDisplayTable();
-            employeeList.setEnabled(true);
-            setEnabledEmployeeInfoPanel(false);
-            addButton.setEnabled(true);
-            removeButton.setEnabled(true);
-            editButton.setEnabled(true);
-            doneButton.setEnabled(false);
+            setEditableEmployeeInfoPanel(false);
     	}catch(NumberFormatException e){
 	    	//Create error message
 	    }
@@ -826,6 +835,10 @@ public class MainUI extends javax.swing.JFrame {
     private void menuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSaveActionPerformed
         saveTable();
     }//GEN-LAST:event_menuItemSaveActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clearButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -855,6 +868,7 @@ public class MainUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.IconButton addButton;
     private javax.swing.JPanel buttonPanel;
+    private gui.IconButton clearButton;
     private gui.IconButton doneButton;
     private gui.IconButton editButton;
     private javax.swing.JComboBox<Gender> empInfoComboBoxGender;
