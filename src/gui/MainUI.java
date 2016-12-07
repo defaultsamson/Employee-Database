@@ -24,7 +24,7 @@ import java.awt.Color;
 /**
  *
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class MainUI extends javax.swing.JFrame {
 
 	private OpenHashTable table;
 	
@@ -33,7 +33,7 @@ public class NewJFrame extends javax.swing.JFrame {
 	/**
 	 * Creates new form NewJFrame
 	 */
-	public NewJFrame() {
+	public MainUI() {
 		isEditing = false;
 		table = new OpenHashTable(2);
 		Database.instance().load(table);
@@ -847,7 +847,7 @@ public class NewJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new MainUI().setVisible(true);
             }
         });
     }
