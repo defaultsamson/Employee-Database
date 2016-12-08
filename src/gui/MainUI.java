@@ -264,6 +264,7 @@ public class MainUI extends javax.swing.JFrame {
         clearButton.setEnabled(editable);
     }
     
+    //Select the wagePanel to display based on whether full time or part time button is selected
     public void selectWagePanel(){
             if(fullTimeRadioButton.isSelected()){
                 ((CardLayout)wagePanel.getLayout()).show(wagePanel,"fullTimeWageCard");
@@ -284,7 +285,7 @@ public class MainUI extends javax.swing.JFrame {
     private void initComponents() {
 
         fullPartTimeButtonGroup = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        employeeListScrollPane = new javax.swing.JScrollPane();
         employeeList = new gui.EmployeeList();
         employeeList.addListSelectionListener(new ListSelectionListener() {
 
@@ -307,11 +308,11 @@ public class MainUI extends javax.swing.JFrame {
         saveButton = new IconButton(IconType.SAVE);
         doneButton = new IconButton(IconType.DONE);
         employeeInfoPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        firstNameLabel = new javax.swing.JLabel();
         empInfoFirstName = new javax.swing.JTextField();
         lastNameEmpInfoLabel = new javax.swing.JLabel();
         empInfoLastName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        deductionRateLabel = new javax.swing.JLabel();
         empInfoDeductionRate = new javax.swing.JTextField();
         portraitPanel = new ImagePanel(IconType.USA);
         empnumLabel = new javax.swing.JLabel();
@@ -338,7 +339,7 @@ public class MainUI extends javax.swing.JFrame {
         partTimeIncomeTextField = new javax.swing.JTextField();
         empInfoEmpnum = new javax.swing.JTextField();
         clearButton = new IconButton(IconType.CLEAR);
-        jMenuBar2 = new javax.swing.JMenuBar();
+        menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemSave = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
@@ -346,7 +347,7 @@ public class MainUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane1.setViewportView(employeeList);
+        employeeListScrollPane.setViewportView(employeeList);
 
         labelEmployeeNumber.setText("<html>Employee<br>&nbsp;Number</p></html>");
 
@@ -450,16 +451,16 @@ public class MainUI extends javax.swing.JFrame {
         employeeInfoPanel.setBackground(new java.awt.Color(204, 204, 204));
         employeeInfoPanel.setEnabled(false);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel1.setText("First Name");
+        firstNameLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        firstNameLabel.setText("First Name");
 
         lastNameEmpInfoLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         lastNameEmpInfoLabel.setText("Last Name");
 
         empInfoLastName.setSize(new java.awt.Dimension(10, 26));
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel2.setText("Deduction Rate");
+        deductionRateLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        deductionRateLabel.setText("Deduction Rate");
 
         portraitPanel.setBackground(new java.awt.Color(204, 204, 204));
         portraitPanel.setPreferredSize(new java.awt.Dimension(160, 200));
@@ -642,7 +643,7 @@ public class MainUI extends javax.swing.JFrame {
                                 .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(employeeInfoPanelLayout.createSequentialGroup()
                                         .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
+                                            .addComponent(firstNameLabel)
                                             .addComponent(empInfoComboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(empInfoFirstName))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
@@ -666,7 +667,7 @@ public class MainUI extends javax.swing.JFrame {
                                             .addGap(18, 49, Short.MAX_VALUE)
                                             .addComponent(partTimeRadioButton)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
-                                        .addComponent(jLabel2))
+                                        .addComponent(deductionRateLabel))
                                     .addComponent(empnumLabel)
                                     .addComponent(empInfoEmpnum, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))))
@@ -682,7 +683,7 @@ public class MainUI extends javax.swing.JFrame {
                         .addComponent(empInfoEmpnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(firstNameLabel)
                             .addComponent(lastNameEmpInfoLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -697,7 +698,7 @@ public class MainUI extends javax.swing.JFrame {
                             .addComponent(empInfoComboBoxGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(empInfoComboBoxLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(deductionRateLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(empInfoDeductionRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(portraitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
@@ -729,15 +730,15 @@ public class MainUI extends javax.swing.JFrame {
         });
         menuFile.add(menuItemSave);
 
-        jMenuBar2.add(menuFile);
+        menuBar.add(menuFile);
 
         menuEdit.setText("Edit");
-        jMenuBar2.add(menuEdit);
+        menuBar.add(menuEdit);
 
         menuHelp.setText("Help");
-        jMenuBar2.add(menuHelp);
+        menuBar.add(menuHelp);
 
-        setJMenuBar(jMenuBar2);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -748,7 +749,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(listHeadingPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(employeeListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -782,7 +783,7 @@ public class MainUI extends javax.swing.JFrame {
                                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
+                                .addComponent(employeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
                         .addGap(15, 15, 15))))
         );
 
@@ -813,7 +814,7 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-    	//Code for creating an or replacing an employee
+    	//Code for creating or replacing an employee
     	try{
     		EmployeeInfo newEmployee;
 	    	if(fullTimeRadioButton.isSelected()){
@@ -865,7 +866,13 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemSaveActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        // TODO add your handling code here:
+    	//Cancel the edit and discard it
+    	setEditableEmployeeInfoPanel(false);
+    	//Reset the employee info panel to display the selected employee
+    	clearEmployeeInfo();
+    	if(employeeList.getSelectedValue() != null){
+    		displayEmployeeInfo(employeeList.getSelectedValue());
+    	}
     }//GEN-LAST:event_clearButtonActionPerformed
 
     /**
@@ -897,6 +904,7 @@ public class MainUI extends javax.swing.JFrame {
     private gui.IconButton addButton;
     private javax.swing.JPanel buttonPanel;
     private gui.IconButton clearButton;
+    private javax.swing.JLabel deductionRateLabel;
     private gui.IconButton doneButton;
     private gui.IconButton editButton;
     private javax.swing.JComboBox<Gender> empInfoComboBoxGender;
@@ -907,7 +915,9 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTextField empInfoLastName;
     private javax.swing.JPanel employeeInfoPanel;
     private gui.EmployeeList employeeList;
+    private javax.swing.JScrollPane employeeListScrollPane;
     private javax.swing.JLabel empnumLabel;
+    private javax.swing.JLabel firstNameLabel;
     private javax.swing.ButtonGroup fullPartTimeButtonGroup;
     private javax.swing.JLabel fullTimeAnnualSalaryLabel;
     private javax.swing.JLabel fullTimeIncomeLabel;
@@ -917,15 +927,12 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel fullTimeWagePanel;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JLabel genderLabel1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelEmployeeNumber;
     private javax.swing.JLabel labelFirstName;
     private javax.swing.JLabel labelLastName;
     private javax.swing.JLabel lastNameEmpInfoLabel;
     private javax.swing.JPanel listHeadingPanel;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
