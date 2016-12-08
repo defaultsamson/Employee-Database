@@ -8,6 +8,7 @@ package gui;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -844,6 +845,7 @@ public class MainUI extends javax.swing.JFrame {
             setEditableEmployeeInfoPanel(false);
     	}catch(NumberFormatException e){
 	    	//Create error message
+    		JOptionPane.showMessageDialog(this, "Invalid data, please make sure all input are valid!","Cannot create employee",JOptionPane.ERROR_MESSAGE);
 	    }
     }//GEN-LAST:event_doneButtonActionPerformed
 
