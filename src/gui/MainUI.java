@@ -22,26 +22,33 @@ import java.awt.CardLayout;
 import java.awt.Color;
 
 /**
- *
+ * The main user interface class for creating an employee database
  */
 public class MainUI extends javax.swing.JFrame {
 
+	//Serial code for JFrame
+	private static final long serialVersionUID = -5250494138480577419L;
+
 	private OpenHashTable table;
-	
 	private boolean isEditing;
+	
+	private static int BUCKET_NUMBER = 2;
 
 	/**
-	 * Creates new form NewJFrame
+	 * Constructor for creating the MainUI
 	 */
 	public MainUI() {
-		isEditing = false;
-		table = new OpenHashTable(2);
+		table = new OpenHashTable(BUCKET_NUMBER);
+		//Load the hash table from the save file using the Database class
 		Database.instance().load(table);
 
+		//Initialise the GUI components, using Netbean generated code
 		initComponents();
 		
+		isEditing = false;
 		setEditableEmployeeInfoPanel(false);
 		
+		//Add DocumentListener for searchTextField to allow instantaneous searches
 		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				action();
@@ -60,10 +67,12 @@ public class MainUI extends javax.swing.JFrame {
 			}
 		});
 		
+		//Update the displayed table
 		updateDisplayTable();
 	}
-
-	public void updateDisplayTable() {
+	
+	//Update the display table based on the text in the search bar
+	private void updateDisplayTable() {
 		ListModel<EmployeeInfo> listModel = employeeList.getModel();
 
 		//Check to see if the list is an instance of DefaultListModel, for type safety
@@ -140,49 +149,68 @@ public class MainUI extends javax.swing.JFrame {
 		}
 	}
 
+	//Save the table using the Database class
 	private void saveTable() {
 		Database.instance().save(table);
 	}
 
+	//Switch the interface to adding mode
     private void addBlankEmployee(){
     		isEditing = false;
             setEditableEmployeeInfoPanel(true);
             clearEmployeeInfo();
     }
     
+    //Switch the interface to editing mode, only called when an employee is selected
     private void editEmployee(int empnum){
     		isEditing = true;
     		setEditableEmployeeInfoPanel(true);
     		displayEmployeeInfo(table.searchEmployee(empnum));
     }
     
+    //Display the selected employee on the information section on the right
     private void displayEmployeeInfo(EmployeeInfo employee){
+    	//Set the value of all text field and combo box to that of the employee
     	empInfoFirstName.setText(employee.getFirstName());
     	empInfoLastName.setText(employee.getLastName());
     	empInfoEmpnum.setText(Integer.toString(employee.getEmployeeNumber()));
     	empInfoComboBoxGender.setSelectedItem(employee.getGender());
     	empInfoDeductionRate.setText(Double.toString(employee.getDeductionsRate()));
     	empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
-    	fullTimeIncomeTextField.setText(Double.toString(employee.getDeductionsRate()));
+    	
+    	//Check if the employee is part time or full time
     	if(employee instanceof FullTimeEmployee){
+    		//For full time employee, set and display the full time panel
     		fullTimeRadioButton.setSelected(true);
+    		selectWagePanel();
     		FullTimeEmployee fullEmployee = (FullTimeEmployee)employee;
     		fullTimeSalaryTextField.setText(Double.toString(fullEmployee.getYearlySalary()));
     		fullTimeIncomeTextField.setText(Double.toString(fullEmployee.calcAnnualIncome()));
-    		selectWagePanel();
+    		
+    		//Remove all temporary values stored on partTimeWagePanel
+    		partTimeHourlyWageTextField.setText("");
+            partTimeHoursWorkedTextField.setText("");
+            partTimeWeeksWorkedTextField.setText("");
+            partTimeIncomeTextField.setText("");
     	} else {
     		if (employee instanceof PartTimeEmployee){
+        		//For part time employee, set and display the part time panel
     			partTimeRadioButton.setSelected(true);
+                selectWagePanel();
         		PartTimeEmployee partEmployee = (PartTimeEmployee)employee;
         		partTimeHourlyWageTextField.setText(Double.toString(partEmployee.getHourlyWage()));
                 partTimeHoursWorkedTextField.setText(Double.toString(partEmployee.getHoursPerWeek()));
                 partTimeWeeksWorkedTextField.setText(Double.toString(partEmployee.getWeeksPerYear()));
                 partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
-                selectWagePanel();
+                
+                //Remove all temporary values stored on fullTimeWagePanel
+        		fullTimeSalaryTextField.setText("");
+        		fullTimeIncomeTextField.setText(""); 
     		}
     	}
     }
     
+    //Remove all instance values stored in the GUI components
     private void clearEmployeeInfo(){
     	empInfoFirstName.setText("");
     	empInfoLastName.setText("");
