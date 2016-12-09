@@ -31,7 +31,10 @@ public class MainUI extends javax.swing.JFrame {
 	private static final long serialVersionUID = -5250494138480577419L;
 
 	private OpenHashTable table;
-	private boolean isEditing;
+	private EmployeeInfo editing;
+	private boolean isEditing() {
+		return editing != null;
+	}
 	
 	private static int BUCKET_NUMBER = 2;
 
@@ -46,7 +49,7 @@ public class MainUI extends javax.swing.JFrame {
 		//Initialise the GUI components, using Netbean generated code
 		initComponents();
 		
-		isEditing = false;
+		editing = null;
 		setEditableEmployeeInfoPanel(false);
 		
 		//Add DocumentListener for searchTextField to allow instantaneous searches
@@ -80,11 +83,11 @@ public class MainUI extends javax.swing.JFrame {
 		if (listModel instanceof DefaultListModel<?>) {
 			DefaultListModel<EmployeeInfo> entries = (DefaultListModel<EmployeeInfo>) listModel;
 
-			// Clear the list
+			// Clears the list
 			entries.removeAllElements();
 
 			String search = searchTextField.getText().toLowerCase();
-			//doSearch indicate if there are non-space characters
+			//doSearch indicates if there are non-space characters
 			boolean doSearch = !search.replace(" ", "").equals("");
 
 			// If there's a search, filter things out
@@ -157,16 +160,16 @@ public class MainUI extends javax.swing.JFrame {
 
 	//Switch the interface to adding mode
     private void addBlankEmployee(){
-    		isEditing = false;
+    		editing = null;
             setEditableEmployeeInfoPanel(true);
             clearEmployeeInfo();
     }
     
     //Switch the interface to editing mode, only called when an employee is selected
-    private void editEmployee(int empnum){
-    		isEditing = true;
+    private void editEmployee(EmployeeInfo employee){
+    		editing = employee;
     		setEditableEmployeeInfoPanel(true);
-    		displayEmployeeInfo(table.searchEmployee(empnum));
+    		displayEmployeeInfo(employee);
     }
     
     //Display the selected employee on the information section on the right
@@ -176,7 +179,7 @@ public class MainUI extends javax.swing.JFrame {
     	empInfoLastName.setText(employee.getLastName());
     	empInfoEmpnum.setText(Integer.toString(employee.getEmployeeNumber()));
     	empInfoComboBoxGender.setSelectedItem(employee.getGender());
-    	empInfoDeductionRate.setText(Double.toString(employee.getDeductionsRate()));
+    	empInfoDeductionRate.setText(Double.toString(employee.getDeductionsRate() * 100));
     	empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
     	
     	//Check if the employee is part time or full time
@@ -810,7 +813,7 @@ public class MainUI extends javax.swing.JFrame {
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         if(employeeList.getSelectedValue()!=null){
-        	editEmployee(employeeList.getSelectedValue().getEmployeeNumber());
+        	editEmployee(employeeList.getSelectedValue());
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
@@ -821,10 +824,10 @@ public class MainUI extends javax.swing.JFrame {
 	    	if(fullTimeRadioButton.isSelected()){
 	    		newEmployee = new FullTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
 	    				empInfoFirstName.getText(),empInfoLastName.getText(),(Gender)empInfoComboBoxGender.getSelectedItem(),
-	    				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
+	    				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()) / 100,
 	    				Double.valueOf(fullTimeSalaryTextField.getText()));
-	    		if(isEditing){
-	    			table.removeEmployee(employeeList.getSelectedValue().getEmployeeNumber());
+	    		if(isEditing()){
+	    			table.removeEmployee(editing);
 	    		}
 	    		table.addEmployee(newEmployee);
 	    	} else {
@@ -834,8 +837,8 @@ public class MainUI extends javax.swing.JFrame {
 	        				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
 	        				Double.valueOf(partTimeHourlyWageTextField.getText()),Double.valueOf(partTimeHoursWorkedTextField.getText()),
 	        				Double.valueOf(partTimeWeeksWorkedTextField.getText()));
-		    		if(isEditing){
-		    			table.removeEmployee(employeeList.getSelectedValue().getEmployeeNumber());
+		    		if(isEditing()){
+		    			table.removeEmployee(editing);
 		    		}
 	        		table.addEmployee(newEmployee);
 	    		}

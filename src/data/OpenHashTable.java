@@ -98,6 +98,23 @@ public class OpenHashTable {
 	}
 
 	/**
+	 * Removes an employee's info.
+	 * 
+	 * @param toRemove
+	 *            the employee object to remove
+	 * @return if the employee was successfully removed or not
+	 */
+	public boolean removeEmployee(EmployeeInfo toRemove) {
+		for (ArrayList<EmployeeInfo> row : buckets) { // Goes through columns
+			if (row.remove(toRemove)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Finds an employee's info from their id.
 	 * 
 	 * @param id
