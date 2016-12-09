@@ -949,12 +949,12 @@ public class MainUI extends javax.swing.JFrame {
 	        		table.addEmployee(newEmployee);
 	    		}
 	    	}
+	    	clearEmployeeInfo();
+	        updateDisplayTable();
+	        setEditableEmployeeInfoPanel(false);
 		}else{
     		JOptionPane.showMessageDialog(this, errorMessage,"Cannot create employee",JOptionPane.ERROR_MESSAGE);
 	    }
-    	clearEmployeeInfo();
-        updateDisplayTable();
-        setEditableEmployeeInfoPanel(false);
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void fullTimeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullTimeRadioButtonActionPerformed
