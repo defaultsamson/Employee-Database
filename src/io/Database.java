@@ -33,7 +33,6 @@ public class Database {
 	private static final String KEY_GENDER = "gen"; // Gender, the gender
 	private static final String KEY_LOCATION = "loc"; // Location, the gender
 	private static final String KEY_DEDUCTIONS = "ded"; // double, the deductions rate
-	private static final String KEY_FULLTIME = "fll"; // Boolean, if the employee is full time, else part time
 
 	// Full Time
 	private static final String KEY_YEARLY_SALARY = "sal"; // double, the yearly salary
@@ -86,7 +85,9 @@ public class Database {
 					Gender gender = Gender.valueOf(jObj.get(KEY_GENDER).toString());
 					Location location = Location.valueOf(jObj.get(KEY_LOCATION).toString());
 					double deductions = Double.parseDouble(jObj.get(KEY_DEDUCTIONS).toString());
-					boolean isFullTime = Boolean.parseBoolean(jObj.get(KEY_FULLTIME).toString());
+
+					// Tells whether it's a fulltime employee or not based on whether the entry has a yearly salary
+					boolean isFullTime = jObj.get(KEY_YEARLY_SALARY) != null;
 
 					if (isFullTime) {
 						double yearlySalary = Double.parseDouble(jObj.get(KEY_YEARLY_SALARY).toString());
@@ -103,7 +104,6 @@ public class Database {
 					e.printStackTrace();
 				}
 			}
-
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -138,11 +138,9 @@ public class Database {
 
 				if (e instanceof FullTimeEmployee) {
 					FullTimeEmployee f = (FullTimeEmployee) e;
-					obj.put(KEY_FULLTIME, true);
 					obj.put(KEY_YEARLY_SALARY, f.getYearlySalary());
 				} else if (e instanceof PartTimeEmployee) {
 					PartTimeEmployee p = (PartTimeEmployee) e;
-					obj.put(KEY_FULLTIME, false);
 					obj.put(KEY_HOURLY_SALARY, p.getHourlyWage());
 					obj.put(KEY_WEEKLY_HOURS, p.getHoursPerWeek());
 					obj.put(KEY_WEEKS_PER_YEAR, p.getWeeksPerYear());
