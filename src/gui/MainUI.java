@@ -342,6 +342,7 @@ public class MainUI extends javax.swing.JFrame {
         partTimeWageLabel = new javax.swing.JLabel();
         partTimeIncomeTextField = new javax.swing.JTextField();
         empInfoEmpnum = new javax.swing.JTextField();
+        deductionRatePercentSignLabel = new javax.swing.JLabel();
         clearButton = new IconButton(IconType.CLEAR);
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -629,6 +630,8 @@ public class MainUI extends javax.swing.JFrame {
 
         wagePanel.add(partTimeWagePanel, "partTimeWageCard");
 
+        deductionRatePercentSignLabel.setText("%");
+
         javax.swing.GroupLayout employeeInfoPanelLayout = new javax.swing.GroupLayout(employeeInfoPanel);
         employeeInfoPanel.setLayout(employeeInfoPanelLayout);
         employeeInfoPanelLayout.setHorizontalGroup(
@@ -663,17 +666,19 @@ public class MainUI extends javax.swing.JFrame {
                                             .addComponent(empInfoComboBoxLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(employeeInfoPanelLayout.createSequentialGroup()
+                                .addComponent(fullTimeRadioButton)
+                                .addGap(49, 49, 49)
+                                .addComponent(partTimeRadioButton)
+                                .addGap(60, 148, Short.MAX_VALUE))
+                            .addGroup(employeeInfoPanelLayout.createSequentialGroup()
                                 .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(empInfoDeductionRate)
-                                        .addGroup(employeeInfoPanelLayout.createSequentialGroup()
-                                            .addComponent(fullTimeRadioButton)
-                                            .addGap(18, 49, Short.MAX_VALUE)
-                                            .addComponent(partTimeRadioButton)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE))
-                                        .addComponent(deductionRateLabel))
                                     .addComponent(empnumLabel)
-                                    .addComponent(empInfoEmpnum, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(empInfoEmpnum, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(employeeInfoPanelLayout.createSequentialGroup()
+                                        .addComponent(empInfoDeductionRate, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(deductionRatePercentSignLabel))
+                                    .addComponent(deductionRateLabel))
                                 .addGap(0, 0, Short.MAX_VALUE))))))
         );
         employeeInfoPanelLayout.setVerticalGroup(
@@ -704,7 +709,9 @@ public class MainUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deductionRateLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(empInfoDeductionRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(empInfoDeductionRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deductionRatePercentSignLabel)))
                     .addComponent(portraitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -817,39 +824,137 @@ public class MainUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
+	//Code for creating or replacing an employee
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-    	//Code for creating or replacing an employee
-    	try{
-    		EmployeeInfo newEmployee;
+    	String errorMessage = new String("Cannot create the employee for the following reasons:\n");
+		boolean isValidEmployee = true;
+		EmployeeInfo newEmployee;
+		int newEmployeeNumber = 0;
+		double newEmployeeDeduction = 0;
+		double newFullTimeSalary = 0;
+		double newPartTimeWage = 0;
+		double newPartTimeHoursWorked = 0;
+		double newPartTimeWeeksWorked = 0;
+		
+		//Checking for errors in employee number
+		try{
+			newEmployeeNumber = Integer.valueOf(empInfoEmpnum.getText());
+			//Only positive employee number is accepted
+			if(newEmployeeNumber <= 0){
+				errorMessage += "\nEmployee number must be positive!";
+				isValidEmployee = false;
+			} else{
+				//Check to see if employee number is occupied by another employee
+				if(table.searchEmployee(newEmployeeNumber) != null){
+					errorMessage += "\nAn employee with the given employee number already exists!";
+					isValidEmployee = false;
+				}
+			}
+		} catch(NumberFormatException e){
+			isValidEmployee = false;
+			errorMessage += "\nEmployee number is not a positive integer!";
+		}
+		
+		//Checking for errors in deduction rate
+		try{
+			newEmployeeDeduction = Double.valueOf(empInfoDeductionRate.getText());
+			//Deduction rate cannot be less than 0 or greater than 100
+			if(newEmployeeDeduction < 0 || newEmployeeDeduction > 100){
+				errorMessage += "\nEmployee number must be between 0 and 100!";
+				isValidEmployee = false;
+			}
+		}catch(NumberFormatException e){
+			isValidEmployee = false;
+			errorMessage += "\nEmployee number is not a valid numerical value!";
+		}
+		
+		//Check for inputs in the wage panel
+		//Check salary for full time employee
+		if(fullTimeRadioButton.isSelected()){
+			try{
+				newFullTimeSalary = Double.valueOf(fullTimeSalaryTextField.getText());
+				if(newFullTimeSalary < 0){
+					isValidEmployee = false;
+					errorMessage += "\nAnnual salary cannot be less than 0!";
+				}
+			}catch(NumberFormatException e){
+				isValidEmployee = false;
+				errorMessage += "\nAnnual salary is not a valid numerical value!";
+			}
+		} else{
+			//Check wage inputs for part time employee
+			if(partTimeRadioButton.isSelected()){
+				
+				//Check for weekly wage 
+				try{
+					newPartTimeWage = Double.valueOf(partTimeHourlyWageTextField.getText());
+					if(newPartTimeWage < 0){
+						errorMessage += "\nHourly wage cannot be less than 0!";
+						isValidEmployee = false;
+					}
+				}catch(NumberFormatException e){
+					isValidEmployee = false;
+					errorMessage += "\nHourly wage is not a valid numerical value!";
+				}
+				
+				//Check for hours worked 
+				try{
+					newPartTimeHoursWorked = Double.valueOf(partTimeHoursWorkedTextField.getText());
+					if(newPartTimeHoursWorked < 0){
+						errorMessage += "\nHours per week cannot be less than 0!";
+						isValidEmployee = false;
+					}
+				}catch(NumberFormatException e){
+					isValidEmployee = false;
+					errorMessage += "\nHours per week is not a valid numerical value!";
+				}				
+				
+				//Check for weeks worked
+				try{
+					newPartTimeWeeksWorked = Double.valueOf(partTimeWeeksWorkedTextField.getText());
+					if(newPartTimeWeeksWorked < 0){
+						errorMessage += "\nWeeks per year cannot be less than 0!";
+						isValidEmployee = false;
+					}
+				}catch(NumberFormatException e){
+					isValidEmployee = false;
+					errorMessage += "\nWeeks per year is not a valid numerical value!";
+				}
+				
+			} else{
+				//Somehow neither button is selected, should never happen
+				errorMessage += "\nINTERNAL ERROR 100: Radio button not selected, please contact us";
+			}
+		}
+		
+		//Create the employee if all inputs are valid
+		if(isValidEmployee){
 	    	if(fullTimeRadioButton.isSelected()){
-	    		newEmployee = new FullTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
-	    				empInfoFirstName.getText(),empInfoLastName.getText(),(Gender)empInfoComboBoxGender.getSelectedItem(),
-	    				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()) / 100,
-	    				Double.valueOf(fullTimeSalaryTextField.getText()));
+	    		newEmployee = new FullTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(),empInfoLastName.getText(),
+	    				(Gender)empInfoComboBoxGender.getSelectedItem(), (Location)empInfoComboBoxLocation.getSelectedItem(),
+	    				newEmployeeDeduction / 100, newFullTimeSalary);
 	    		if(isEditing()){
 	    			table.removeEmployee(editing);
 	    		}
 	    		table.addEmployee(newEmployee);
 	    	} else {
 	    		if (partTimeRadioButton.isSelected()){
-	    			newEmployee = new PartTimeEmployee(Integer.valueOf(empInfoEmpnum.getText()),
+	    			newEmployee = new PartTimeEmployee(newEmployeeNumber,
 	        				empInfoFirstName.getText(),empInfoLastName.getText(),(Gender)empInfoComboBoxGender.getSelectedItem(),
-	        				(Location)empInfoComboBoxLocation.getSelectedItem(),Double.valueOf(empInfoDeductionRate.getText()),
-	        				Double.valueOf(partTimeHourlyWageTextField.getText()),Double.valueOf(partTimeHoursWorkedTextField.getText()),
-	        				Double.valueOf(partTimeWeeksWorkedTextField.getText()));
+	        				(Location)empInfoComboBoxLocation.getSelectedItem(),newEmployeeDeduction / 100,
+	        				newPartTimeWage, newPartTimeHoursWorked, newPartTimeWeeksWorked);
 		    		if(isEditing()){
 		    			table.removeEmployee(editing);
 		    		}
 	        		table.addEmployee(newEmployee);
 	    		}
-	    	} 
-	    	clearEmployeeInfo();
-            updateDisplayTable();
-            setEditableEmployeeInfoPanel(false);
-    	}catch(NumberFormatException e){
-	    	//Create error message
-    		JOptionPane.showMessageDialog(this, "Invalid data, please make sure all input are valid!","Cannot create employee",JOptionPane.ERROR_MESSAGE);
+	    	}
+		}else{
+    		JOptionPane.showMessageDialog(this, errorMessage,"Cannot create employee",JOptionPane.ERROR_MESSAGE);
 	    }
+    	clearEmployeeInfo();
+        updateDisplayTable();
+        setEditableEmployeeInfoPanel(false);
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void fullTimeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullTimeRadioButtonActionPerformed
@@ -910,6 +1015,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JPanel buttonPanel;
     private gui.IconButton clearButton;
     private javax.swing.JLabel deductionRateLabel;
+    private javax.swing.JLabel deductionRatePercentSignLabel;
     private gui.IconButton doneButton;
     private gui.IconButton editButton;
     private javax.swing.JComboBox<Gender> empInfoComboBoxGender;
