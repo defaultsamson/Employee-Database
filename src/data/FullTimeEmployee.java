@@ -1,5 +1,8 @@
 package data;
 
+/**
+ *	A subclass of EmployeeInfo for full time employees
+ */
 public class FullTimeEmployee extends EmployeeInfo {
 
 	private double yearlySalary;
@@ -10,13 +13,14 @@ public class FullTimeEmployee extends EmployeeInfo {
 		this.yearlySalary = yearlySalary;
 	}
 
-	public void setYearlySalary(double newSalary) {
-		yearlySalary = newSalary;
-	}
-
 	@Override
 	public double calcAnnualIncome() {
 		return yearlySalary * (1D - deductionsRate);
+	}
+
+	//Getter and setter for yearly salary
+	public void setYearlySalary(double newSalary) {
+		yearlySalary = newSalary;
 	}
 
 	public double getYearlySalary() {

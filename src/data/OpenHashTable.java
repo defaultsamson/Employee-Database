@@ -30,7 +30,8 @@ public class OpenHashTable {
 
 	/**
 	 * Find the bucket that an employee belongs to
-	 * @param keyValue	The employee number of the employee
+	 * @param keyValue	
+	 * 			The employee number of the employee
 	 * @return			The bucket the employee is in
 	 */
 	private int calcBucket(int keyValue) {
@@ -47,7 +48,8 @@ public class OpenHashTable {
 
 	/**
 	 * Add an employee to the hash table
-	 * @param theEmployee	The new employee to be added
+	 * @param theEmployee	
+	 * 			The new employee to be added
 	 * @return				Whether or not the employee is successfully added
 	 */
 	public boolean addEmployee(EmployeeInfo theEmployee) {
@@ -58,7 +60,8 @@ public class OpenHashTable {
 	
 	/**
 	 * Search the table to find a specific employee
-	 * @param employeeNum	The employee number of the employee
+	 * @param employeeNum	
+	 * 			The employee number of the employee
 	 * @return				The employee with the specified employee number
 	 */
 	public EmployeeInfo searchEmployee(int employeeNum){
@@ -72,7 +75,8 @@ public class OpenHashTable {
 
 	/**
 	 * Search and remove an employee
-	 * @param employeeNum	The employee number of the employee that will be removed
+	 * @param employeeNum	
+	 * 			The employee number of the employee that will be removed
 	 * @return				The employee that is removed
 	 */
 	public EmployeeInfo removeEmployee(int employeeNum) {
@@ -82,6 +86,18 @@ public class OpenHashTable {
 			buckets[calcBucket(employeeNum)].remove(result);
 		}
 		return result;
+	}
+	
+	/**
+	 * Update the information of an employee
+	 * @param employeeNum
+	 * 			The employee number of the old employee data
+	 * @param updatedEmployee
+	 * 			The updated Employee information
+	 */
+	public void replaceEmployee(int employeeNum, EmployeeInfo updatedEmployee){
+		removeEmployee(employeeNum);
+		addEmployee(updatedEmployee);
 	}
 	
 	/**

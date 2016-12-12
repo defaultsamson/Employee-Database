@@ -41,9 +41,6 @@ public class MainUI extends javax.swing.JFrame {
 	//Web site for the help manual
 	private static final String HELP_URL = "https://docs.google.com/document/d/1CnoW9rv26RZfZ2koTzjqFZrtr3Hw4pRkOjv-A8SjeX8/edit?usp=sharing";
 
-	private static final int MAX_HOURS_PER_WEEK = 168;
-	private static final int MAX_WEEKS_PER_YEAR = 365 / 7;
-
 	//String constants
 	private static final Object SAVE_MESSAGE = "Save all changes before closing the program?";
 	private static final String SAVE_TITLE = "Unsaved changes!";
@@ -1058,8 +1055,8 @@ public class MainUI extends javax.swing.JFrame {
 						isValidEmployee = false;
 					}
 					// Prevent employee being overworked
-					if (newPartTimeHoursWorked > MAX_HOURS_PER_WEEK) {
-						errorMessage += "\nHours per week invalid! Only " + MAX_HOURS_PER_WEEK + " hours in a week!";
+					if (newPartTimeHoursWorked > PartTimeEmployee.MAX_HOURS_PER_WEEK) {
+						errorMessage += "\nHours per week invalid! Only " + PartTimeEmployee.MAX_HOURS_PER_WEEK + " hours in a week!";
 						isValidEmployee = false;
 					}
 				} catch (NumberFormatException e) {
@@ -1074,8 +1071,8 @@ public class MainUI extends javax.swing.JFrame {
 						errorMessage += "\nWeeks per year cannot be less than 0!";
 						isValidEmployee = false;
 					}
-					if (newPartTimeWeeksWorked > MAX_WEEKS_PER_YEAR) {
-						errorMessage += "\nWeeks per year cannot be greater than " + MAX_WEEKS_PER_YEAR + " (or 365/7 to be exact)!";
+					if (newPartTimeWeeksWorked > PartTimeEmployee.MAX_WEEKS_PER_YEAR) {
+						errorMessage += "\nWeeks per year cannot be greater than " + PartTimeEmployee.MAX_WEEKS_PER_YEAR + " (or 365/7 to be exact)!";
 						isValidEmployee = false;
 					}
 				} catch (NumberFormatException e) {
@@ -1092,23 +1089,13 @@ public class MainUI extends javax.swing.JFrame {
 		// If all inputs are valid
 		if (isValidEmployee) {
 
-			// If the user is editing an entry, edit those fields in the existing entry
+			// If the user is editing an entry, replace the employee being edited with the updated employee
 			if (isEditing()) {
-				editingEmployee.setEmployeeNumber(newEmployeeNumber);
-				editingEmployee.setFirstName(empInfoFirstName.getText());
-				editingEmployee.setLastName(empInfoLastName.getText());
-				editingEmployee.setGender((Gender) empInfoComboBoxGender.getSelectedItem());
-				editingEmployee.setLocation((Location) empInfoComboBoxLocation.getSelectedItem());
-				editingEmployee.setDeductionsRate(newEmployeeDeduction / 100);
-
 				if (fullTimeRadioButton.isSelected()) {
-					((FullTimeEmployee) editingEmployee).setYearlySalary(newFullTimeSalary);
-				} else {
-					((PartTimeEmployee) editingEmployee).setHourlyWage(newPartTimeWage);
-					((PartTimeEmployee) editingEmployee).setHoursPerWeek(newPartTimeHoursWorked);
-					((PartTimeEmployee) editingEmployee).setWeeksPerYear(newPartTimeWeeksWorked);
+					table.replaceEmployee(editingEmployee.getEmployeeNumber(), new FullTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(), empInfoLastName.getText(), (Gender) empInfoComboBoxGender.getSelectedItem(), (Location) empInfoComboBoxLocation.getSelectedItem(), newEmployeeDeduction / 100, newFullTimeSalary));
+				} else if (partTimeRadioButton.isSelected()) {
+					table.replaceEmployee(editingEmployee.getEmployeeNumber(), new PartTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(), empInfoLastName.getText(), (Gender) empInfoComboBoxGender.getSelectedItem(), (Location) empInfoComboBoxLocation.getSelectedItem(), newEmployeeDeduction / 100, newPartTimeWage, newPartTimeHoursWorked, newPartTimeWeeksWorked));
 				}
-
 				// Else create a new entry
 			} else {
 				if (fullTimeRadioButton.isSelected()) {
