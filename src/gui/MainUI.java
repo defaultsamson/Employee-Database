@@ -971,6 +971,18 @@ public class MainUI extends javax.swing.JFrame {
 			errorMessage += "\nEmployee number is not a positive integer!";
 		}
 
+		if (empInfoComboBoxLocation.getSelectedItem() == null)
+		{
+			errorMessage += "\nMust choose a work location!";
+			isValidEmployee = false;
+		}
+		
+		if (empInfoComboBoxGender.getSelectedItem() == null)
+		{
+			errorMessage += "\nMust choose a gender!";
+			isValidEmployee = false;
+		}
+		
 		// Checking for errors in deduction rate
 		try {
 			newEmployeeDeduction = Double.valueOf(empInfoDeductionRate.getText());
