@@ -640,8 +640,10 @@ public class MainUI extends javax.swing.JFrame {
 					errorMessage += "\nEmployee number must be positive!";
 					isValidEmployee = false;
 				} else {
+					EmployeeInfo toTest = table.searchEmployee(newEmployeeNumber);
+					
 					// Check to see if employee number is occupied by another employee when adding an employee
-					if (table.searchEmployee(newEmployeeNumber) != null && !isEditing()) {
+					if (toTest != null && toTest != editing) {
 						errorMessage += "\nAn employee with the given employee number already exists!";
 						isValidEmployee = false;
 					}
