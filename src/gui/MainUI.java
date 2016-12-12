@@ -351,6 +351,7 @@ public class MainUI extends javax.swing.JFrame {
         menuHelp = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(900, 450));
 
         employeeListScrollPane.setViewportView(employeeList);
 
@@ -377,10 +378,10 @@ public class MainUI extends javax.swing.JFrame {
                 .addComponent(labelLastName)
                 .addGap(12, 12, 12)
                 .addComponent(labelEmployeeNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
             .addGroup(listHeadingPanelLayout.createSequentialGroup()
-                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         listHeadingPanelLayout.setVerticalGroup(
             listHeadingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -474,7 +475,7 @@ public class MainUI extends javax.swing.JFrame {
         portraitPanel.setLayout(portraitPanelLayout);
         portraitPanelLayout.setHorizontalGroup(
             portraitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 193, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
         portraitPanelLayout.setVerticalGroup(
             portraitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -643,8 +644,8 @@ public class MainUI extends javax.swing.JFrame {
                         .addComponent(wagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(employeeInfoPanelLayout.createSequentialGroup()
-                        .addComponent(portraitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(portraitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(employeeInfoPanelLayout.createSequentialGroup()
                                 .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -669,7 +670,7 @@ public class MainUI extends javax.swing.JFrame {
                                 .addComponent(fullTimeRadioButton)
                                 .addGap(49, 49, 49)
                                 .addComponent(partTimeRadioButton)
-                                .addGap(60, 148, Short.MAX_VALUE))
+                                .addGap(60, 169, Short.MAX_VALUE))
                             .addGroup(employeeInfoPanelLayout.createSequentialGroup()
                                 .addGroup(employeeInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(empnumLabel)
@@ -718,7 +719,7 @@ public class MainUI extends javax.swing.JFrame {
                     .addComponent(partTimeRadioButton)
                     .addComponent(fullTimeRadioButton))
                 .addGap(18, 18, 18)
-                .addComponent(wagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                .addComponent(wagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -794,7 +795,7 @@ public class MainUI extends javax.swing.JFrame {
                                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(employeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
+                                .addComponent(employeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)))
                         .addGap(15, 15, 15))))
         );
 
