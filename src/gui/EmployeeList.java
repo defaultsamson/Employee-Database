@@ -16,11 +16,8 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import data.EmployeeInfo;
-import data.OpenHashTable;
 
 public class EmployeeList extends JList<EmployeeInfo> {
-
-	private OpenHashTable employeeTable;
 
 	private static final int LINE_X_OFFSET = -3;
 

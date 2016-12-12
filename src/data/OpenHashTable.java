@@ -65,7 +65,7 @@ public class OpenHashTable {
 				return i;
 		}
 
-		// -1 if not found iin bucket for some reason |:I
+		// -1 if not found in bucket for some reason |:I
 		return -1;
 	}
 
