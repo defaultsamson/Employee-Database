@@ -44,10 +44,16 @@ public class MainUI extends javax.swing.JFrame {
 	private static final int MAX_HOURS_PER_WEEK = 168;
 	private static final int MAX_WEEKS_PER_YEAR = 365 / 7;
 
+	//String constants
+	private static final Object SAVE_MESSAGE = "Save all changes before closing the program?";
+	private static final String SAVE_TITLE = "Unsaved changes!";
+
 	private OpenHashTable table;
 	/** The employee that's currently being edited */
 	private EmployeeInfo editingEmployee;
 
+	private boolean hasUnsavedChanges = false;
+	
 	/**
 	 * @return if the user is currently editing an employee.
 	 */
@@ -177,6 +183,7 @@ public class MainUI extends javax.swing.JFrame {
 	 */
 	private void saveTable() {
 		Database.instance().save(table);
+		hasUnsavedChanges = false;
 	}
 
 	/**
@@ -397,8 +404,13 @@ public class MainUI extends javax.swing.JFrame {
         menuHelp = new javax.swing.JMenu();
         menuItemManual = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 450));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                windowsClosingHandler(evt);
+            }
+        });
 
         employeeListScrollPane.setViewportView(employeeList);
 
@@ -407,12 +419,6 @@ public class MainUI extends javax.swing.JFrame {
         labelLastName.setText("Last Name");
 
         labelFirstName.setText("First Name");
-
-        searchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchTextFieldActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout listHeadingPanelLayout = new javax.swing.GroupLayout(listHeadingPanel);
         listHeadingPanel.setLayout(listHeadingPanelLayout);
@@ -912,9 +918,27 @@ public class MainUI extends javax.swing.JFrame {
     	}
 	}//GEN-LAST:event_menuItemManualActionPerformed
 
-	private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_searchTextFieldActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_searchTextFieldActionPerformed
+	private void windowsClosingHandler(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowsClosingHandler
+		//Prompt the user to save before closing the program if there are any unsaved changes
+		if(hasUnsavedChanges){
+			int saveOption = JOptionPane.showOptionDialog(this, SAVE_MESSAGE, SAVE_TITLE, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+			//If yes is selected, save the table then close
+			if(saveOption == JOptionPane.YES_OPTION){
+				saveTable();
+				//Exit, the parameter 0 means no error in execution
+				System.exit(0);
+			} else{
+				//If no is selected, close without saving
+				if(saveOption == JOptionPane.NO_OPTION){
+					System.exit(0);
+				}
+			}
+		} else{
+			//Exit the program if there are no unsaved changes
+			System.exit(0);
+		}
+		//Do nothing if cancel is neither yes or no is selected
+	}//GEN-LAST:event_windowsClosingHandler
 
 	private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addButtonActionPerformed
 		addBlankEmployee();
@@ -1096,18 +1120,18 @@ public class MainUI extends javax.swing.JFrame {
 			clearEmployeeInfo();
 			updateDisplayTable();
 			setEditableEmployeeInfoPanel(false);
+			//There are unsaved changes
+			hasUnsavedChanges = true;
 		} else {
 			JOptionPane.showMessageDialog(this, errorMessage, "Cannot create employee", JOptionPane.ERROR_MESSAGE);
 		}
 	}// GEN-LAST:event_doneButtonActionPerformed
 
 	private void fullTimeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fullTimeRadioButtonActionPerformed
-		// TODO catch the event
 		selectWagePanel();
 	}// GEN-LAST:event_fullTimeRadioButtonActionPerformed
 
 	private void partTimeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_partTimeRadioButtonActionPerformed
-		// TODO catch the event
 		selectWagePanel();
 	}// GEN-LAST:event_partTimeRadioButtonActionPerformed
 

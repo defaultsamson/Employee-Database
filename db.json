@@ -1,4 +1,3 @@
 {"gen":"OTHER","loc":"CHICAGO","wpy":34.0,"ded":1.0,"fst":"Sam","id":2,"lst":"Close","dph":50.0,"hpw":100.0}
-{"gen":"MALE","loc":"OTTAWA","wpy":23.0,"ded":0.34,"fst":"das","id":55,"lst":"das","dph":234.0,"hpw":23.0}
-{"gen":"FEMALE","loc":"MISSISSAUGA","ded":0.13,"fst":"Cameron","id":1,"lst":"Scott","sal":55300.0}
 {"gen":"MALE","loc":"MISSISSAUGA","wpy":24.0,"ded":0.2,"fst":"Ben","id":54,"lst":"Dover","dph":11.0,"hpw":30.0}
+{"gen":"FEMALE","loc":"MISSISSAUGA","ded":0.13,"fst":"Cameron","id":1,"lst":"Scott","sal":55300.0}
