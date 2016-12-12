@@ -352,6 +352,9 @@ public class MainUI extends javax.swing.JFrame {
         menuFile = new javax.swing.JMenu();
         menuItemSave = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
+        menuItemAdd = new javax.swing.JMenuItem();
+        menuItemRemove = new javax.swing.JMenuItem();
+        menuItemEdit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -742,7 +745,6 @@ public class MainUI extends javax.swing.JFrame {
 
         menuFile.setText("File");
 
-        menuItemSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         menuItemSave.setText("save");
         menuItemSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -754,6 +756,31 @@ public class MainUI extends javax.swing.JFrame {
         menuBar.add(menuFile);
 
         menuEdit.setText("Edit");
+
+        menuItemAdd.setText("Create New Employee");
+        menuItemAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAddActionPerformed(evt);
+            }
+        });
+        menuEdit.add(menuItemAdd);
+
+        menuItemRemove.setText("Remove Selected Employee");
+        menuItemRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRemoveActionPerformed(evt);
+            }
+        });
+        menuEdit.add(menuItemRemove);
+
+        menuItemEdit.setText("Edit Selected Employee");
+        menuItemEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemEditActionPerformed(evt);
+            }
+        });
+        menuEdit.add(menuItemEdit);
+
         menuBar.add(menuEdit);
 
         menuHelp.setText("Help");
@@ -1022,6 +1049,18 @@ public class MainUI extends javax.swing.JFrame {
     	}
     }//GEN-LAST:event_empInfoComboBoxGenderActionPerformed
 
+    private void menuItemAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAddActionPerformed
+        addBlankEmployee();
+    }//GEN-LAST:event_menuItemAddActionPerformed
+
+    private void menuItemRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRemoveActionPerformed
+        removeButtonActionPerformed(evt);
+    }//GEN-LAST:event_menuItemRemoveActionPerformed
+
+    private void menuItemEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditActionPerformed
+        editButtonActionPerformed(evt);
+    }//GEN-LAST:event_menuItemEditActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1084,6 +1123,9 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenuItem menuItemAdd;
+    private javax.swing.JMenuItem menuItemEdit;
+    private javax.swing.JMenuItem menuItemRemove;
     private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JLabel partTimeHourlyWageLabel;
     private javax.swing.JTextField partTimeHourlyWageTextField;
