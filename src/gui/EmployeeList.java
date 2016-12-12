@@ -16,7 +16,6 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import data.EmployeeInfo;
-import data.OpenHashTable;
 
 public class EmployeeList extends JList<EmployeeInfo> {
 
