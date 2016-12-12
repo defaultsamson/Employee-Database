@@ -28,7 +28,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemAdd">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Create New Employee"/>
+                <Property name="text" type="java.lang.String" value="Add new employee"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemAddActionPerformed"/>
@@ -36,7 +36,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemRemove">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Remove Selected Employee"/>
+                <Property name="text" type="java.lang.String" value="Remove employee"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemRemoveActionPerformed"/>
@@ -44,7 +44,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemEdit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Edit Selected Employee"/>
+                <Property name="text" type="java.lang.String" value="Edit employee"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemEditActionPerformed"/>
@@ -59,7 +59,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemManual">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Manual"/>
+                <Property name="text" type="java.lang.String" value="Open help document"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemManualActionPerformed"/>
