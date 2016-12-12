@@ -31,15 +31,23 @@ import io.Database;
  */
 public class MainUI extends javax.swing.JFrame {
 
-	//Serial code for JFrame
+	// Serial code for JFrame
 	private static final long serialVersionUID = -5250494138480577419L;
 
+	private static final int MAX_HOURS_PER_WEEK = 168;
+	private static final int MAX_WEEKS_PER_YEAR = 365 / 7;
+
 	private OpenHashTable table;
-	private EmployeeInfo editing;
+	/** The employee that's currently being edited */
+	private EmployeeInfo editingEmployee;
+
+	/**
+	 * @return if the user is currently editing an employee.
+	 */
 	private boolean isEditing() {
-		return editing != null;
+		return editingEmployee != null;
 	}
-	
+
 	private static int BUCKET_NUMBER = 2;
 
 	/**
@@ -47,16 +55,16 @@ public class MainUI extends javax.swing.JFrame {
 	 */
 	public MainUI() {
 		table = new OpenHashTable(BUCKET_NUMBER);
-		//Load the hash table from the save file using the Database class
+		// Load the hash table from the save file using the Database class
 		Database.instance().load(table);
 
-		//Initialise the GUI components, using Netbean generated code
+		// Initialise the GUI components, using Netbean generated code
 		initComponents();
-		
-		editing = null;
+
+		editingEmployee = null;
 		setEditableEmployeeInfoPanel(false);
-		
-		//Add DocumentListener for searchTextField to allow instantaneous searches
+
+		// Add DocumentListener for searchTextField to allow instantaneous searches
 		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				action();
@@ -74,16 +82,16 @@ public class MainUI extends javax.swing.JFrame {
 				updateDisplayTable();
 			}
 		});
-		
-		//Update the displayed table
+
+		// Update the displayed table
 		updateDisplayTable();
 	}
-	
-	//Update the display table based on the text in the search bar
+
+	// Update the display table based on the text in the search bar
 	private void updateDisplayTable() {
 		ListModel<EmployeeInfo> listModel = employeeList.getModel();
 
-		//Check to see if the list is an instance of DefaultListModel, for type safety
+		// Check to see if the list is an instance of DefaultListModel, for type safety
 		if (listModel instanceof DefaultListModel<?>) {
 			DefaultListModel<EmployeeInfo> entries = (DefaultListModel<EmployeeInfo>) listModel;
 
@@ -91,7 +99,7 @@ public class MainUI extends javax.swing.JFrame {
 			entries.removeAllElements();
 
 			String search = searchTextField.getText().toLowerCase();
-			//doSearch indicates if there are non-space characters
+			// doSearch indicates if there are non-space characters
 			boolean doSearch = !search.replace(" ", "").equals("");
 
 			// If there's a search, filter things out
@@ -157,167 +165,187 @@ public class MainUI extends javax.swing.JFrame {
 		}
 	}
 
-	//Save the table using the Database class
+	/**
+	 * Save the table using the Database class
+	 */
 	private void saveTable() {
 		Database.instance().save(table);
 	}
 
-	//Switch the interface to adding mode
-    private void addBlankEmployee(){
-    		editing = null;
-            setEditableEmployeeInfoPanel(true);
-            clearEmployeeInfo();
-    }
-    
-    //Switch the interface to editing mode, only called when an employee is selected
-    private void editEmployee(EmployeeInfo employee){
-    		editing = employee;
-    		setEditableEmployeeInfoPanel(true);
-    		displayEmployeeInfo(employee);
-    }
-    
-    //Display the selected employee on the information section on the right
-    private void displayEmployeeInfo(EmployeeInfo employee){
-    	//Set the value of all text field and combo box to that of the employee
-    	empInfoFirstName.setText(employee.getFirstName());
-    	empInfoLastName.setText(employee.getLastName());
-    	empInfoEmpnum.setText(Integer.toString(employee.getEmployeeNumber()));
-    	empInfoComboBoxGender.setSelectedItem(employee.getGender());
-    	//Display the double as a percentage rounded to at most 2 decimal digits
-    	//This is added to prevent a java internal error related to binary representation of decimals
-    	empInfoDeductionRate.setText(Double.toString((Math.round(employee.getDeductionsRate() * 10000) / 100)));
-    	empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
-    	
-    	//Check if the employee is part time or full time
-    	if(employee instanceof FullTimeEmployee){
-    		//For full time employee, set and display the full time panel
-    		fullTimeRadioButton.setSelected(true);
-    		selectWagePanel();
-    		FullTimeEmployee fullEmployee = (FullTimeEmployee)employee;
-    		//Display the double values, all of them are rounded to at most 2 decimal places
-    		fullTimeSalaryTextField.setText(Double.toString(Math.round(fullEmployee.getYearlySalary() * 100) / 100));
-    		fullTimeIncomeTextField.setText(Double.toString(Math.round(fullEmployee.calcAnnualIncome() * 100) / 100));
-    		
-    		//Remove all temporary values stored on partTimeWagePanel
-    		partTimeHourlyWageTextField.setText("");
-            partTimeHoursWorkedTextField.setText("");
-            partTimeWeeksWorkedTextField.setText("");
-            partTimeIncomeTextField.setText("");
-    	} else {
-    		if (employee instanceof PartTimeEmployee){
-        		//For part time employee, set and display the part time panel
-    			partTimeRadioButton.setSelected(true);
-                selectWagePanel();
-        		PartTimeEmployee partEmployee = (PartTimeEmployee)employee;
-        		//Display the double values, all of them are rounded to at most 2 decimal places
-        		partTimeHourlyWageTextField.setText(Double.toString((Math.round(partEmployee.getHourlyWage() * 100) / 100)));
-                partTimeHoursWorkedTextField.setText(Double.toString((Math.round(partEmployee.getHoursPerWeek() * 100) / 100)));
-                partTimeWeeksWorkedTextField.setText(Double.toString((Math.round(partEmployee.getWeeksPerYear() * 100) / 100)));
-                partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
-                
-                //Remove all temporary values stored on fullTimeWagePanel
-        		fullTimeSalaryTextField.setText("");
-        		fullTimeIncomeTextField.setText(""); 
-    		}
-    	}
-    }
-    
-    //Remove all instance values stored in the GUI components
-    private void clearEmployeeInfo(){
-    	empInfoFirstName.setText("");
-    	empInfoLastName.setText("");
-    	empInfoEmpnum.setText("");
-        empInfoDeductionRate.setText("");
-    	empInfoComboBoxGender.setSelectedIndex(-1);
-    	empInfoComboBoxLocation.setSelectedIndex(-1);
-    	fullTimeRadioButton.setSelected(false);
-    	fullTimeIncomeTextField.setText("");
-    	fullTimeSalaryTextField.setText("");
-    	fullTimeIncomeTextField.setText("");
-    	partTimeRadioButton.setSelected(false);
-        partTimeHourlyWageTextField.setText("");
-        partTimeHoursWorkedTextField.setText("");
-        partTimeWeeksWorkedTextField.setText("");
-        partTimeIncomeTextField.setText("");
-    }
-    
-    //Set whether or not everything in EmployeeInfoPanel is enabled for editing
-    private void setEditableEmployeeInfoPanel(boolean editable){
-    	
-    	//Make all text fields editable all other component enabled if editable is true
-    	//Otherwise set all text field as not editable and disable all other components
-    	empInfoEmpnum.setEditable(editable);
-    	empInfoFirstName.setEditable(editable);
-    	empInfoLastName.setEditable(editable);
-    	empInfoComboBoxGender.setEnabled(editable);
-    	empInfoComboBoxLocation.setEnabled(editable);
-    	empInfoDeductionRate.setEditable(editable);
-    	partTimeRadioButton.setEnabled(editable);
-    	fullTimeRadioButton.setEnabled(editable);
-    	
-    	//Set all valid text field in partTimeWagePanel as editable depends on the boolean
-    	//editable. Annual income is not a valid text field for this as it is never editable
-        partTimeHourlyWageTextField.setEditable(editable);
-        partTimeHoursWorkedTextField.setEditable(editable);
-        partTimeWeeksWorkedTextField.setEditable(editable);
-        
-        //Set editable status for all valid text field in fullTimeWagePanel
-        fullTimeSalaryTextField.setEditable(editable);
-        
-        //The employeeList and the buttons for adding, removing and editing employees
-        //are locked when editing the info panel to prevent losing any changes
-        employeeList.setEnabled(!editable);
-        addButton.setEnabled(!editable);
-        removeButton.setEnabled(!editable);
-        editButton.setEnabled(!editable);
-        
-        //Enable the doneButton and clearButton when editing
-        doneButton.setEnabled(editable);
-        clearButton.setEnabled(editable);
-    }
-    
-    //Select the wagePanel to display based on whether full time or part time button is selected
-    public void selectWagePanel(){
-            if(fullTimeRadioButton.isSelected()){
-                ((CardLayout)wagePanel.getLayout()).show(wagePanel,"fullTimeWageCard");
-            } else {
-                if(partTimeRadioButton.isSelected()){
-                    ((CardLayout)wagePanel.getLayout()).show(wagePanel,"partTimeWageCard");
-                }
-            }
-    }
-    
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	/**
+	 * Switch the interface to adding mode
+	 */
+	private void addBlankEmployee() {
+		editingEmployee = null;
+		setEditableEmployeeInfoPanel(true);
+		clearEmployeeInfo();
+	}
 
-        fullPartTimeButtonGroup = new javax.swing.ButtonGroup();
-        employeeListScrollPane = new javax.swing.JScrollPane();
-        employeeList = new gui.EmployeeList();
-        employeeList.addListSelectionListener(new ListSelectionListener() {
+	/**
+	 * Switch the interface to editing mode, only called when an employee is selected
+	 * 
+	 * @param employee
+	 *            the selected employee
+	 */
+	private void editEmployee(EmployeeInfo employee) {
+		editingEmployee = employee;
+		setEditableEmployeeInfoPanel(true);
+		displayEmployeeInfo(employee);
+	}
 
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(employeeList.getSelectedValue() != null){
-                    displayEmployeeInfo(employeeList.getSelectedValue());
-                }
-            }
-        });
-        listHeadingPanel = new javax.swing.JPanel();
-        labelEmployeeNumber = new javax.swing.JLabel();
-        labelLastName = new javax.swing.JLabel();
-        labelFirstName = new javax.swing.JLabel();
-        searchTextField = new IconTextField("Search", IconType.SEARCH);
-        buttonPanel = new javax.swing.JPanel();
-        addButton = new IconButton(IconType.ADD);
-        removeButton = new IconButton(IconType.REMOVE);
-        editButton = new IconButton(IconType.EDIT);
-        saveButton = new IconButton(IconType.SAVE);
+	/**
+	 * Display the selected employee on the information section on the right
+	 * 
+	 * @param employee
+	 *            the employee to display
+	 */
+	private void displayEmployeeInfo(EmployeeInfo employee) {
+		// Set the value of all text field and combo box to that of the employee
+		empInfoFirstName.setText(employee.getFirstName());
+		empInfoLastName.setText(employee.getLastName());
+		empInfoEmpnum.setText(Integer.toString(employee.getEmployeeNumber()));
+		empInfoComboBoxGender.setSelectedItem(employee.getGender());
+		// Display the double as a percentage rounded to at most 2 decimal digits
+		// This is added to prevent a java internal error related to binary representation of decimals
+		empInfoDeductionRate.setText(Double.toString((Math.round(employee.getDeductionsRate() * 10000) / 100)));
+		empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
+
+		// Check if the employee is part time or full time
+		if (employee instanceof FullTimeEmployee) {
+			// For full time employee, set and display the full time panel
+			fullTimeRadioButton.setSelected(true);
+			selectWagePanel();
+			FullTimeEmployee fullEmployee = (FullTimeEmployee) employee;
+			// Display the double values, all of them are rounded to at most 2 decimal places
+			fullTimeSalaryTextField.setText(Double.toString(Math.round(fullEmployee.getYearlySalary() * 100) / 100));
+			fullTimeIncomeTextField.setText(Double.toString(Math.round(fullEmployee.calcAnnualIncome() * 100) / 100));
+
+			// Remove all temporary values stored on partTimeWagePanel
+			partTimeHourlyWageTextField.setText("");
+			partTimeHoursWorkedTextField.setText("");
+			partTimeWeeksWorkedTextField.setText("");
+			partTimeIncomeTextField.setText("");
+		} else {
+			if (employee instanceof PartTimeEmployee) {
+				// For part time employee, set and display the part time panel
+				partTimeRadioButton.setSelected(true);
+				selectWagePanel();
+				PartTimeEmployee partEmployee = (PartTimeEmployee) employee;
+				// Display the double values, all of them are rounded to at most 2 decimal places
+				partTimeHourlyWageTextField.setText(Double.toString((Math.round(partEmployee.getHourlyWage() * 100) / 100)));
+				partTimeHoursWorkedTextField.setText(Double.toString((Math.round(partEmployee.getHoursPerWeek() * 100) / 100)));
+				partTimeWeeksWorkedTextField.setText(Double.toString((Math.round(partEmployee.getWeeksPerYear() * 100) / 100)));
+				partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
+
+				// Remove all temporary values stored on fullTimeWagePanel
+				fullTimeSalaryTextField.setText("");
+				fullTimeIncomeTextField.setText("");
+			}
+		}
+	}
+
+	/**
+	 * Removes all instance values stored in the GUI components
+	 */
+	private void clearEmployeeInfo() {
+		empInfoFirstName.setText("");
+		empInfoLastName.setText("");
+		empInfoEmpnum.setText("");
+		empInfoDeductionRate.setText("");
+		empInfoComboBoxGender.setSelectedIndex(-1);
+		empInfoComboBoxLocation.setSelectedIndex(-1);
+		fullTimeRadioButton.setSelected(false);
+		fullTimeIncomeTextField.setText("");
+		fullTimeSalaryTextField.setText("");
+		fullTimeIncomeTextField.setText("");
+		partTimeRadioButton.setSelected(false);
+		partTimeHourlyWageTextField.setText("");
+		partTimeHoursWorkedTextField.setText("");
+		partTimeWeeksWorkedTextField.setText("");
+		partTimeIncomeTextField.setText("");
+	}
+
+	/**
+	 * Set whether or not everything in EmployeeInfoPanel is enabled for editing
+	 * 
+	 * @param editable
+	 */
+	private void setEditableEmployeeInfoPanel(boolean editable) {
+
+		// Make all text fields editable all other component enabled if editable is true
+		// Otherwise set all text field as not editable and disable all other components
+		empInfoEmpnum.setEditable(editable);
+		empInfoFirstName.setEditable(editable);
+		empInfoLastName.setEditable(editable);
+		empInfoComboBoxGender.setEnabled(editable);
+		empInfoComboBoxLocation.setEnabled(editable);
+		empInfoDeductionRate.setEditable(editable);
+		partTimeRadioButton.setEnabled(editable);
+		fullTimeRadioButton.setEnabled(editable);
+
+		// Set all valid text field in partTimeWagePanel as editable depends on the boolean
+		// editable. Annual income is not a valid text field for this as it is never editable
+		partTimeHourlyWageTextField.setEditable(editable);
+		partTimeHoursWorkedTextField.setEditable(editable);
+		partTimeWeeksWorkedTextField.setEditable(editable);
+
+		// Set editable status for all valid text field in fullTimeWagePanel
+		fullTimeSalaryTextField.setEditable(editable);
+
+		// The employeeList and the buttons for adding, removing and editing employees
+		// are locked when editing the info panel to prevent losing any changes
+		employeeList.setEnabled(!editable);
+		addButton.setEnabled(!editable);
+		removeButton.setEnabled(!editable);
+		editButton.setEnabled(!editable);
+
+		// Enable the doneButton and clearButton when editing
+		doneButton.setEnabled(editable);
+		clearButton.setEnabled(editable);
+	}
+
+	/**
+	 * Select the wagePanel to display based on whether full time or part time button is selected.
+	 */
+	public void selectWagePanel() {
+		if (fullTimeRadioButton.isSelected()) {
+			((CardLayout) wagePanel.getLayout()).show(wagePanel, "fullTimeWageCard");
+		} else {
+			if (partTimeRadioButton.isSelected()) {
+				((CardLayout) wagePanel.getLayout()).show(wagePanel, "partTimeWageCard");
+			}
+		}
+	}
+
+	/**
+	 * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
+
+		fullPartTimeButtonGroup = new javax.swing.ButtonGroup();
+		employeeListScrollPane = new javax.swing.JScrollPane();
+		employeeList = new gui.EmployeeList();
+		employeeList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (employeeList.getSelectedValue() != null) {
+					displayEmployeeInfo(employeeList.getSelectedValue());
+				}
+			}
+		});
+		listHeadingPanel = new javax.swing.JPanel();
+		labelEmployeeNumber = new javax.swing.JLabel();
+		labelLastName = new javax.swing.JLabel();
+		labelFirstName = new javax.swing.JLabel();
+		searchTextField = new IconTextField("Search", IconType.SEARCH);
+		buttonPanel = new javax.swing.JPanel();
+		addButton = new IconButton(IconType.ADD);
+		removeButton = new IconButton(IconType.REMOVE);
+		editButton = new IconButton(IconType.EDIT);
+		saveButton = new IconButton(IconType.SAVE);
 		doneButton = new IconButton(IconType.DONE);
 		employeeInfoPanel = new javax.swing.JPanel();
 		firstNameLabel = new javax.swing.JLabel();
@@ -620,156 +648,159 @@ public class MainUI extends javax.swing.JFrame {
 		}
 	}// GEN-LAST:event_editButtonActionPerformed
 
-	// Code for creating or replacing an employee
-		private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_doneButtonActionPerformed
-			String errorMessage = new String("Cannot create the employee for the following reasons:\n");
-			boolean isValidEmployee = true;
-			EmployeeInfo newEmployee;
-			int newEmployeeNumber = 0;
-			double newEmployeeDeduction = 0;
-			double newFullTimeSalary = 0;
-			double newPartTimeWage = 0;
-			double newPartTimeHoursWorked = 0;
-			double newPartTimeWeeksWorked = 0;
+	/**
+	 * Code for creating or replacing an employee
+	 * 
+	 * @param evt
+	 */
+	private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_doneButtonActionPerformed
+		String errorMessage = new String("Cannot create the employee for the following reasons:\n");
+		boolean isValidEmployee = true;
+		int newEmployeeNumber = 0;
+		double newEmployeeDeduction = 0;
+		double newFullTimeSalary = 0;
+		double newPartTimeWage = 0;
+		double newPartTimeHoursWorked = 0;
+		double newPartTimeWeeksWorked = 0;
 
-			// Checking for errors in employee number
-			try {
-				newEmployeeNumber = Integer.valueOf(empInfoEmpnum.getText());
-				// Only positive employee number is accepted
-				if (newEmployeeNumber <= 0) {
-					errorMessage += "\nEmployee number must be positive!";
+		// Checking for errors in employee number
+		try {
+			newEmployeeNumber = Integer.valueOf(empInfoEmpnum.getText());
+			// Only positive employee number is accepted
+			if (newEmployeeNumber <= 0) {
+				errorMessage += "\nEmployee number must be positive!";
+				isValidEmployee = false;
+			} else {
+				EmployeeInfo toTest = table.searchEmployee(newEmployeeNumber);
+
+				// Check to see if employee number is occupied by another employee when adding an employee
+				if (toTest != null && toTest != editingEmployee) {
+					errorMessage += "\nAn employee with the given employee number already exists!";
 					isValidEmployee = false;
-				} else {
-					EmployeeInfo toTest = table.searchEmployee(newEmployeeNumber);
-					
-					// Check to see if employee number is occupied by another employee when adding an employee
-					if (toTest != null && toTest != editing) {
-						errorMessage += "\nAn employee with the given employee number already exists!";
-						isValidEmployee = false;
-					}
+				}
+			}
+		} catch (NumberFormatException e) {
+			isValidEmployee = false;
+			errorMessage += "\nEmployee number is not a positive integer!";
+		}
+
+		// Checking for errors in deduction rate
+		try {
+			newEmployeeDeduction = Double.valueOf(empInfoDeductionRate.getText());
+			// Deduction rate cannot be less than 0 or greater than 100
+			if (newEmployeeDeduction < 0 || newEmployeeDeduction > 100) {
+				errorMessage += "\nDeductions rate must be between 0 and 100!";
+				isValidEmployee = false;
+			}
+		} catch (NumberFormatException e) {
+			isValidEmployee = false;
+			errorMessage += "\nDeductions rate is not a valid numerical value!";
+		}
+
+		// Check for inputs in the wage panel
+		// Check salary for full time employee
+		if (fullTimeRadioButton.isSelected()) {
+			try {
+				newFullTimeSalary = Double.valueOf(fullTimeSalaryTextField.getText());
+				if (newFullTimeSalary < 0) {
+					isValidEmployee = false;
+					errorMessage += "\nAnnual salary cannot be less than 0!";
 				}
 			} catch (NumberFormatException e) {
 				isValidEmployee = false;
-				errorMessage += "\nEmployee number is not a positive integer!";
+				errorMessage += "\nAnnual salary is not a valid numerical value!";
 			}
+		} else {
+			// Check wage inputs for part time employee
+			if (partTimeRadioButton.isSelected()) {
 
-			// Checking for errors in deduction rate
-			try {
-				newEmployeeDeduction = Double.valueOf(empInfoDeductionRate.getText());
-				// Deduction rate cannot be less than 0 or greater than 100
-				if (newEmployeeDeduction < 0 || newEmployeeDeduction > 100) {
-					errorMessage += "\nDeductions rate must be between 0 and 100!";
-					isValidEmployee = false;
-				}
-			} catch (NumberFormatException e) {
-				isValidEmployee = false;
-				errorMessage += "\nDeductions rate is not a valid numerical value!";
-			}
-
-			// Check for inputs in the wage panel
-			// Check salary for full time employee
-			if (fullTimeRadioButton.isSelected()) {
+				// Check for weekly wage
 				try {
-					newFullTimeSalary = Double.valueOf(fullTimeSalaryTextField.getText());
-					if (newFullTimeSalary < 0) {
+					newPartTimeWage = Double.valueOf(partTimeHourlyWageTextField.getText());
+					if (newPartTimeWage < 0) {
+						errorMessage += "\nHourly wage cannot be less than 0!";
 						isValidEmployee = false;
-						errorMessage += "\nAnnual salary cannot be less than 0!";
 					}
 				} catch (NumberFormatException e) {
 					isValidEmployee = false;
-					errorMessage += "\nAnnual salary is not a valid numerical value!";
+					errorMessage += "\nHourly wage is not a valid numerical value!";
 				}
+
+				// Check for hours worked
+				try {
+					newPartTimeHoursWorked = Double.valueOf(partTimeHoursWorkedTextField.getText());
+					if (newPartTimeHoursWorked < 0) {
+						errorMessage += "\nHours per week cannot be less than 0!";
+						isValidEmployee = false;
+					}
+					// Prevent employee being overworked
+					if (newPartTimeHoursWorked > MAX_HOURS_PER_WEEK) {
+						errorMessage += "\nHours per week invalid! Only " + MAX_HOURS_PER_WEEK + " hours in a week!";
+						isValidEmployee = false;
+					}
+				} catch (NumberFormatException e) {
+					isValidEmployee = false;
+					errorMessage += "\nHours per week is not a valid numerical value!";
+				}
+
+				// Check for weeks worked
+				try {
+					newPartTimeWeeksWorked = Double.valueOf(partTimeWeeksWorkedTextField.getText());
+					if (newPartTimeWeeksWorked < 0) {
+						errorMessage += "\nWeeks per year cannot be less than 0!";
+						isValidEmployee = false;
+					}
+					if (newPartTimeWeeksWorked > MAX_WEEKS_PER_YEAR) {
+						errorMessage += "\nWeeks per year cannot be greater than " + MAX_WEEKS_PER_YEAR + " (or 365/7 to be exact)!";
+						isValidEmployee = false;
+					}
+				} catch (NumberFormatException e) {
+					isValidEmployee = false;
+					errorMessage += "\nWeeks per year is not a valid numerical value!";
+				}
+
 			} else {
-				// Check wage inputs for part time employee
-				if (partTimeRadioButton.isSelected()) {
+				// Somehow neither button is selected, should never happen
+				errorMessage += "\nINTERNAL ERROR 100: Radio button not selected, please contact us";
+			}
+		}
 
-					// Check for weekly wage
-					try {
-						newPartTimeWage = Double.valueOf(partTimeHourlyWageTextField.getText());
-						if (newPartTimeWage < 0) {
-							errorMessage += "\nHourly wage cannot be less than 0!";
-							isValidEmployee = false;
-						}
-					} catch (NumberFormatException e) {
-						isValidEmployee = false;
-						errorMessage += "\nHourly wage is not a valid numerical value!";
-					}
+		// If all inputs are valid
+		if (isValidEmployee) {
 
-					// Check for hours worked
-					try {
-						newPartTimeHoursWorked = Double.valueOf(partTimeHoursWorkedTextField.getText());
-						if (newPartTimeHoursWorked < 0) {
-							errorMessage += "\nHours per week cannot be less than 0!";
-							isValidEmployee = false;
-						}
-						// Prevent employee being overworked
-						if (newPartTimeHoursWorked > 168) {
-							errorMessage += "\nHours per week invalid! Only 168 hours in a week!";
-							isValidEmployee = false;
-						}
-					} catch (NumberFormatException e) {
-						isValidEmployee = false;
-						errorMessage += "\nHours per week is not a valid numerical value!";
-					}
+			// If the user is editing an entry, edit those fields in the existing entry
+			if (isEditing()) {
+				editingEmployee.setEmployeeNumber(newEmployeeNumber);
+				editingEmployee.setFirstName(empInfoFirstName.getText());
+				editingEmployee.setLastName(empInfoLastName.getText());
+				editingEmployee.setGender((Gender) empInfoComboBoxGender.getSelectedItem());
+				editingEmployee.setLocation((Location) empInfoComboBoxLocation.getSelectedItem());
+				editingEmployee.setDeductionsRate(newEmployeeDeduction / 100);
 
-					// Check for weeks worked
-					try {
-						newPartTimeWeeksWorked = Double.valueOf(partTimeWeeksWorkedTextField.getText());
-						if (newPartTimeWeeksWorked < 0) {
-							errorMessage += "\nWeeks per year cannot be less than 0!";
-							isValidEmployee = false;
-						}
-						if (newPartTimeWeeksWorked > 365 / 7) {
-							errorMessage += "\nWeeks per year cannot be greater than 52 (or 365/7 to be exact)!";
-							isValidEmployee = false;
-						}
-					} catch (NumberFormatException e) {
-						isValidEmployee = false;
-						errorMessage += "\nWeeks per year is not a valid numerical value!";
-					}
-
+				if (fullTimeRadioButton.isSelected()) {
+					((FullTimeEmployee) editingEmployee).setYearlySalary(newFullTimeSalary);
 				} else {
-					// Somehow neither button is selected, should never happen
-					errorMessage += "\nINTERNAL ERROR 100: Radio button not selected, please contact us";
+					((PartTimeEmployee) editingEmployee).setHourlyWage(newPartTimeWage);
+					((PartTimeEmployee) editingEmployee).setHoursPerWeek(newPartTimeHoursWorked);
+					((PartTimeEmployee) editingEmployee).setWeeksPerYear(newPartTimeWeeksWorked);
+				}
+
+				// Else create a new entry
+			} else {
+				if (fullTimeRadioButton.isSelected()) {
+					table.addEmployee(new FullTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(), empInfoLastName.getText(), (Gender) empInfoComboBoxGender.getSelectedItem(), (Location) empInfoComboBoxLocation.getSelectedItem(), newEmployeeDeduction / 100, newFullTimeSalary));
+				} else if (partTimeRadioButton.isSelected()) {
+					table.addEmployee(new PartTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(), empInfoLastName.getText(), (Gender) empInfoComboBoxGender.getSelectedItem(), (Location) empInfoComboBoxLocation.getSelectedItem(), newEmployeeDeduction / 100, newPartTimeWage, newPartTimeHoursWorked, newPartTimeWeeksWorked));
 				}
 			}
 
-			// Create the employee if all inputs are valid
-			if (isValidEmployee) {
-
-				// If the user is editing an entry, edit those fields in the existing entry
-				if (isEditing()) {
-					editing.setEmployeeNumber(newEmployeeNumber);
-					editing.setFirstName(empInfoFirstName.getText());
-					editing.setLastName(empInfoLastName.getText());
-					editing.setGender((Gender) empInfoComboBoxGender.getSelectedItem());
-					editing.setLocation((Location) empInfoComboBoxLocation.getSelectedItem());
-					editing.setDeductionsRate(newEmployeeDeduction / 100);
-
-					if (fullTimeRadioButton.isSelected()) {
-						((FullTimeEmployee) editing).setYearlySalary(newFullTimeSalary);
-					} else {
-						((PartTimeEmployee) editing).setHourlyWage(newPartTimeWage);
-						((PartTimeEmployee) editing).setHoursPerWeek(newPartTimeHoursWorked);
-						((PartTimeEmployee) editing).setWeeksPerYear(newPartTimeWeeksWorked);
-					}
-
-					// Else create a new entry
-				} else {
-					if (fullTimeRadioButton.isSelected()) {
-						table.addEmployee(new FullTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(), empInfoLastName.getText(), (Gender) empInfoComboBoxGender.getSelectedItem(), (Location) empInfoComboBoxLocation.getSelectedItem(), newEmployeeDeduction / 100, newFullTimeSalary));
-					} else if (partTimeRadioButton.isSelected()) {
-						table.addEmployee(new PartTimeEmployee(newEmployeeNumber, empInfoFirstName.getText(), empInfoLastName.getText(), (Gender) empInfoComboBoxGender.getSelectedItem(), (Location) empInfoComboBoxLocation.getSelectedItem(), newEmployeeDeduction / 100, newPartTimeWage, newPartTimeHoursWorked, newPartTimeWeeksWorked));
-					}
-				}
-
-				clearEmployeeInfo();
-				updateDisplayTable();
-				setEditableEmployeeInfoPanel(false);
-			} else {
-				JOptionPane.showMessageDialog(this, errorMessage, "Cannot create employee", JOptionPane.ERROR_MESSAGE);
-			}
-		}// GEN-LAST:event_doneButtonActionPerformed
+			clearEmployeeInfo();
+			updateDisplayTable();
+			setEditableEmployeeInfoPanel(false);
+		} else {
+			JOptionPane.showMessageDialog(this, errorMessage, "Cannot create employee", JOptionPane.ERROR_MESSAGE);
+		}
+	}// GEN-LAST:event_doneButtonActionPerformed
 
 	private void fullTimeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fullTimeRadioButtonActionPerformed
 		// TODO catch the event
