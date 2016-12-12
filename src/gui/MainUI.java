@@ -21,6 +21,10 @@ import data.*;
 import io.Database;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * The main user interface class for creating an employee database
@@ -29,6 +33,9 @@ public class MainUI extends javax.swing.JFrame {
 
 	//Serial code for JFrame
 	private static final long serialVersionUID = -5250494138480577419L;
+	
+	//Link to the manual
+	private static final String MANUAL_URI = "https://docs.google.com/document/d/1CnoW9rv26RZfZ2koTzjqFZrtr3Hw4pRkOjv-A8SjeX8/edit?usp=sharing";
 
 	private OpenHashTable table;
 	private EmployeeInfo editing;
@@ -356,6 +363,7 @@ public class MainUI extends javax.swing.JFrame {
         menuItemRemove = new javax.swing.JMenuItem();
         menuItemEdit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        menuItemManual = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 450));
@@ -784,6 +792,15 @@ public class MainUI extends javax.swing.JFrame {
         menuBar.add(menuEdit);
 
         menuHelp.setText("Help");
+
+        menuItemManual.setText("Manual");
+        menuItemManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemManualActionPerformed(evt);
+            }
+        });
+        menuHelp.add(menuItemManual);
+
         menuBar.add(menuHelp);
 
         setJMenuBar(menuBar);
@@ -1050,16 +1067,29 @@ public class MainUI extends javax.swing.JFrame {
     }//GEN-LAST:event_empInfoComboBoxGenderActionPerformed
 
     private void menuItemAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAddActionPerformed
-        addBlankEmployee();
+        //Add an employee
+    	addBlankEmployee();
     }//GEN-LAST:event_menuItemAddActionPerformed
 
     private void menuItemRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRemoveActionPerformed
-        removeButtonActionPerformed(evt);
+        //Same as pressing the remove button
+    	removeButtonActionPerformed(evt);
     }//GEN-LAST:event_menuItemRemoveActionPerformed
 
     private void menuItemEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditActionPerformed
-        editButtonActionPerformed(evt);
+        //Same as pressing the edit button
+    	editButtonActionPerformed(evt);
     }//GEN-LAST:event_menuItemEditActionPerformed
+
+    private void menuItemManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemManualActionPerformed
+    	//Open the website that contains the manual
+    	try{
+    		URI link = new URI(MANUAL_URI);
+        	Desktop.getDesktop().browse(link);
+    	} catch (URISyntaxException | IOException e){
+    		e.printStackTrace();
+    	}
+    }//GEN-LAST:event_menuItemManualActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1125,6 +1155,7 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemAdd;
     private javax.swing.JMenuItem menuItemEdit;
+    private javax.swing.JMenuItem menuItemManual;
     private javax.swing.JMenuItem menuItemRemove;
     private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JLabel partTimeHourlyWageLabel;
