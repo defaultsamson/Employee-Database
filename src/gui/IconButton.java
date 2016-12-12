@@ -9,6 +9,9 @@ import javax.swing.JButton;
 
 import io.FileUtil;
 
+/**
+ *	A JButton with an icon on it
+ */
 public class IconButton extends JButton {
 	/**
 	 * 

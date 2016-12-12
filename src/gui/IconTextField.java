@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import io.FileUtil;
 
+/**
+ * A text field that displays a hint when empty, and contains an icon on the right side of the text field
+ */
 public class IconTextField extends HintTextField {
 	/**
 	 * 

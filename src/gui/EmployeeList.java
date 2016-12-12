@@ -18,6 +18,9 @@ import javax.swing.ListSelectionModel;
 import data.EmployeeInfo;
 import data.OpenHashTable;
 
+/**
+ * A GUI component that allows the user to select the employees in a 3-column list
+ */
 public class EmployeeList extends JList<EmployeeInfo> {
 
 	private static final int LINE_X_OFFSET = -3;

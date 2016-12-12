@@ -5,6 +5,9 @@ import java.awt.Graphics;
 
 import javax.swing.JTextField;
 
+/**
+ *	A Text field that displays a hint when it is empty
+ */
 public class HintTextField extends JTextField {
 	/**
 	 * 

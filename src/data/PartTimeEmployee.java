@@ -12,7 +12,18 @@ public class PartTimeEmployee extends EmployeeInfo {
 	private double hoursPerWeek;
 	private double weeksPerYear;
 	
-	//Constructor
+	/**
+	 * Creates a part time employee
+	 * @param num				The employee number of the employee, must be different from all other existing employees
+	 * @param firstName			The first name of the employee
+	 * @param lastName			The last name of the employee
+	 * @param gender			The gender of the employee, must be a value from the Gender enumeration
+	 * @param workLocation		The work place of the employee, must be a value from the wokrLocation enumeration
+	 * @param deductionsRate	The deductions rate expressed as a decimal, must be between 0 and 1
+	 * @param hourlyWage		The wage per hour, must be positive
+	 * @param hoursPerWeek		The hours worked per week, must be between 0 and MAX_HOUR_PER_WEEK
+	 * @param weeksPerYear		The weeks worked per year, must be between 0 and MAX_WEEKS_PER_YEAR
+	 */
 	public PartTimeEmployee(int num, String firstName, String lastName, Gender gender, Location workLocation, double deductionsRate, double hourlyWage, double hoursPerWeek, double weeksPerYear) {
 		super(num, firstName, lastName, gender, workLocation, deductionsRate);
 

@@ -14,8 +14,7 @@ import javax.swing.JPanel;
 import io.FileUtil;
 
 /**
- * Creates a panel with an image as its background
- *
+ * A panel with an image as its background
  */
 class ImagePanel extends JPanel {
 
