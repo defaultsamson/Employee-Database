@@ -179,7 +179,9 @@ public class MainUI extends javax.swing.JFrame {
     	empInfoLastName.setText(employee.getLastName());
     	empInfoEmpnum.setText(Integer.toString(employee.getEmployeeNumber()));
     	empInfoComboBoxGender.setSelectedItem(employee.getGender());
-    	empInfoDeductionRate.setText(Double.toString(employee.getDeductionsRate() * 100));
+    	//Display the double as a percentage rounded to at most 2 decimal digits
+    	//This is added to prevent a java internal error related to binary representation of decimals
+    	empInfoDeductionRate.setText(Double.toString((Math.round(employee.getDeductionsRate() * 10000) / 100)));
     	empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
     	
     	//Check if the employee is part time or full time
@@ -188,8 +190,9 @@ public class MainUI extends javax.swing.JFrame {
     		fullTimeRadioButton.setSelected(true);
     		selectWagePanel();
     		FullTimeEmployee fullEmployee = (FullTimeEmployee)employee;
-    		fullTimeSalaryTextField.setText(Double.toString(fullEmployee.getYearlySalary()));
-    		fullTimeIncomeTextField.setText(Double.toString(fullEmployee.calcAnnualIncome()));
+    		//Display the double values, all of them are rounded to at most 2 decimal places
+    		fullTimeSalaryTextField.setText(Double.toString(Math.round(fullEmployee.getYearlySalary() * 100) / 100));
+    		fullTimeIncomeTextField.setText(Double.toString(Math.round(fullEmployee.calcAnnualIncome() * 100) / 100));
     		
     		//Remove all temporary values stored on partTimeWagePanel
     		partTimeHourlyWageTextField.setText("");
@@ -202,9 +205,10 @@ public class MainUI extends javax.swing.JFrame {
     			partTimeRadioButton.setSelected(true);
                 selectWagePanel();
         		PartTimeEmployee partEmployee = (PartTimeEmployee)employee;
-        		partTimeHourlyWageTextField.setText(Double.toString(partEmployee.getHourlyWage()));
-                partTimeHoursWorkedTextField.setText(Double.toString(partEmployee.getHoursPerWeek()));
-                partTimeWeeksWorkedTextField.setText(Double.toString(partEmployee.getWeeksPerYear()));
+        		//Display the double values, all of them are rounded to at most 2 decimal places
+        		partTimeHourlyWageTextField.setText(Double.toString((Math.round(partEmployee.getHourlyWage() * 100) / 100)));
+                partTimeHoursWorkedTextField.setText(Double.toString((Math.round(partEmployee.getHoursPerWeek() * 100) / 100)));
+                partTimeWeeksWorkedTextField.setText(Double.toString((Math.round(partEmployee.getWeeksPerYear() * 100) / 100)));
                 partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
                 
                 //Remove all temporary values stored on fullTimeWagePanel
@@ -850,8 +854,8 @@ public class MainUI extends javax.swing.JFrame {
 				errorMessage += "\nEmployee number must be positive!";
 				isValidEmployee = false;
 			} else{
-				//Check to see if employee number is occupied by another employee
-				if(table.searchEmployee(newEmployeeNumber) != null){
+				//Check to see if employee number is occupied by another employee when adding an employee
+				if(table.searchEmployee(newEmployeeNumber) != null && !isEditing()){
 					errorMessage += "\nAn employee with the given employee number already exists!";
 					isValidEmployee = false;
 				}
@@ -910,6 +914,11 @@ public class MainUI extends javax.swing.JFrame {
 						errorMessage += "\nHours per week cannot be less than 0!";
 						isValidEmployee = false;
 					}
+					//Prevent employee being overworked
+					if(newPartTimeHoursWorked > 168){
+						errorMessage += "\nHours per week invalid! Only 168 hours in a week!";
+						isValidEmployee = false;
+					}
 				}catch(NumberFormatException e){
 					isValidEmployee = false;
 					errorMessage += "\nHours per week is not a valid numerical value!";
@@ -920,6 +929,10 @@ public class MainUI extends javax.swing.JFrame {
 					newPartTimeWeeksWorked = Double.valueOf(partTimeWeeksWorkedTextField.getText());
 					if(newPartTimeWeeksWorked < 0){
 						errorMessage += "\nWeeks per year cannot be less than 0!";
+						isValidEmployee = false;
+					}
+					if(newPartTimeWeeksWorked > 365/7){
+						errorMessage += "\nWeeks per year cannot be greater than 52 (or 365/7 to be exact)!";
 						isValidEmployee = false;
 					}
 				}catch(NumberFormatException e){
