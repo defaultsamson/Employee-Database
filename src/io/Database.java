@@ -86,7 +86,7 @@ public class Database {
 					Location location = Location.valueOf(jObj.get(KEY_LOCATION).toString());
 					double deductions = Double.parseDouble(jObj.get(KEY_DEDUCTIONS).toString());
 
-					// Tells whether it's a fulltime employee or not based on whether the entry has a yearly salary
+					// Tells whether it's a full time employee or not based on whether the entry has a yearly salary
 					boolean isFullTime = jObj.get(KEY_YEARLY_SALARY) != null;
 
 					if (isFullTime) {

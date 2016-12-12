@@ -950,6 +950,7 @@ public class MainUI extends javax.swing.JFrame {
 			table.removeEmployee(removedEmployee.getEmployeeNumber());
 			updateDisplayTable();
 			clearEmployeeInfo();
+			hasUnsavedChanges = true;
 		}
 	}// GEN-LAST:event_removeButtonActionPerformed
 
