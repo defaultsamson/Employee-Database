@@ -19,12 +19,24 @@ public class PartTimeEmployee extends EmployeeInfo {
 		return hourlyWage * hoursPerWeek * weeksPerYear * (1D - deductionsRate);
 	}
 
+	public void setHourlyWage(double newHourlyWage) {
+		hourlyWage = newHourlyWage;
+	}
+
 	public double getHourlyWage() {
 		return hourlyWage;
 	}
 
+	public void setHoursPerWeek(double newHoursPerWeek) {
+		hoursPerWeek = newHoursPerWeek;
+	}
+
 	public double getHoursPerWeek() {
 		return hoursPerWeek;
+	}
+
+	public void setWeeksPerYear(double newWeeksPerYear) {
+		weeksPerYear = newWeeksPerYear;
 	}
 
 	public double getWeeksPerYear() {

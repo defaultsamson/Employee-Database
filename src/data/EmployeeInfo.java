@@ -21,24 +21,48 @@ public class EmployeeInfo {
 		return 0D;
 	}
 
+	public void setDeductionsRate(double newDeductionsRate) {
+		deductionsRate = newDeductionsRate;
+	}
+
 	public double getDeductionsRate() {
 		return deductionsRate;
+	}
+
+	public void setEmployeeNumber(int newEmployeeNumber) {
+		empNumber = newEmployeeNumber;
 	}
 
 	public int getEmployeeNumber() {
 		return empNumber;
 	}
 
+	public void setFirstName(String newName) {
+		firstName = newName;
+	}
+
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public void setLastName(String newName) {
+		lastName = newName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setGender(Gender newGender) {
+		sex = newGender;
 	}
 
 	public Gender getGender() {
 		return sex;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public void setLocation(Location newLoc) {
+		workLocation = newLoc;
 	}
 
 	public Location getLocation() {

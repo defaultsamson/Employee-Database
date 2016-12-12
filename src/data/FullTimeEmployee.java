@@ -10,6 +10,10 @@ public class FullTimeEmployee extends EmployeeInfo {
 		this.yearlySalary = yearlySalary;
 	}
 
+	public void setYearlySalary(double newSalary) {
+		yearlySalary = newSalary;
+	}
+
 	@Override
 	public double calcAnnualIncome() {
 		return yearlySalary * (1D - deductionsRate);

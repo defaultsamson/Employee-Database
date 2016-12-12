@@ -17,11 +17,11 @@ public class IconButton extends JButton {
 
 	private BufferedImage image;
 	private IconType iconType;
-        
-        //NETBEANS
-        public IconButton(){
-            super();
-        }
+
+	// NETBEANS
+	public IconButton() {
+		super();
+	}
 
 	public IconButton(IconType iconType) {
 		super();
@@ -39,11 +39,11 @@ public class IconButton extends JButton {
 
 		setSize(new Dimension(image.getWidth(), image.getHeight()));
 	}
-        
-        @Override
-        public void setText(String text){
-            //Discard the text
-        }
+
+	@Override
+	public void setText(String text) {
+		// Discard the text
+	}
 
 	public IconType getIconType() {
 		return iconType;
