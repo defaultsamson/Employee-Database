@@ -318,7 +318,7 @@ public class MainUI extends javax.swing.JFrame {
         empInfoLastName = new javax.swing.JTextField();
         deductionRateLabel = new javax.swing.JLabel();
         empInfoDeductionRate = new javax.swing.JTextField();
-        portraitPanel = new ImagePanel(IconType.USA);
+        portraitPanel = new ImagePanel(IconType.UNKNOWN);
         empnumLabel = new javax.swing.JLabel();
         fullTimeRadioButton = new javax.swing.JRadioButton();
         partTimeRadioButton = new javax.swing.JRadioButton();
@@ -508,6 +508,11 @@ public class MainUI extends javax.swing.JFrame {
         empInfoComboBoxGender.setModel((new javax.swing.DefaultComboBoxModel<>(new Gender[] { Gender.MALE, Gender.FEMALE, Gender.OTHER })));
         empInfoComboBoxGender.setSelectedIndex(-1);
         empInfoComboBoxGender.setSelectedItem(null);
+        empInfoComboBoxGender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empInfoComboBoxGenderActionPerformed(evt);
+            }
+        });
 
         genderLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         genderLabel1.setText("Location");
@@ -985,6 +990,24 @@ public class MainUI extends javax.swing.JFrame {
     		displayEmployeeInfo(employeeList.getSelectedValue());
     	}
     }//GEN-LAST:event_clearButtonActionPerformed
+
+    //Change the profile picture based on gender
+    private void empInfoComboBoxGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empInfoComboBoxGenderActionPerformed
+    	//The index for the different genders, change them here if new gender is discovered
+    	final int MALE_INDEX = 0;
+    	final int FEMALE_INDEX = 1;
+    	final int OTHER_INDEX = 2;
+    	switch(empInfoComboBoxGender.getSelectedIndex()){
+       		case MALE_INDEX :	((ImagePanel)portraitPanel).setImage(IconType.MALE);
+       						 	break;
+       		case FEMALE_INDEX:  ((ImagePanel)portraitPanel).setImage(IconType.FEMALE);
+       							break;
+       		case OTHER_INDEX:	((ImagePanel)portraitPanel).setImage(IconType.OTHER);
+       							break;
+       		default:			((ImagePanel)portraitPanel).setImage(IconType.UNKNOWN);
+       							break;
+    	}
+    }//GEN-LAST:event_empInfoComboBoxGenderActionPerformed
 
     /**
      * @param args the command line arguments

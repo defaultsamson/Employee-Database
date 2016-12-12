@@ -14,16 +14,15 @@ import javax.swing.JPanel;
 import io.FileUtil;
 
 /**
- *
+ *Creates a panel with an image as its background
  *
  */
 class ImagePanel extends JPanel {
 
-	/**
-	 * 
-	 */
+	//Serial ID for extending JPanel
 	private static final long serialVersionUID = 3966638652448600131L;
 
+	//The displayed image
 	private BufferedImage image;
 
 	public ImagePanel(IconType icon) {
@@ -36,7 +35,22 @@ class ImagePanel extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Change to a new image
+	 * @param The image to be displayed
+	 */
+	public void setImage(IconType icon){
+		try {
+			// Loads the image
+			image = FileUtil.loadImage(icon.getTextureDir());
+			repaint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Override the method in parent to paint the image
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

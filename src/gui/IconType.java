@@ -9,9 +9,10 @@ public enum IconType {
 	SEARCH("ic_search_black_18dp_1x.png"),
 	SAVE("ic_save_black_48dp_1x.png"),
 	CLEAR("ic_clear_black_48dp_1x.png"),
-	USA("usa.jpg"),
+	UNKNOWN("unknown.jpg"),
 	MALE("male.jpg"),
-	FEMALE("female.jpg");
+	FEMALE("female.jpg"),
+	OTHER("other.jpg");
 
 	private String textureDir;
 
