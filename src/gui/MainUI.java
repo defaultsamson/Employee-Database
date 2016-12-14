@@ -401,7 +401,7 @@ public class MainUI extends javax.swing.JFrame {
         menuHelp = new javax.swing.JMenu();
         menuItemManual = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 450));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -447,27 +447,28 @@ public class MainUI extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
+        addButton.setToolTipText("Add a new employee");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
 
-        removeButton.setText("iconButton1");
+        removeButton.setToolTipText("Remove the employee");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
             }
         });
 
-        editButton.setText("iconButton1");
+        editButton.setToolTipText("Edit the employee");
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
             }
         });
 
-        saveButton.setText("iconButton1");
+        saveButton.setToolTipText("Save the employee table");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -496,7 +497,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(0, 24, Short.MAX_VALUE))
         );
 
-        doneButton.setText("iconButton1");
+        doneButton.setToolTipText("Confirm changes");
         doneButton.setEnabled(false);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -778,7 +779,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        clearButton.setText("iconButton1");
+        clearButton.setToolTipText("Cancel Changes");
         clearButton.setEnabled(false);
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
