@@ -218,7 +218,7 @@ public class MainUI extends javax.swing.JFrame {
 		empInfoComboBoxGender.setSelectedItem(employee.getGender());
 		// Display the double as a percentage rounded to at most 2 decimal digits
 		// This is added to prevent a java internal error related to binary representation of decimals
-		empInfoDeductionRate.setText(Double.toString((Math.round(employee.getDeductionsRate() * 10000) / 100)));
+		empInfoDeductionRate.setText(Double.toString((Math.round(employee.getDeductionsRate() * 10000.0) / 100.0)));
 		empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
 
 		// Check if the employee is part time or full time
@@ -228,8 +228,8 @@ public class MainUI extends javax.swing.JFrame {
 			selectWagePanel();
 			FullTimeEmployee fullEmployee = (FullTimeEmployee) employee;
 			// Display the double values, all of them are rounded to at most 2 decimal places
-			fullTimeSalaryTextField.setText(Double.toString(Math.round(fullEmployee.getYearlySalary() * 100) / 100));
-			fullTimeIncomeTextField.setText(Double.toString(Math.round(fullEmployee.calcAnnualIncome() * 100) / 100));
+			fullTimeSalaryTextField.setText(Double.toString(Math.round(fullEmployee.getYearlySalary() * 100.0) / 100.0));
+			fullTimeIncomeTextField.setText(Double.toString(Math.round(fullEmployee.calcAnnualIncome() * 100.0) / 100.0));
 
 			// Remove all temporary values stored on partTimeWagePanel
 			partTimeHourlyWageTextField.setText("");
@@ -243,10 +243,10 @@ public class MainUI extends javax.swing.JFrame {
 				selectWagePanel();
 				PartTimeEmployee partEmployee = (PartTimeEmployee) employee;
 				// Display the double values, all of them are rounded to at most 2 decimal places
-				partTimeHourlyWageTextField.setText(Double.toString((Math.round(partEmployee.getHourlyWage() * 100) / 100)));
-				partTimeHoursWorkedTextField.setText(Double.toString((Math.round(partEmployee.getHoursPerWeek() * 100) / 100)));
-				partTimeWeeksWorkedTextField.setText(Double.toString((Math.round(partEmployee.getWeeksPerYear() * 100) / 100)));
-				partTimeIncomeTextField.setText(Double.toString(partEmployee.calcAnnualIncome()));
+				partTimeHourlyWageTextField.setText(Double.toString((Math.round(partEmployee.getHourlyWage() * 100.0) / 100.0)));
+				partTimeHoursWorkedTextField.setText(Double.toString((Math.round(partEmployee.getHoursPerWeek() * 100.0) / 100.0)));
+				partTimeWeeksWorkedTextField.setText(Double.toString((Math.round(partEmployee.getWeeksPerYear() * 100.0) / 100.0)));
+				partTimeIncomeTextField.setText(Double.toString(Math.round(partEmployee.calcAnnualIncome() * 100.0) / 100.0));
 
 				// Remove all temporary values stored on fullTimeWagePanel
 				fullTimeSalaryTextField.setText("");
@@ -1137,8 +1137,10 @@ public class MainUI extends javax.swing.JFrame {
 		setEditableEmployeeInfoPanel(false);
 		// Reset the employee info panel to display the selected employee
 		clearEmployeeInfo();
-		if (employeeList.getSelectedValue() != null) {
-			displayEmployeeInfo(employeeList.getSelectedValue());
+		updateDisplayTable();
+		if (editingEmployee != null) {
+			employeeList.setSelectedValue(editingEmployee, true);
+			displayEmployeeInfo(editingEmployee);
 		}
 	}// GEN-LAST:event_clearButtonActionPerformed
 
