@@ -148,7 +148,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="employeeListScrollPane" pref="337" max="32767" attributes="0"/>
+                              <Component id="employeeListScrollPane" pref="342" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -442,7 +442,7 @@
                       <Component id="fullTimeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="wagePanel" pref="84" max="32767" attributes="0"/>
+                  <Component id="wagePanel" pref="89" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -614,13 +614,13 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="fullTimeAnnualSalaryLabel" min="-2" pref="66" max="-2" attributes="0"/>
                               <Component id="fullTimeSalaryTextField" min="-2" pref="175" max="-2" attributes="0"/>
+                              <Component id="fullTimeAnnualSalaryLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="209" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="fullTimeIncomeLabel" min="-2" pref="69" max="-2" attributes="0"/>
                               <Component id="fullTimeIncomeTextField" min="-2" pref="175" max="-2" attributes="0"/>
+                              <Component id="fullTimeIncomeLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -650,7 +650,7 @@
                       <Font name="Lucida Grande" size="14" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Annual&lt;br&gt;Salary&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Annual&lt;br&gt;Salary ($)&lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="fullTimeIncomeLabel">
@@ -659,7 +659,7 @@
                       <Font name="Lucida Grande" size="14" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Annual&lt;br&gt;Income&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Annual&lt;br&gt;Income ($)&lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="fullTimeIncomeTextField">
@@ -697,7 +697,7 @@
                                   <Component id="partTimeHourlyWageTextField" min="-2" pref="86" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="70" max="32767" attributes="0"/>
+                          <EmptySpace pref="67" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="partTimeHoursWorkedTextField" min="-2" pref="94" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
@@ -705,7 +705,7 @@
                                   <Component id="partTimeHoursWorkedLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="70" max="32767" attributes="0"/>
+                          <EmptySpace pref="67" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="partTimeWeeksWorkedTextField" min="-2" pref="92" max="-2" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
@@ -713,7 +713,7 @@
                                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="69" max="32767" attributes="0"/>
+                          <EmptySpace pref="67" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="partTimeIncomeTextField" min="-2" pref="78" max="-2" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
@@ -753,7 +753,7 @@
                       <Font name="Lucida Grande" size="14" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Hourly&lt;br&gt;&amp;nbsp;Wage&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Hourly&lt;br&gt;Wage ($)&lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="partTimeHoursWorkedLabel">
@@ -786,7 +786,7 @@
                       <Font name="Lucida Grande" size="14" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;Annual&lt;br&gt;Income&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&amp;nbsp;&amp;nbsp;Annual&lt;br&gt;Income ($)&lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="partTimeIncomeTextField">

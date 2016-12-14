@@ -189,6 +189,7 @@ public class MainUI extends javax.swing.JFrame {
 	private void addBlankEmployee() {
 		editingEmployee = null;
 		setEditableEmployeeInfoPanel(true);
+		updateDisplayTable();
 		clearEmployeeInfo();
 	}
 
@@ -201,7 +202,7 @@ public class MainUI extends javax.swing.JFrame {
 	private void editEmployee(EmployeeInfo employee) {
 		editingEmployee = employee;
 		setEditableEmployeeInfoPanel(true);
-		displayEmployeeInfo(employee);
+		updateDisplayTable();
 	}
 
 	/**
@@ -578,11 +579,11 @@ public class MainUI extends javax.swing.JFrame {
 
         fullTimeAnnualSalaryLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         fullTimeAnnualSalaryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fullTimeAnnualSalaryLabel.setText("<html>Annual<br>Salary</p></html>");
+        fullTimeAnnualSalaryLabel.setText("<html>Annual<br>Salary ($)</p></html>");
 
         fullTimeIncomeLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         fullTimeIncomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fullTimeIncomeLabel.setText("<html>Annual<br>Income</p></html>");
+        fullTimeIncomeLabel.setText("<html>Annual<br>Income ($)</p></html>");
 
         fullTimeIncomeTextField.setEditable(false);
 
@@ -593,12 +594,12 @@ public class MainUI extends javax.swing.JFrame {
             .addGroup(fullTimeWagePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fullTimeAnnualSalaryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fullTimeSalaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fullTimeSalaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fullTimeAnnualSalaryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                 .addGroup(fullTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fullTimeIncomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fullTimeIncomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fullTimeIncomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fullTimeIncomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         fullTimeWagePanelLayout.setVerticalGroup(
@@ -620,7 +621,7 @@ public class MainUI extends javax.swing.JFrame {
 
         partTimeHourlyWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         partTimeHourlyWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        partTimeHourlyWageLabel.setText("<html>Hourly<br>&nbsp;Wage</p></html>");
+        partTimeHourlyWageLabel.setText("<html>Hourly<br>Wage ($)</p></html>");
 
         partTimeHoursWorkedLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         partTimeHoursWorkedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -632,7 +633,7 @@ public class MainUI extends javax.swing.JFrame {
 
         partTimeWageLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         partTimeWageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        partTimeWageLabel.setText("<html>Annual<br>Income</p></html>");
+        partTimeWageLabel.setText("<html>&nbsp;&nbsp;Annual<br>Income ($)</p></html>");
 
         partTimeIncomeTextField.setEditable(false);
 
@@ -648,19 +649,19 @@ public class MainUI extends javax.swing.JFrame {
                     .addGroup(partTimeWagePanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(partTimeHourlyWageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(partTimeHoursWorkedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(partTimeWagePanelLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(partTimeHoursWorkedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(partTimeWeeksWorkedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, partTimeWagePanelLayout.createSequentialGroup()
                         .addComponent(partTimeWeeksWorkedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(partTimeWagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(partTimeIncomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, partTimeWagePanelLayout.createSequentialGroup()
@@ -775,7 +776,7 @@ public class MainUI extends javax.swing.JFrame {
                     .addComponent(partTimeRadioButton)
                     .addComponent(fullTimeRadioButton))
                 .addGap(18, 18, 18)
-                .addComponent(wagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(wagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -884,7 +885,7 @@ public class MainUI extends javax.swing.JFrame {
                                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(employeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)))
+                                .addComponent(employeeListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)))
                         .addGap(15, 15, 15))))
         );
 
@@ -1107,10 +1108,11 @@ public class MainUI extends javax.swing.JFrame {
 			}
 
 			clearEmployeeInfo();
-			updateDisplayTable();
 			setEditableEmployeeInfoPanel(false);
+			updateDisplayTable();
 			//There are unsaved changes
 			hasUnsavedChanges = true;
+			editingEmployee = null;
 		} else {
 			JOptionPane.showMessageDialog(this, errorMessage, "Cannot create employee", JOptionPane.ERROR_MESSAGE);
 		}
@@ -1137,10 +1139,11 @@ public class MainUI extends javax.swing.JFrame {
 		setEditableEmployeeInfoPanel(false);
 		// Reset the employee info panel to display the selected employee
 		clearEmployeeInfo();
+		//Due to an bug with JList background, when there is only one item in the list, updateDisplayTable have to be called twice
+		updateDisplayTable();
 		updateDisplayTable();
 		if (editingEmployee != null) {
 			employeeList.setSelectedValue(editingEmployee, true);
-			displayEmployeeInfo(editingEmployee);
 		}
 	}// GEN-LAST:event_clearButtonActionPerformed
 
