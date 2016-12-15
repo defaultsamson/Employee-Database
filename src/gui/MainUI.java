@@ -53,6 +53,9 @@ public class MainUI extends javax.swing.JFrame {
 
 	private boolean hasUnsavedChanges = false;
 	
+	//Control switches for the UI.
+	//If the employee information panel is editable or not
+	private boolean infoPanelEditable;
 	/**
 	 * @return if the user is currently editing an employee.
 	 */
@@ -74,7 +77,8 @@ public class MainUI extends javax.swing.JFrame {
 		initComponents();
 
 		editingEmployee = null;
-		setEditableEmployeeInfoPanel(false);
+		infoPanelEditable = false;
+		setEditableEmployeeInfoPanel(infoPanelEditable);
 
 		// Add DocumentListener for searchTextField to allow instantaneous searches
 		searchTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -190,7 +194,8 @@ public class MainUI extends javax.swing.JFrame {
 	 */
 	private void addBlankEmployee() {
 		editingEmployee = null;
-		setEditableEmployeeInfoPanel(true);
+		infoPanelEditable = true;
+		setEditableEmployeeInfoPanel(infoPanelEditable);
 		employeeList.clearSelection();
 		clearEmployeeInfo();
 	}
@@ -203,7 +208,8 @@ public class MainUI extends javax.swing.JFrame {
 	 */
 	private void editEmployee(EmployeeInfo employee) {
 		editingEmployee = employee;
-		setEditableEmployeeInfoPanel(true);
+		infoPanelEditable = true;
+		setEditableEmployeeInfoPanel(infoPanelEditable);
 		displayEmployeeInfo(employee);
 	}
 
@@ -1118,7 +1124,8 @@ public class MainUI extends javax.swing.JFrame {
 
 			clearEmployeeInfo();
 			updateDisplayTable();
-			setEditableEmployeeInfoPanel(false);
+			infoPanelEditable = false;
+			setEditableEmployeeInfoPanel(infoPanelEditable);
 			//There are unsaved changes
 			hasUnsavedChanges = true;
 			editingEmployee = null;
@@ -1145,7 +1152,8 @@ public class MainUI extends javax.swing.JFrame {
 
 	private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_clearButtonActionPerformed
 		// Cancel the edit and discard it
-		setEditableEmployeeInfoPanel(false);
+		infoPanelEditable = false;
+		setEditableEmployeeInfoPanel(infoPanelEditable);
 		// Reset the employee info panel to display the selected employee
 		clearEmployeeInfo();
 		if (editingEmployee != null) {
