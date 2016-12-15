@@ -191,7 +191,7 @@ public class MainUI extends javax.swing.JFrame {
 	private void addBlankEmployee() {
 		editingEmployee = null;
 		setEditableEmployeeInfoPanel(true);
-		updateDisplayTable();
+		employeeList.clearSelection();
 		clearEmployeeInfo();
 	}
 
@@ -204,7 +204,7 @@ public class MainUI extends javax.swing.JFrame {
 	private void editEmployee(EmployeeInfo employee) {
 		editingEmployee = employee;
 		setEditableEmployeeInfoPanel(true);
-		updateDisplayTable();
+		displayEmployeeInfo(employee);
 	}
 
 	/**
@@ -1143,11 +1143,10 @@ public class MainUI extends javax.swing.JFrame {
 		setEditableEmployeeInfoPanel(false);
 		// Reset the employee info panel to display the selected employee
 		clearEmployeeInfo();
-		//Due to an bug with JList background, when there is only one item in the list, updateDisplayTable have to be called twice
-		updateDisplayTable();
-		updateDisplayTable();
 		if (editingEmployee != null) {
+			//select and display the employee that was previously selected, in case the search bar was used
 			employeeList.setSelectedValue(editingEmployee, true);
+			displayEmployeeInfo(editingEmployee);
 		}
 	}// GEN-LAST:event_clearButtonActionPerformed
 
