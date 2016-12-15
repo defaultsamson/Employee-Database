@@ -74,6 +74,7 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 
 	private DefaultListCellRenderer defaultRenderer;
 
+	//Variables for the JLabel in the 3 columns
 	private JLabel c1;
 	private JLabel c2;
 	private JLabel c3;
@@ -100,7 +101,7 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		add(c2);
 		add(c3);
 
-		disabledBackground = new Color(0.5F, 0.5F, 0.5F);
+		disabledBackground = new Color(0.7F, 0.7F, 0.7F);
 	}
 
 	@Override
@@ -108,6 +109,7 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		DefaultListCellRenderer renderer = defaultRenderer;
 		JLabel defaultLabel = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
+		//Assign values to the three columns
 		c1.setText(value.getFirstName());
 		c2.setText(value.getLastName());
 		c3.setText("" + value.getEmployeeNumber());
