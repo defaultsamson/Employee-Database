@@ -84,7 +84,7 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 	private Color selectedBackground = null;
 	private Color selectedForeground = null;
 
-	private Color disabledBackground;
+	private Color disabledForeground;
 
 	public EmployeeListRenderer() {
 		super();
@@ -101,7 +101,7 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		add(c2);
 		add(c3);
 
-		disabledBackground = new Color(0.7F, 0.7F, 0.7F);
+		disabledForeground = new Color(0.7F, 0.7F, 0.7F);
 	}
 
 	@Override
@@ -114,14 +114,8 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 		c2.setText(value.getLastName());
 		c3.setText("" + value.getEmployeeNumber());
 
-		// Sets the background colour to grey if this component is not enabled
-		if (!isEnabled()) {
-			list.setBackground(disabledBackground);
-
-			setBackground(list.getBackground());
-
-			// Sets the colours based on whether the entry is selected or not
-		} else if (isSelected) {
+		// Sets the colours based on whether the entry is selected or not
+		if (isSelected) {
 			// Sets the background and foreground colours from the defaults
 			if (background == null) {
 				Color bg = defaultLabel.getBackground();
@@ -154,7 +148,12 @@ class EmployeeListRenderer extends JPanel implements ListCellRenderer<EmployeeIn
 
 			// Uses the default colours
 			list.setBackground(selectedBackground);
-			list.setForeground(selectedForeground);
+			// Sets the foreground colour (font colour) to grey if this component is not enabled
+			if(list.isEnabled()){
+				list.setForeground(selectedForeground);
+			} else{
+				list.setForeground(disabledForeground);	
+			}
 
 			c1.setForeground(list.getForeground());
 			c2.setForeground(list.getForeground());
