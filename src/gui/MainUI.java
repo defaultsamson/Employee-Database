@@ -10,6 +10,8 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -222,6 +224,8 @@ public class MainUI extends javax.swing.JFrame {
 		empInfoDeductionRate.setText(Double.toString((Math.round(employee.getDeductionsRate() * 10000.0) / 100.0)));
 		empInfoComboBoxLocation.setSelectedItem(employee.getLocation());
 
+		//All text field for money will be formatted to two decimal places
+		NumberFormat moneyFormatter = new DecimalFormat("#0.00");
 		// Check if the employee is part time or full time
 		if (employee instanceof FullTimeEmployee) {
 			// For full time employee, set and display the full time panel
@@ -229,8 +233,8 @@ public class MainUI extends javax.swing.JFrame {
 			selectWagePanel();
 			FullTimeEmployee fullEmployee = (FullTimeEmployee) employee;
 			// Display the double values, all of them are rounded to at most 2 decimal places
-			fullTimeSalaryTextField.setText(Double.toString(Math.round(fullEmployee.getYearlySalary() * 100.0) / 100.0));
-			fullTimeIncomeTextField.setText(Double.toString(Math.round(fullEmployee.calcAnnualIncome() * 100.0) / 100.0));
+			fullTimeSalaryTextField.setText(moneyFormatter.format((Math.round(fullEmployee.getYearlySalary() * 100.0) / 100.0)));
+			fullTimeIncomeTextField.setText(moneyFormatter.format(Math.round(fullEmployee.calcAnnualIncome() * 100.0) / 100.0));
 
 			// Remove all temporary values stored on partTimeWagePanel
 			partTimeHourlyWageTextField.setText("");
@@ -244,10 +248,10 @@ public class MainUI extends javax.swing.JFrame {
 				selectWagePanel();
 				PartTimeEmployee partEmployee = (PartTimeEmployee) employee;
 				// Display the double values, all of them are rounded to at most 2 decimal places
-				partTimeHourlyWageTextField.setText(Double.toString((Math.round(partEmployee.getHourlyWage() * 100.0) / 100.0)));
+				partTimeHourlyWageTextField.setText(moneyFormatter.format((Math.round(partEmployee.getHourlyWage() * 100.0) / 100.0)));
 				partTimeHoursWorkedTextField.setText(Double.toString((Math.round(partEmployee.getHoursPerWeek() * 100.0) / 100.0)));
 				partTimeWeeksWorkedTextField.setText(Double.toString((Math.round(partEmployee.getWeeksPerYear() * 100.0) / 100.0)));
-				partTimeIncomeTextField.setText(Double.toString(Math.round(partEmployee.calcAnnualIncome() * 100.0) / 100.0));
+				partTimeIncomeTextField.setText(moneyFormatter.format(Math.round(partEmployee.calcAnnualIncome() * 100.0) / 100.0));
 
 				// Remove all temporary values stored on fullTimeWagePanel
 				fullTimeSalaryTextField.setText("");
