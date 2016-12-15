@@ -314,6 +314,11 @@ public class MainUI extends javax.swing.JFrame {
 		addButton.setEnabled(!editable);
 		removeButton.setEnabled(!editable);
 		editButton.setEnabled(!editable);
+		
+		//Disable the menu edit options when editing
+		menuItemAdd.setEnabled(!editable);
+		menuItemRemove.setEnabled(!editable);
+		menuItemEdit.setEnabled(!editable);
 
 		// Enable the doneButton and clearButton when editing
 		doneButton.setEnabled(editable);
@@ -898,7 +903,7 @@ public class MainUI extends javax.swing.JFrame {
 
 	private void menuItemAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAddActionPerformed
         //Same as pressing the add employee button
-        addBlankEmployee();
+        addButtonActionPerformed(evt);
 	}//GEN-LAST:event_menuItemAddActionPerformed
 
 	private void menuItemRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRemoveActionPerformed
