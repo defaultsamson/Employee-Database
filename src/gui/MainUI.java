@@ -150,7 +150,7 @@ public class MainUI extends javax.swing.JFrame {
 							}
 						}
 
-						// Tests if each parameter found a match in this EmployeeInfo object
+						// Tests if each parameter found a match in this EmployeeInfo object, in case of multiple words
 						boolean trulyAdd = true;
 						for (int j = 0; j < addResult.length; j++) {
 							if (addResult[j] == false)
@@ -1112,8 +1112,8 @@ public class MainUI extends javax.swing.JFrame {
 			}
 
 			clearEmployeeInfo();
-			setEditableEmployeeInfoPanel(false);
 			updateDisplayTable();
+			setEditableEmployeeInfoPanel(false);
 			//There are unsaved changes
 			hasUnsavedChanges = true;
 			editingEmployee = null;
