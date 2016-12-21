@@ -72,7 +72,7 @@ public class Database {
 	public boolean load(OpenHashTable table) {
 		try {
 			// Loads lines from the file
-			List<String> lines = Files.readAllLines(file.toPath());
+			List<String> lines = FileUtil.readAllLines(file);// Java 8 -> Files.readAllLines(file.toPath());
 
 			// Parses loaded lines into JSON objects, then to EmployeeInfo
 			for (String s : lines) {
@@ -105,8 +105,6 @@ public class Database {
 				}
 			}
 			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

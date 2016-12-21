@@ -2,9 +2,12 @@ package io;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -28,5 +31,25 @@ public class FileUtil {
 		}
 
 		pw.close();
+	}
+
+	/**
+	 * Takes all the lines from a file as Strings.
+	 * 
+	 * @param file
+	 *            the file to read
+	 * @return the lines read.
+	 */
+	public static List<String> readAllLines(File file) throws FileNotFoundException {
+		List<String> toReturn = new ArrayList<String>();
+		Scanner fileScanner = new Scanner(file);
+
+		while (fileScanner.hasNextLine()) {
+			toReturn.add(fileScanner.nextLine());
+		}
+
+		fileScanner.close();
+
+		return toReturn;
 	}
 }
